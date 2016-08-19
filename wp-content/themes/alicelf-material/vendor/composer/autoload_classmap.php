@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AlicelfMaterial\\Helpers\\Arr' => $baseDir . '/AlicelfMaterial/Helpers/Arr.php',
+    'AlicelfMaterial\\Helpers\\Helper' => $baseDir . '/AlicelfMaterial/Helpers/Helper.php',
 );

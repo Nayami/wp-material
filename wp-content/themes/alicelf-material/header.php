@@ -10,10 +10,11 @@
 </head>
 <body <?php body_class() ?>>
 	<?php do_action('AM_afterbody_start') ?>
-	<main>
-		<header>
-
-		</header>
-		<nav>
-
-		</nav>
+	<div class="mdl-layout mdl-js-layout">
+		<?php include locate_template('templates/menu.php') ?>
+		<main class="mdl-layout__content">
+			<div class="page-content">
+				<!-- FAB button with ripple -->
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+					<i class="material-icons">add</i>
+				</button>

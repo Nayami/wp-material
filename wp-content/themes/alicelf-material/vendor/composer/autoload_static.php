@@ -8,6 +8,10 @@ class ComposerStaticInitb6f04ed7e1f797b95ad60e857e3cc76d
 {
     public static $files = array (
         '8cf2ea2c665fb6f888a15a224c46b6d7' => __DIR__ . '/../..' . '/inc/media_links.php',
+        '4a070dff1f00c642fda7018255356c3c' => __DIR__ . '/../..' . '/inc/action_filters.php',
+        'ca53cdeb09b7b188b69d5e27bb76c53e' => __DIR__ . '/../..' . '/inc/shortcodes.php',
+        '0d37f26285857c5cce37455a883803d4' => __DIR__ . '/../..' . '/inc/woocommerce.php',
+        '30248657f148dcb761045796202df670' => __DIR__ . '/../..' . '/inc/menus.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -24,11 +28,17 @@ class ComposerStaticInitb6f04ed7e1f797b95ad60e857e3cc76d
         ),
     );
 
+    public static $classMap = array (
+        'AlicelfMaterial\\Helpers\\Arr' => __DIR__ . '/../..' . '/AlicelfMaterial/Helpers/Arr.php',
+        'AlicelfMaterial\\Helpers\\Helper' => __DIR__ . '/../..' . '/AlicelfMaterial/Helpers/Helper.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitb6f04ed7e1f797b95ad60e857e3cc76d::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitb6f04ed7e1f797b95ad60e857e3cc76d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb6f04ed7e1f797b95ad60e857e3cc76d::$classMap;
 
         }, null, ClassLoader::class);
     }
