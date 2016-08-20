@@ -1,0 +1,20 @@
+
+
+/**
+ * ==================== Menu Trigger ======================
+ * 20.08.2016
+ */
+.mdl-layout__drawer {
+	padding-top : 60px;
+	.mdl-layout-title {
+		padding-left  : 15px;
+		padding-right : 15px;
+	}
+}
+
+.am-logo {
+	display : block;
+	img {
+		@extend .img-responsive;
+	}
+}

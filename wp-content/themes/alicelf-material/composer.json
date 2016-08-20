@@ -8,11 +8,20 @@
   ],
   "autoload": {
     "files" : [
-      "inc/media_links.php",
-      "inc/action_filters.php",
-      "inc/shortcodes.php",
-      "inc/woocommerce.php",
-      "inc/menus.php"
+      "AlicelfMaterial/redux/ReduxCore/framework.php",
+      "AlicelfMaterial/redux/config.php",
+
+      "AlicelfMaterial/media_links.php",
+      "AlicelfMaterial/action_filters.php",
+      "AlicelfMaterial/shortcodes.php",
+      "AlicelfMaterial/woocommerce.php",
+      "AlicelfMaterial/menus.php",
+      "AlicelfMaterial/plugins_deps/init.php",
+      "AlicelfMaterial/theme_functions.php",
+      "AlicelfMaterial/dynamic_styles.php",
+
+      "AlicelfMaterial/AMenu.php"
+
     ],
     "psr-4": {
       "AlicelfMaterial\\": "AlicelfMaterial"

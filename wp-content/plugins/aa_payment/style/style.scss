@@ -1,0 +1,36 @@
+@import "grid";
+@import "style_partials/varmix";
+@import "style_partials/loader";
+
+#plugin-admin-container {
+
+}
+
+/*Desktop*/
+@media (min-width : 952px) {
+	#plugin-admin-container {
+		margin-left  : 15px;
+		margin-right : 15px;
+	}
+}
+
+.aa-pluginsloader-holder {
+	position : relative;
+}
+
+#toplevel_page_aa_payment {
+	.wp-menu-image {
+		&:before {
+			@include fAwesome();
+			content: "\f07a"; //"\f217"
+		}
+	}
+}
+
+.table {
+	width : 100%;
+}
+.form-control {
+	display: block;
+	width : 100%;
+}

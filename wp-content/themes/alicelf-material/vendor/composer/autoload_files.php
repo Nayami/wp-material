@@ -6,9 +6,15 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    '8cf2ea2c665fb6f888a15a224c46b6d7' => $baseDir . '/inc/media_links.php',
-    '4a070dff1f00c642fda7018255356c3c' => $baseDir . '/inc/action_filters.php',
-    'ca53cdeb09b7b188b69d5e27bb76c53e' => $baseDir . '/inc/shortcodes.php',
-    '0d37f26285857c5cce37455a883803d4' => $baseDir . '/inc/woocommerce.php',
-    '30248657f148dcb761045796202df670' => $baseDir . '/inc/menus.php',
+    '541ae616241342009f57916e2e87ef9f' => $baseDir . '/AlicelfMaterial/redux/ReduxCore/framework.php',
+    'e1188992f6c461e5d5793bf9ad65fd4a' => $baseDir . '/AlicelfMaterial/redux/config.php',
+    'a8f85bcc4c14901533ab94bfd43f4093' => $baseDir . '/AlicelfMaterial/media_links.php',
+    '593310181a80f0432011dfb3beaad8c9' => $baseDir . '/AlicelfMaterial/action_filters.php',
+    '10d49c37afd9ed2c6266a5d32f594e91' => $baseDir . '/AlicelfMaterial/shortcodes.php',
+    '5f180e7aed6c46e48e31acc8ea405794' => $baseDir . '/AlicelfMaterial/woocommerce.php',
+    '0a120ed02bc6ca80a888974e7db6554e' => $baseDir . '/AlicelfMaterial/menus.php',
+    '3b6ff1405d3cb32935eda3e027b11b1b' => $baseDir . '/AlicelfMaterial/plugins_deps/init.php',
+    '0ef6c611715cb33ad0129badaabc1915' => $baseDir . '/AlicelfMaterial/theme_functions.php',
+    'fa3695581d5d9ae45f46cbc34e6329b5' => $baseDir . '/AlicelfMaterial/dynamic_styles.php',
+    '9b9b5b1ffa9e298546c8b6cf7015f0f3' => $baseDir . '/AlicelfMaterial/AMenu.php',
 );

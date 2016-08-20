@@ -1,10 +1,7 @@
-<footer>
-
-</footer>
-
 <?php wp_footer(); ?>
-			</div>
-		</div>
-	</main>
+</div>
+</main>
+</div>
+
 </body>
 </html>

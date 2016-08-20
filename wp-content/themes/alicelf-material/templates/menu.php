@@ -1,50 +1,45 @@
-<header class="mdl-layout__header mdl-layout__header--scroll">
-	<?php
-	if ( ! has_nav_menu( 'primary' ) ) {
-		$menu_id = wp_create_nav_menu( "Default Alicelf Menu" );
+<?php
+global $_am;
+?>
+<header class="mdl-layout__header <?php echo am_header_class() ?>">
+	<div class="mdl-layout__header-row">
+		<!-- Title -->
+		<span class="mdl-layout-title"><?php echo material_logo() ?></span>
+		<!-- Add spacer, to align navigation to the right -->
+		<div class="mdl-layout-spacer"></div>
+		<!-- Navigation. We hide it in small screens. -->
+		<?php
+		if ( ! has_nav_menu( 'primary' ) ) {
+			$menu_id = wp_create_nav_menu( "Default Alicelf Menu" );
 
-		wp_update_nav_menu_item( $menu_id, 0, [
-				'menu-item-title'   => __( 'Home' ),
-				'menu-item-classes' => 'home',
-				'menu-item-url'     => home_url( '/' ),
-				'menu-item-status'  => 'publish'
-			]
-		);
-		wp_nav_menu( [
-			'show_home'  => true,
-			'menu_class' => 'mdl-navigation',
-			'container'  => false,
-		] );
-	} else {
+			wp_update_nav_menu_item( $menu_id, 0, [
+					'menu-item-title'   => __( 'Home' ),
+					'menu-item-classes' => 'mdl-navigation__link',
+					'menu-item-url'     => home_url( '/' ),
+					'menu-item-status'  => 'publish'
+				]
+			);
+			wp_nav_menu( [
+				'show_home'  => true,
+				'menu_class' => 'mdl-navigation', // mdl-navigation__link
+				'container'  => 'nav',
+				'walker'     => new AMenu()
+			] );
+		} else {
+			wp_nav_menu( [
+				'show_home'      => true,
+				'menu_class'     => 'mdl-navigation',
+				'theme_location' => 'primary',
+				'container'      => 'nav',
+				'walker'         => new AMenu()
+			] );
+		}
 		?>
-		<div class="mdl-layout__header-row">
-			<!-- Logo -->
-			<span class="mdl-layout-title">
-				<?php echo get_bloginfo('name') ?>
-			</span>
-			<!-- Add spacer, to align navigation to the right -->
-			<div class="mdl-layout-spacer"></div>
-			<!-- Navigation -->
-				<?php
-				// <a class="mdl-navigation__link" href="">Link</a>
-				wp_nav_menu( [
-					'show_home'      => true,
-					'menu_class'     => 'mdl-navigation',
-					'theme_location' => 'primary',
-					'container'      => 'nav'
-				] );
-				?>
-		</div>
-
-
-	<?php } ?>
+	</div>
 </header>
 
-<!--Mobile nav-->
 <div class="mdl-layout__drawer">
-	<span class="mdl-layout-title">
-		<?php echo get_bloginfo('name') ?>
-	</span>
+	<span class="mdl-layout-title"><?php echo material_logo() ?></span>
 	<nav class="mdl-navigation">
 		<?php
 		wp_nav_menu( [
