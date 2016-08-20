@@ -9,7 +9,7 @@ class AMenu extends Walker_Nav_Menu {
 		$indent     = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 		$value      = '';
 		$classes    = empty( $item->classes ) ? array() : (array) $item->classes;
-		$classes[ ] = 'mdl-navigation__link menu-item-' . $item->ID;
+		$classes[ ] = 'menu-item-' . $item->ID;
 		/* If this item has a dropdown menu, add the 'dropdown' class for Bootstrap */
 
 		$item->hasChildren && $classes[ ] = 'dropdown';
@@ -30,8 +30,7 @@ class AMenu extends Walker_Nav_Menu {
 
 		// new addition for active class on the a tag
 		// Add attributes for active link in menu
-		in_array( 'current-menu-item', $classes ) && $attributes .= 'class="al-active"';
-
+		$attributes .= "class='mdl-navigation__link'";
 		$item_output = '<span class="title-icons glyphicon ' . esc_attr( $item->attr_title ) . ' "></span><a' . $attributes . '>';
 		$item_output .= apply_filters( 'the_title', $item->title, $item->ID );
 		if ( $item->hasChildren && $depth == 0 ) {

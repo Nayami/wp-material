@@ -22,7 +22,7 @@
 	.wp-menu-image {
 		&:before {
 			@include fAwesome();
-			content: "\f07a"; //"\f217"
+			content : "\f07a"; //"\f217"
 		}
 	}
 }
@@ -30,7 +30,30 @@
 .table {
 	width : 100%;
 }
+
 .form-control {
-	display: block;
-	width : 100%;
+	display : block;
+	width   : 100%;
+}
+
+/**
+ * ==================== System Messages ======================
+ * 20.08.2016
+ */
+#aa-payment-system-messages {
+	position : absolute;
+	top      : 0;
+	right    : 0;
+	.system-message-item {
+		padding       : 15px 30px;
+		color         : #fff;
+		border-radius : 2px;
+		margin-top    : 1px;
+		&.success {
+			background-color : $successColor;
+		}
+		&.cancel {
+			background-color : $dangerColor;
+		}
+	}
 }

@@ -7,7 +7,7 @@ Author: Alicelf WebArtisan
 Version: 1.0.1
 Author URI: http://www.upwork.com/fl/olegtsibulnik
 */
-
+session_start();
 // Dependencies
 require_once( 'AAPluginInitial.php' );
 $aa_payment = new AAPluginInitial( "AA Payment", null, null, null, 99 );
