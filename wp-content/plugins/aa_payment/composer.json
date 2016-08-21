@@ -12,7 +12,9 @@
       "products/orders_custom_posts.php",
       "content_templates/attributes.php",
       "content_templates/single-product-content.php",
-      "content_templates/init.php"
+      "content_templates/init.php",
+
+      "options_pages.php"
 
     ],
     "psr-4": {
