@@ -17,11 +17,12 @@ use PayPal\Auth\OAuthTokenCredential;
 add_action( 'wp_loaded', 'aa_func_20160920090937', 1 );
 function aa_func_20160920090937()
 {
-	global $aa_paypal;
+	global $aa_paypal, $paypal_credentials;
+
 	$aa_paypal = new ApiContext(
 		new OAuthTokenCredential(
-			PP_CLIENT_ID,
-			PP_CLIENT_SECRET
+			$paypal_credentials[ 'client_id' ],
+			$paypal_credentials[ 'client_secret' ]
 		)
 	);
 }
@@ -81,7 +82,7 @@ function aa_func_20164820054804()
 			die( $e );
 		}
 		$approvalUrl = $payment->getApprovalLink();
-		wp_redirect($approvalUrl);
+		wp_redirect( $approvalUrl );
 		die;
 	}
 }

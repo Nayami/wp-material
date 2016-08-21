@@ -36,12 +36,11 @@ function ajx20164726124749()
 	global $aa_payment;
 	$p = $_POST[ 'aa_pp_payment' ];
 	if ( isset( $p ) ) {
-		$aa_payment->setOption( 'paypa_credentials', array(
-			'email'     => $p[ 'email' ],
-			'client_id' => $p[ 'client_id' ],
-			'secret'    => $p[ 'secret' ]
-		), true
-		);
+		$end_data = [];
+		foreach ( $p as $item ) {
+			$end_data[$item['name']] = $item['value'];
+		}
+		$aa_payment->setOption( 'paypal_credentials', $end_data, true );
 		echo "success";
 		die;
 	}

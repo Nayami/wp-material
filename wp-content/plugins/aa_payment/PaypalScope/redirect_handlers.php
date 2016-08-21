@@ -6,19 +6,19 @@
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 
-add_action('wp_footer', 'aa_func_20165020085037');
+add_action( 'wp_footer', 'aa_func_20165020085037' );
 function aa_func_20165020085037()
 {
-	if(isset($_SESSION['aa_payment_system_messages'])) {
-		$data = $_SESSION['aa_payment_system_messages'];
+	if ( isset( $_SESSION[ 'aa_payment_system_messages' ] ) ) {
+		$data = $_SESSION[ 'aa_payment_system_messages' ];
 		echo "<div id='aa-payment-system-messages'>";
 		foreach ( $data as $item ) {
 			echo "<div class='system-message-item {$item['type']}'>";
-			echo $item['message'];
+			echo $item[ 'message' ];
 			echo "</div>";
 		}
 		echo "</div>";
-		unset($_SESSION['aa_payment_system_messages']);
+		unset( $_SESSION[ 'aa_payment_system_messages' ] );
 	}
 
 }
@@ -35,17 +35,17 @@ function aa_func_20164820084853()
 			 * 20.08.2016
 			 */
 			case 'success' :
-				$paymentId = $_GET['paymentId'];
-				$payerID = $_GET['PayerID'];
-				$payment = Payment::get($paymentId, $aa_paypal);
+				$paymentId = $_GET[ 'paymentId' ];
+				$payerID   = $_GET[ 'PayerID' ];
+				$payment   = Payment::get( $paymentId, $aa_paypal );
 
 				$execute = new PaymentExecution();
-				$execute->setPayerId($payerID);
+				$execute->setPayerId( $payerID );
 
 				try {
-					$result = $payment->execute($execute, $aa_paypal);
-				} catch (Exception $e) {
-					die($e);
+					$result = $payment->execute( $execute, $aa_paypal );
+				} catch ( Exception $e ) {
+					die( $e );
 				}
 
 				$_SESSION[ 'aa_payment_system_messages' ][] = [

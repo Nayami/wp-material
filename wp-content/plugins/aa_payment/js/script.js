@@ -46,10 +46,10 @@ jQuery(document).ready(function($) {
 	};
 
 
-	var alertsFn = function(status, message){
+	var alertsFn = function(status, message) {
 		switch (status) {
 			case "success" :
-				return "<div class='updated notice is-dismissible'><p>"+message+"</p></div>";
+				return "<div class='updated notice is-dismissible'><p>" + message + "</p></div>";
 		}
 	};
 
@@ -96,21 +96,51 @@ jQuery(document).ready(function($) {
 
 		var that = $(this),
 			thatForm = that.parents('form'),
-			email = thatForm.find('#paypal-email'),
-			clientId = thatForm.find('#paypal-client-id'),
-			secret = thatForm.find('#paypal-secret');
-
+			allData = [];
 		thatForm.append(Loaders.bouncingAbsolute);
 
+		$.each(thatForm.find('tr'), function() {
+			var thatRow = $(this),
+				inputObj = thatRow.find('[data-name]'),
+				simpleFields = ['text', 'email', 'number'],
+				radioFields = ['radio', 'checkbox'];
+
+			if (simpleFields.indexOf(inputObj.attr('type')) > -1) {
+				var name = inputObj.attr('data-name'),
+					val = thatRow.find('input, textarea').val();
+
+				allData.push({
+					name : name,
+					value: val,
+					type : inputObj.attr('type')
+				});
+			}
+			if (radioFields.indexOf(inputObj.attr('type')) > -1) {
+				var cx = thatRow.find('[data-name]:checked');
+				if(cx.length > 0) {
+					var arrValues = [];
+					$.each(thatRow.find('[data-name]:checked'), function(){
+						var thisBox = $(this);
+						arrValues.push(thisBox.val());
+					});
+
+					allData.push({
+						name : cx.attr('data-name'),
+						value: arrValues,
+						type : cx.attr('type')
+					});
+				}
+
+			}
+
+
+		});
+		console.log(allData);
 		$.ajax({
 			type   : "POST",
 			url    : ajaxurl,
 			data   : {
-				aa_pp_payment: {
-					email    : email.val(),
-					client_id: clientId.val(),
-					secret   : secret.val()
-				},
+				aa_pp_payment: allData,
 				action       : "ajx20164726124749"
 			},
 			success: function(data) {
@@ -120,9 +150,8 @@ jQuery(document).ready(function($) {
 			error  : function(jqXHR, textStatus, errorThrown) {
 				alert(jqXHR + " :: " + textStatus + " :: " + errorThrown);
 			}
-		})
+		});
 	});
-
 
 
 });
