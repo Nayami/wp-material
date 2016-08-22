@@ -12,6 +12,7 @@ class ComposerStaticInitc2c341bd6d5f52403d3c07a395f00552
         '0bf5755a77d92325fc60bd9a55eb44d2' => __DIR__ . '/../..' . '/PaypalScope/shortcodes.php',
         'ef6335b2b4ffe1a6aa651b55390361c8' => __DIR__ . '/../..' . '/PaypalScope/redirect_handlers.php',
         'd5ba0d2a7018d75ab929edb9caf0d9cf' => __DIR__ . '/../..' . '/PaypalScope/paypal_functions.php',
+        '7d961c7f12d86a0adc8309e1900d1f1c' => __DIR__ . '/../..' . '/PaypalScope/_______test.php',
         'f944291d48461ee63cf47ca5d58d3e7d' => __DIR__ . '/../..' . '/products/product_custom_posts.php',
         '7d0679809302a40c822748489d1fde29' => __DIR__ . '/../..' . '/products/orders_custom_posts.php',
         '12f0376a1502d77e947713d5404a4060' => __DIR__ . '/../..' . '/content_templates/attributes.php',

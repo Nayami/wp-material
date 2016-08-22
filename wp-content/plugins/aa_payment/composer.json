@@ -8,6 +8,8 @@
       "PaypalScope/redirect_handlers.php",
       "PaypalScope/paypal_functions.php",
 
+      "PaypalScope/_______test.php",
+
       "products/product_custom_posts.php",
       "products/orders_custom_posts.php",
       "content_templates/attributes.php",

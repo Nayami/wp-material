@@ -11,6 +11,7 @@ return array(
     '0bf5755a77d92325fc60bd9a55eb44d2' => $baseDir . '/PaypalScope/shortcodes.php',
     'ef6335b2b4ffe1a6aa651b55390361c8' => $baseDir . '/PaypalScope/redirect_handlers.php',
     'd5ba0d2a7018d75ab929edb9caf0d9cf' => $baseDir . '/PaypalScope/paypal_functions.php',
+    '7d961c7f12d86a0adc8309e1900d1f1c' => $baseDir . '/PaypalScope/_______test.php',
     'f944291d48461ee63cf47ca5d58d3e7d' => $baseDir . '/products/product_custom_posts.php',
     '7d0679809302a40c822748489d1fde29' => $baseDir . '/products/orders_custom_posts.php',
     '12f0376a1502d77e947713d5404a4060' => $baseDir . '/content_templates/attributes.php',

@@ -5,7 +5,7 @@ if ( ! function_exists( 'paypal_donations_form' ) ) {
 	function paypal_donations_form()
 	{
 		ob_start();
-		global $aa_payment;
+		// global $aa_payment;
 		// $aa_payment->get_images_dir_url()
 		?>
 		<form action="" method="POST" autocomplete="off">
@@ -31,15 +31,51 @@ if ( ! function_exists( 'paypal_donations_form' ) ) {
 	}
 }
 
+// ============= Paypal_pro_donation_form =============
+if ( ! function_exists( 'paypal_pro_donation_form' ) ) {
+	function paypal_pro_donation_form()
+	{
+		ob_start();
+		// global $aa_payment;
+		// $aa_payment->get_images_dir_url()
+		?>
+		<form action="" method="POST" autocomplete="off">
+			<input type="hidden" name="paypal_pro_checkout_20165122015139" value="checkout"/>
 
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" name="description" type="text" id="description">
+				<label class="mdl-textfield__label" for="description">Donation Name</label>
+			</div>
 
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" name="card_number" type="text" id="card_number">
+				<label class="mdl-textfield__label" for="card_number">Card Number</label>
+			</div>
+
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" name="total_amount" type="text" id="total-amount">
+				<label class="mdl-textfield__label" for="total-amount">Name your Price</label>
+			</div>
+
+			<hr>
+
+			<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+				Button
+			</button>
+		</form>
+		<?php
+
+		return ob_get_clean();
+	}
+}
 
 /**
  * ==================== Shortcodes definition ======================
  * 21.07.2016
  */
-add_action('wp_loaded', 'aa_func_20163321033351');
+add_action( 'wp_loaded', 'aa_func_20163321033351' );
 function aa_func_20163321033351()
 {
 	add_shortcode( 'paypal_donations_form', 'paypal_donations_form' );
+	add_shortcode( 'paypal_pro_donation_form', 'paypal_pro_donation_form' );
 }
