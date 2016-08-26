@@ -18,6 +18,15 @@ function aa_func_20163119123146()
 	wp_register_script( 'jquery', $template_path . '/script/prod/jQuery2.1.js', [], '2.1', true );
 	wp_enqueue_script( 'jquery' );
 
+	// Typescript and angular
+	$nodesrc = $template_path."/node_modules/";
+	wp_enqueue_script('ngShim', $nodesrc. "core-js/client/shim.min.js", [], false, true);
+	wp_enqueue_script('ngZone', $nodesrc. "zone.js/dist/zone.js", [], false, true);
+	wp_enqueue_script('ngReflect', $nodesrc. "reflect-metadata/Reflect.js", [], false, true);
+	wp_enqueue_script('ngSystem', $nodesrc. "systemjs/dist/system.src.js", [], false, true);
+	wp_enqueue_script('systemConfig', $template_path. "/systemjs.config.js", [], false, true);
+
+	wp_enqueue_script('angularInit', $template_path. "/script/dev/angular_init.js", [ 'systemConfig' ], false, true);
 }
 
 

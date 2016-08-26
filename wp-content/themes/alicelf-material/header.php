@@ -19,3 +19,4 @@
 
 	<main class="mdl-layout__content">
 		<div class="page-content">
+			<?php do_action('AM_content') ?>

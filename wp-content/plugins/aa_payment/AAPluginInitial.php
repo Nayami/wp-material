@@ -36,7 +36,7 @@ class AAPluginInitial {
 		// Admin Script
 		add_action( 'admin_enqueue_scripts', [ $this, 'registerPluginEnqueScript' ] );
 		// Front Script
-		add_action( 'wp_enqueue_scripts', [ $this, 'registerPluginEnqueScript' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'registerPluginEnqueScript' ], 11 );
 		add_action( 'admin_menu', [ $this, 'createAdminPage' ] );
 
 		// Set plugin notices

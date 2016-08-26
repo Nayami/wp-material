@@ -9,6 +9,7 @@ class ComposerStaticInitb6f04ed7e1f797b95ad60e857e3cc76d
     public static $files = array (
         '541ae616241342009f57916e2e87ef9f' => __DIR__ . '/../..' . '/AlicelfMaterial/redux/ReduxCore/framework.php',
         'e1188992f6c461e5d5793bf9ad65fd4a' => __DIR__ . '/../..' . '/AlicelfMaterial/redux/config.php',
+        '982c9002c12920c2ec9966b8680fa3e3' => __DIR__ . '/../..' . '/AlicelfMaterial/ng_dirrectives.php',
         'a8f85bcc4c14901533ab94bfd43f4093' => __DIR__ . '/../..' . '/AlicelfMaterial/media_links.php',
         '593310181a80f0432011dfb3beaad8c9' => __DIR__ . '/../..' . '/AlicelfMaterial/action_filters.php',
         '10d49c37afd9ed2c6266a5d32f594e91' => __DIR__ . '/../..' . '/AlicelfMaterial/shortcodes.php',

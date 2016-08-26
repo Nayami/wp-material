@@ -97,7 +97,7 @@ if ( ! function_exists( 'pro_request_params' ) ) {
 
 			// Should be dynamic data
 			'CREDITCARDTYPE' => $data[ 'card_type' ],     // Visa MasterCard Discover Amex JCB Maestro
-			'ACCT'           => $data[ 'card_number' ],
+			'ACCT'           => $data[ 'card_number' ],   // actual credit card number
 			'EXPDATE'        => $data[ 'exp_date' ],      // 022013
 			'CVV2'           => $data[ 'cvv2' ],          // 456
 			'FIRSTNAME'      => $data[ 'first_name' ],    // Buyer Fname

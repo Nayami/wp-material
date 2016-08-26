@@ -10,6 +10,7 @@
     "files" : [
       "AlicelfMaterial/redux/ReduxCore/framework.php",
       "AlicelfMaterial/redux/config.php",
+      "AlicelfMaterial/ng_dirrectives.php",
 
       "AlicelfMaterial/media_links.php",
       "AlicelfMaterial/action_filters.php",
