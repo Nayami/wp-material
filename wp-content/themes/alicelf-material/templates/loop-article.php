@@ -14,8 +14,10 @@
 					<li class="nav-next"><?php next_post_link( '%link &rarr;' ); ?></li>
 				</ul>
 			</nav>
-
-			<?php comments_template( ); ?>
+			<AMcomment>Waiting...</AMcomment>
+			<?php
+//			comments_template( );
+			?>
 		</div>
 
 	<?php endwhile; ?>

@@ -9,17 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var AppComponent = (function () {
-    function AppComponent() {
+var CommentsComponent = (function () {
+    function CommentsComponent() {
+        this.title = 'Outer comments Component';
     }
-    AppComponent = __decorate([
+    CommentsComponent = __decorate([
         core_1.Component({
-            selector: 'AMcontent',
-            template: '<h1>Angular 2 App</h1>'
+            selector: 'AMcomment',
+            template: "<h1>{{title}}</h1>"
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], CommentsComponent);
+    return CommentsComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.CommentsComponent = CommentsComponent;
+//# sourceMappingURL=comments.component.js.map

@@ -26,7 +26,6 @@ function aa_func_20163119123146()
 	wp_enqueue_script('ngSystem', $nodesrc. "systemjs/dist/system.src.js", [], false, true);
 	wp_enqueue_script('systemConfig', $template_path. "/systemjs.config.js", [], false, true);
 
-	wp_enqueue_script('angularInit', $template_path. "/script/dev/angular_init.js", [ 'systemConfig' ], false, true);
 }
 
 
