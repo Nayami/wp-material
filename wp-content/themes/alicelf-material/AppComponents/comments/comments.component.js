@@ -11,12 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var CommentsComponent = (function () {
     function CommentsComponent() {
-        this.title = 'Outer comments Component';
+        this.title = 'Leave a Reply';
     }
     CommentsComponent = __decorate([
         core_1.Component({
             selector: 'AMcomment',
-            template: "<h1>{{title}}</h1>"
+            template: "<h3>{{title}}</h3>"
         }), 
         __metadata('design:paramtypes', [])
     ], CommentsComponent);

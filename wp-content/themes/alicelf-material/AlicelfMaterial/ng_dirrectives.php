@@ -25,12 +25,30 @@ function aa_func_20162526072510()
 {
 	?>
 	<script>
-		System.import('app').catch(function(err) {
-			console.error(err);
-		});
-		System.import('comments').catch(function(err) {
-			console.error(err);
-		});
+		/**
+		 * ==================== Import and bootstrapping ======================
+		 * 29.08.2016
+		 */
+		var activeModules = [
+			{
+				name    : 'app',
+				selector: 'AMcontent'
+			},
+			{
+				name    : 'comments',
+				selector: 'AMcomment'
+			}
+		];
+
+		for (var mdlcnt = activeModules.length; mdlcnt--;) {
+			var LaunchModule = activeModules[mdlcnt];
+			if (document.getElementsByTagName(LaunchModule.selector).length > 0) {
+				System.import(LaunchModule.name).catch(function(err) {
+					console.error(err);
+				});
+			}
+		}
+
 	</script>
 	<?php
 }
