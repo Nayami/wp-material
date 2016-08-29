@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 	selector: 'AMcomment',
 	template: `<h3>{{title}}</h3>`
 })
+
 export class CommentsComponent {
 	title = 'Leave a Reply';
 }
