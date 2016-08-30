@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-var fileVersion = '?tmplv=' + Date.now();
+var fileVersion = '?tmplv=' + Date.now(),
+	componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 
 // AMdefaults Global JS variable that comes from php
 @Component({
 	selector   : 'AMsingleComment',
-	templateUrl: AMdefaults.themeurl + '/AppComponents/comments/views/single_comment.html' + fileVersion
+	templateUrl: componentPath + 'views/single_comment.html' + fileVersion
 })
 
 export class SingleCommentComponent {
