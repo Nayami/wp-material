@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var comments_component_1 = require('./comments.component');
+var single_comments_component_1 = require('./comments_childs/single.comments.component');
 var CommentsModule = (function () {
     function CommentsModule() {
     }
@@ -22,7 +23,8 @@ var CommentsModule = (function () {
                 forms_1.FormsModule
             ],
             declarations: [
-                comments_component_1.CommentsComponent
+                comments_component_1.CommentsComponent,
+                single_comments_component_1.SingleCommentComponent
             ],
             bootstrap: [comments_component_1.CommentsComponent]
         }), 

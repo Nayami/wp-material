@@ -1,0 +1,6 @@
+<li *ngFor="let cmnt of commentsAll" class="comment" id="comment-id-{{cmnt.id}}">
+	<div itemprop="name" class="author">
+		<span itemprop="commentTime"> on Friday 3th</span>, <strong>{{cmnt.author}}</strong>
+	</div>
+	<div itemprop="commentText" class="content"><p>{{cmnt.body}}</p></div>
+</li>

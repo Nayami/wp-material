@@ -11,10 +11,10 @@ function aa_func_20163526113508()
 	?>
 	<script>
 		var AMdefaults = {
-			baseurl  : "<?php site_url() ?>",
+			baseurl  : "<?php echo get_site_url() ?>",
 			themeurl : "<?php echo get_template_directory_uri() ?>",
 			themepath: "<?php echo get_template_directory() ?>",
-			ajaxurl  : "<?php admin_url( 'admin-ajax.php' ) ?>"
+			ajaxurl  : "<?php echo admin_url( 'admin-ajax.php' ) ?>"
 		};
 	</script>
 	<?php
@@ -48,6 +48,27 @@ function aa_func_20162526072510()
 				});
 			}
 		}
+
+		var mdlUpgradeDom = false;
+		setInterval(function() {
+			if (mdlUpgradeDom) {
+				componentHandler.upgradeDom();
+				mdlUpgradeDom = false;
+			}
+		}, 200);
+
+		var observer = new MutationObserver(function () {
+			mdlUpgradeDom = true;
+		});
+		observer.observe(document.body, {
+			childList: true,
+			subtree: true
+		});
+		/* support <= IE 10
+		 angular.element(document).bind('DOMNodeInserted', function(e) {
+		 mdlUpgradeDom = true;
+		 });
+		 */
 
 	</script>
 	<?php

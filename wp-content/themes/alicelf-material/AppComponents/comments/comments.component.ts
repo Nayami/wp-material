@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+var fileVersion = '?tmplv=' + Date.now();
 
 @Component({
-	selector: 'AMcomment',
-	template: `<h3>{{title}}</h3>`
+	selector   : 'AMcomment',
+	templateUrl: AMdefaults.themeurl+'/AppComponents/comments/views/form.html' + fileVersion,
 })
 
 export class CommentsComponent {
