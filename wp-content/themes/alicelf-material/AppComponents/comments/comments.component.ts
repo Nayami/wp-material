@@ -1,3 +1,5 @@
+declare var AMdefaults: any;
+
 import { Component } from '@angular/core';
 var fileVersion = '?tmplv=' + Date.now(),
 	componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
