@@ -1,0 +1,31 @@
+{
+	"data" : [
+		{
+			"post_id"    : 1,
+			"comment_id" : 2,
+			"author_id"  : 1,
+			"author"     : "John Does",
+			"body"       : "Largessdfsd text body",
+			"replyTo"    : 0,
+			"status"     : "approoved"
+		},
+		{
+			"post_id"    : 1,
+			"comment_id" : 3,
+			"author_id"  : 2,
+			"author"     : "Sarah Connor",
+			"body"       : "Lorem Ipsum dolor sit amet",
+			"replyTo"    : 0,
+			"status"     : "approoved"
+		},
+		{
+			"post_id"    : 1,
+			"comment_id" : 4,
+			"author_id"  : 5,
+			"author"     : "Jane Doe",
+			"body"       : "Ipsum text",
+			"replyTo"    : 3,
+			"status"     : "approoved"
+		}
+	]
+}

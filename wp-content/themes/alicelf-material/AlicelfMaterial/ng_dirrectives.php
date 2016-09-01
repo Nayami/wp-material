@@ -36,7 +36,7 @@ function aa_func_20162526072510()
 			},
 			{
 				name    : 'comments',
-				selector: 'AMcomment'
+				selector: 'AMreviewShell'
 			}
 		];
 

@@ -1,12 +1,12 @@
-declare var AMdefaults: any;
-
 import { Component } from '@angular/core';
+
+declare var AMdefaults: any;
 var fileVersion = '?tmplv=' + Date.now(),
 	componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 
 @Component({
-	selector   : 'AMcomment',
-	templateUrl: componentPath + 'views/form.html' + fileVersion
+	selector   : 'AMreviewShell',
+	templateUrl: componentPath + 'views/shell.html' + fileVersion
 })
 
 export class CommentsComponent {

@@ -16,8 +16,8 @@ var CommentsComponent = (function () {
     }
     CommentsComponent = __decorate([
         core_1.Component({
-            selector: 'AMcomment',
-            templateUrl: componentPath + 'views/form.html' + fileVersion
+            selector: 'AMreviewShell',
+            templateUrl: componentPath + 'views/shell.html' + fileVersion
         }), 
         __metadata('design:paramtypes', [])
     ], CommentsComponent);

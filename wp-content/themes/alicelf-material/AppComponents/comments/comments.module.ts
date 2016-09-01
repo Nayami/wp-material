@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 
 import { CommentsComponent }  from './comments.component';
-import { SingleCommentComponent }  from './comments_childs/single.comments.component';
+import { FormComponent }  from './comments_childs/form.component';
+import { ListingCommentComponent }  from './comments_childs/listing.comments.component';
 
 @NgModule({
 	imports: [
@@ -12,7 +13,8 @@ import { SingleCommentComponent }  from './comments_childs/single.comments.compo
 	],
 	declarations: [
 		CommentsComponent,
-		SingleCommentComponent
+		FormComponent,
+		ListingCommentComponent
 	],
 	bootstrap: [ CommentsComponent ]
 })

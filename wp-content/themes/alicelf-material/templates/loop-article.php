@@ -14,7 +14,7 @@
 					<li class="nav-next"><?php next_post_link( '%link &rarr;' ); ?></li>
 				</ul>
 			</nav>
-			<AMcomment>Waiting...</AMcomment>
+			<AMreviewShell>Waiting...</AMreviewShell>
 			<?php
 //			comments_template( );
 			?>
