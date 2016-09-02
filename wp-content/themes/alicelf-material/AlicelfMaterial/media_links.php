@@ -3,11 +3,13 @@ add_action( 'wp_enqueue_scripts', 'aa_func_20163119123146' );
 function aa_func_20163119123146()
 {
 	$template_path = get_stylesheet_directory_uri();
+	$nodesrc = $template_path."/node_modules/";
+//	$bowersrc = $template_path."/bower_components/";
 
 	// Styles
 	// GMaterial
 	wp_enqueue_style( 'google-material-icons', "https://fonts.googleapis.com/icon?family=Material+Icons" );
-	wp_enqueue_style( 'google-material-style', $template_path."/mdl/material.min.css" );
+	wp_enqueue_style( 'google-material-style', $template_path."/mdl/mdl.css" );
 	wp_enqueue_style( 'template-base-styles', get_bloginfo( 'stylesheet_url' ) );
 
 
@@ -19,7 +21,6 @@ function aa_func_20163119123146()
 	wp_enqueue_script( 'jquery' );
 
 	// Typescript and angular
-	$nodesrc = $template_path."/node_modules/";
 	wp_enqueue_script('ngShim', $nodesrc. "core-js/client/shim.min.js", [], false, true);
 	wp_enqueue_script('ngZone', $nodesrc. "zone.js/dist/zone.js", [], false, true);
 	wp_enqueue_script('ngReflect', $nodesrc. "reflect-metadata/Reflect.js", [], false, true);
