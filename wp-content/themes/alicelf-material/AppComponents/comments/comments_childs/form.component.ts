@@ -10,6 +10,8 @@ var fileVersion   = '?tmplv=' + Date.now(),
 @Component( {
 	selector   : 'AMformComponent',
 	templateUrl: componentPath + 'views/form.html' + fileVersion,
+	//styles : [`form {	background-color: red; }`],
+	//styleUrls : ['/AppComponents/comments/styles/comments.css'+ fileVersion],
 	providers  : [ CommentsDataService, HTTP_PROVIDERS ]
 } )
 
