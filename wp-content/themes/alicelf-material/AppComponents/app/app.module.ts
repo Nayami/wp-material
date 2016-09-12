@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 
 import { AppComponent }  from './app.component';
-import { SublineComponent } from './app_childs/subline.component';
 
 
 @NgModule({
@@ -12,8 +11,7 @@ import { SublineComponent } from './app_childs/subline.component';
 		FormsModule
 	],
 	declarations: [
-		AppComponent,
-		SublineComponent
+		AppComponent
 	],
 	bootstrap: [ AppComponent ]
 })

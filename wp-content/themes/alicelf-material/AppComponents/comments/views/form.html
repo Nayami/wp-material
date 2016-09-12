@@ -1,22 +1,22 @@
-<form action="" method="POST" class="AMscope">
+<form class="AMscope" [formGroup]="commentForm" (ngSubmit)="addReview()">
 	<div class="row">
 		<div class="col-md-4">
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" name="AM-comment-name" type="text" id="AM-comment-name" pattern="[A-Z,a-z]*">
+				<input formControlName="name" class="mdl-textfield__input" type="text" id="AM-comment-name" pattern="[A-Z,a-z]*">
 				<label class="mdl-textfield__label" for="AM-comment-name">Your Name</label>
 				<span class="mdl-textfield__error">Please type letters without spaces</span>
 			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" name="AM-comment-email" type="text" id="AM-comment-email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+				<input formControlName="email" class="mdl-textfield__input" type="text" id="AM-comment-email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
 				<label class="mdl-textfield__label" for="AM-comment-email">Email</label>
 				<span class="mdl-textfield__error">Please enter valid email</span>
 			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" name="AM-comment-url" type="text" id="AM-comment-url" pattern="https?://.+">
+				<input formControlName="website" class="mdl-textfield__input" type="text" id="AM-comment-url" pattern="https?://.+">
 				<label class="mdl-textfield__label" for="AM-comment-url">Website</label>
 				<span class="mdl-textfield__error">Please enter valid url</span>
 			</div>
@@ -26,7 +26,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<textarea class="mdl-textfield__input" type="text" name="AM-comment-body" rows="3" id="AM-comment-body"></textarea>
+				<textarea formControlName="body" class="mdl-textfield__input" type="text" rows="3" id="AM-comment-body"></textarea>
 				<label class="mdl-textfield__label" for="AM-comment-body">Your Message...</label>
 			</div>
 		</div>

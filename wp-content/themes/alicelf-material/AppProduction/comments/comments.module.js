@@ -11,9 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
+var forms_2 = require("@angular/forms");
 var comments_component_1 = require('./comments.component');
-var form_component_1 = require('./comments_childs/form.component');
-var listing_comments_component_1 = require('./comments_childs/listing.comments.component');
+var Form_component_1 = require('./comments_childs/Form.component');
+var ListingComments_component_1 = require('./comments_childs/ListingComments.component');
 var CommentsModule = (function () {
     function CommentsModule() {
     }
@@ -21,12 +22,13 @@ var CommentsModule = (function () {
         core_1.NgModule({
             imports: [
                 platform_browser_1.BrowserModule,
-                forms_1.FormsModule
+                forms_1.FormsModule,
+                forms_2.ReactiveFormsModule
             ],
             declarations: [
                 comments_component_1.CommentsComponent,
-                form_component_1.FormComponent,
-                listing_comments_component_1.ListingCommentComponent
+                Form_component_1.FormComponent,
+                ListingComments_component_1.ListingCommentsComponent
             ],
             bootstrap: [comments_component_1.CommentsComponent]
         }), 

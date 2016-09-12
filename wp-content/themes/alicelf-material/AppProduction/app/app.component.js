@@ -16,7 +16,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'AMcontent',
-            template: "<h1>{{title}}</h1><AMsubline>Loading...</AMsubline>"
+            template: "<div>{{title}}</div>"
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

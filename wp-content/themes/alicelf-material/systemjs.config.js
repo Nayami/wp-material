@@ -8,6 +8,7 @@
 	var map = {
 		'app'                       : componetsPath + 'app',
 		'comments'                  : componetsPath + 'comments',
+
 		'@angular'                  : AMdefaults.themeurl + '/node_modules/@angular',
 		'angular2-in-memory-web-api': AMdefaults.themeurl + '/node_modules/angular2-in-memory-web-api',
 		'rxjs'                      : AMdefaults.themeurl + '/node_modules/rxjs'
@@ -16,6 +17,7 @@
 	var packages = {
 		'app':                        { main: 'main.js',  defaultExtension: 'js' },
 		'comments':                   { main: 'main.js',  defaultExtension: 'js' },
+
 		'rxjs':                       { defaultExtension: 'js' },
 		'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
 	};

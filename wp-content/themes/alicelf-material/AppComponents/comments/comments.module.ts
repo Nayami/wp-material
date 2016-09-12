@@ -1,22 +1,26 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { ReactiveFormsModule } from "@angular/forms";
 
 import { CommentsComponent }  from './comments.component';
-import { FormComponent }  from './comments_childs/form.component';
-import { ListingCommentComponent }  from './comments_childs/listing.comments.component';
+import { FormComponent }  from './comments_childs/Form.component';
+import { ListingCommentsComponent }  from './comments_childs/ListingComments.component';
 
-@NgModule({
-	imports: [
+
+@NgModule( {
+	imports     : [
 		BrowserModule,
-		FormsModule
+		FormsModule,
+		ReactiveFormsModule
 	],
 	declarations: [
 		CommentsComponent,
 		FormComponent,
-		ListingCommentComponent
+		ListingCommentsComponent
 	],
-	bootstrap: [ CommentsComponent ]
-})
+	bootstrap   : [CommentsComponent]
+} )
 
-export class CommentsModule { }
+export class CommentsModule {
+}

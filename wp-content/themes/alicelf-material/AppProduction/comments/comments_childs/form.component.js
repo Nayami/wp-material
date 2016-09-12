@@ -10,22 +10,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var forms_1 = require('@angular/forms');
 var CommentsDataService_1 = require('../model/CommentsDataService');
-var fileVersion = '?tmplv=' + Date.now(), componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
+var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 var FormComponent = (function () {
-    function FormComponent() {
+    function FormComponent(fb) {
+        this.commentForm = fb.group({
+            "name": ["", forms_1.Validators.required],
+            "email": ["", forms_1.Validators.required],
+            "website": [""],
+            "body": ["", forms_1.Validators.required],
+        });
     }
+    FormComponent.prototype.addReview = function () {
+        console.log(this.commentForm.value);
+    };
+    FormComponent.prototype.ngOnInit = function () { };
     FormComponent = __decorate([
         core_1.Component({
             selector: 'AMformComponent',
-            templateUrl: componentPath + 'views/form.html' + fileVersion,
-            //styles : [`form {	background-color: red; }`],
-            //styleUrls : ['/AppComponents/comments/styles/comments.css'+ fileVersion],
+            templateUrl: componentPath + 'views/form.html',
             providers: [CommentsDataService_1.CommentsDataService, http_1.HTTP_PROVIDERS]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [forms_1.FormBuilder])
     ], FormComponent);
     return FormComponent;
 }());
 exports.FormComponent = FormComponent;
-//# sourceMappingURL=form.component.js.map
+//# sourceMappingURL=Form.component.js.map

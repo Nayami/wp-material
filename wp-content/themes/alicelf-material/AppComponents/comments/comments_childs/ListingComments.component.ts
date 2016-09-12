@@ -13,13 +13,12 @@ var fileVersion   = '?tmplv=' + Date.now(),
 	providers  : [ CommentsDataService, HTTP_PROVIDERS ]
 } )
 
-export class ListingCommentComponent {
+export class ListingCommentsComponent {
 	commentsAll: CommentModel[];
 
-	constructor( private CommentsObj: CommentsDataService ) {}
-	ngOnInit() {
+	constructor( private CommentsObj: CommentsDataService ) {
 		this.CommentsObj.getComments()
-			.subscribe(commentsAll => this.commentsAll = commentsAll);
+		    .subscribe(commentsAll => this.commentsAll = commentsAll);
 	}
 
 	replyAction( comment ) {

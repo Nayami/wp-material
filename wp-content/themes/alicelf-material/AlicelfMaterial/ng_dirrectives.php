@@ -74,7 +74,7 @@ function aa_func_20162526072510()
 	<?php
 }
 
-add_action( 'AM_content', 'aa_func_20161226031250' );
+//add_action( 'AM_content', 'aa_func_20161226031250' );
 function aa_func_20161226031250()
 {
 	?>
