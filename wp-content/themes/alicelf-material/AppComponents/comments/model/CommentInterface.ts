@@ -1,5 +1,5 @@
-export interface CommentModel {
-	post_id    : number;
+export interface CommentInterface {
+	post_id   : number;
 	comment_id : number;
 	author_id  : number;
 	author     : string;

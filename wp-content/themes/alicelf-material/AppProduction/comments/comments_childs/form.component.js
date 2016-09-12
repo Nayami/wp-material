@@ -9,9 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
 var forms_1 = require('@angular/forms');
-var CommentsDataService_1 = require('../model/CommentsDataService');
 var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 var FormComponent = (function () {
     function FormComponent(fb) {
@@ -30,7 +28,6 @@ var FormComponent = (function () {
         core_1.Component({
             selector: 'AMformComponent',
             templateUrl: componentPath + 'views/form.html',
-            providers: [CommentsDataService_1.CommentsDataService, http_1.HTTP_PROVIDERS]
         }), 
         __metadata('design:paramtypes', [forms_1.FormBuilder])
     ], FormComponent);

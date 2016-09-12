@@ -12,9 +12,11 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var forms_2 = require("@angular/forms");
+var http_1 = require('@angular/http');
 var comments_component_1 = require('./comments.component');
 var Form_component_1 = require('./comments_childs/Form.component');
 var ListingComments_component_1 = require('./comments_childs/ListingComments.component');
+var CommentsDataService_1 = require("./model/CommentsDataService");
 var CommentsModule = (function () {
     function CommentsModule() {
     }
@@ -30,7 +32,8 @@ var CommentsModule = (function () {
                 Form_component_1.FormComponent,
                 ListingComments_component_1.ListingCommentsComponent
             ],
-            bootstrap: [comments_component_1.CommentsComponent]
+            bootstrap: [comments_component_1.CommentsComponent],
+            providers: [CommentsDataService_1.CommentsDataService, http_1.HTTP_PROVIDERS]
         }), 
         __metadata('design:paramtypes', [])
     ], CommentsModule);

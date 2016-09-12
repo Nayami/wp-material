@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
-import { CommentModel } from '../model/CommentModel';
 import { CommentsDataService } from '../model/CommentsDataService';
+import { CommentInterface } from "../model/CommentInterface";
 
 declare var AMdefaults: any;
 var fileVersion   = '?tmplv=' + Date.now(),
@@ -14,7 +14,7 @@ var fileVersion   = '?tmplv=' + Date.now(),
 } )
 
 export class ListingCommentsComponent {
-	commentsAll: CommentModel[];
+	commentsAll: CommentInterface[];
 
 	constructor( private CommentsObj: CommentsDataService ) {
 		this.CommentsObj.getComments()

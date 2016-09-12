@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var fileVersion = '?tmplv=' + Date.now(), componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
+var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 var CommentsComponent = (function () {
     function CommentsComponent() {
         this.title = 'Leave a Reply';
@@ -17,7 +17,7 @@ var CommentsComponent = (function () {
     CommentsComponent = __decorate([
         core_1.Component({
             selector: 'AMreviewShell',
-            templateUrl: componentPath + 'views/shell.html' + fileVersion
+            templateUrl: componentPath + 'views/shell.html'
         }), 
         __metadata('design:paramtypes', [])
     ], CommentsComponent);
