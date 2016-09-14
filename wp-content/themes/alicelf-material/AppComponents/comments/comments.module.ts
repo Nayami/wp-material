@@ -8,6 +8,7 @@ import { CommentsComponent }  from './comments.component';
 import { FormComponent }  from './comments_childs/Form.component';
 import { ListingCommentsComponent }  from './comments_childs/ListingComments.component';
 import { CommentsDataService } from "./model/CommentsDataService";
+import { PostService } from "./services/post.service";
 
 
 @NgModule( {
@@ -22,7 +23,7 @@ import { CommentsDataService } from "./model/CommentsDataService";
 		ListingCommentsComponent
 	],
 	bootstrap   : [CommentsComponent],
-	providers : [ CommentsDataService, HTTP_PROVIDERS ]
+	providers : [ CommentsDataService, PostService, HTTP_PROVIDERS ]
 } )
 
 export class CommentsModule {

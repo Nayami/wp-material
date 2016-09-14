@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
+var post_service_1 = require("../services/post.service");
 var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 var FormComponent = (function () {
-    function FormComponent(fb) {
+    function FormComponent(fb, postService) {
+        this.postService = postService;
         this.commentForm = fb.group({
             "name": ["", forms_1.Validators.required],
             "email": ["", forms_1.Validators.required],
@@ -23,13 +25,18 @@ var FormComponent = (function () {
     FormComponent.prototype.addReview = function () {
         console.log(this.commentForm.value);
     };
-    FormComponent.prototype.ngOnInit = function () { };
+    FormComponent.prototype.ngOnInit = function () {
+        this.postService.getPost()
+            .subscribe(function (data) {
+            console.log(data);
+        });
+    };
     FormComponent = __decorate([
         core_1.Component({
             selector: 'AMformComponent',
             templateUrl: componentPath + 'views/form.html',
         }), 
-        __metadata('design:paramtypes', [forms_1.FormBuilder])
+        __metadata('design:paramtypes', [forms_1.FormBuilder, post_service_1.PostService])
     ], FormComponent);
     return FormComponent;
 }());

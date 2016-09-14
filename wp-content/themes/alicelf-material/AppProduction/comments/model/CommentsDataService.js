@@ -11,18 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/map');
-var fileVersion = '?tmplv=' + Date.now(), componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
+var post_service_1 = require("../services/post.service");
+var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 var CommentsDataService = (function () {
-    function CommentsDataService(http) {
+    function CommentsDataService(http, postService) {
         this.http = http;
+        this.postService = postService;
     }
     CommentsDataService.prototype.getComments = function () {
-        return this.http.get(componentPath + '/model/comments.json' + fileVersion)
+        return this.http.get(componentPath + '/model/comments.json')
             .map(function (response) { return response.json().data; });
     };
     CommentsDataService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, post_service_1.PostService])
     ], CommentsDataService);
     return CommentsDataService;
 }());

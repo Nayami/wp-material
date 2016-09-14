@@ -4,13 +4,11 @@ import { CommentsDataService } from '../model/CommentsDataService';
 import { CommentInterface } from "../model/CommentInterface";
 
 declare var AMdefaults: any;
-var fileVersion   = '?tmplv=' + Date.now(),
-    componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
+var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 
 @Component( {
 	selector   : 'AMsingleComment',
-	templateUrl: componentPath + 'views/single_comment.html' + fileVersion,
-	providers  : [ CommentsDataService, HTTP_PROVIDERS ]
+	templateUrl: componentPath + 'views/single_comment.html'
 } )
 
 export class ListingCommentsComponent {

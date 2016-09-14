@@ -17,6 +17,7 @@ var comments_component_1 = require('./comments.component');
 var Form_component_1 = require('./comments_childs/Form.component');
 var ListingComments_component_1 = require('./comments_childs/ListingComments.component');
 var CommentsDataService_1 = require("./model/CommentsDataService");
+var post_service_1 = require("./services/post.service");
 var CommentsModule = (function () {
     function CommentsModule() {
     }
@@ -33,7 +34,7 @@ var CommentsModule = (function () {
                 ListingComments_component_1.ListingCommentsComponent
             ],
             bootstrap: [comments_component_1.CommentsComponent],
-            providers: [CommentsDataService_1.CommentsDataService, http_1.HTTP_PROVIDERS]
+            providers: [CommentsDataService_1.CommentsDataService, post_service_1.PostService, http_1.HTTP_PROVIDERS]
         }), 
         __metadata('design:paramtypes', [])
     ], CommentsModule);
