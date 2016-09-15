@@ -17,7 +17,7 @@ export class FormComponent implements OnInit {
 
 	commentForm: FormGroup;
 
-	constructor( fb: FormBuilder, private postService: PostService ) {
+	constructor( fb: FormBuilder, private postService: PostService, private commentService : CommentService ) {
 
 		this.commentForm = fb.group( {
 			"name"   : [ "", Validators.required ],
@@ -28,7 +28,14 @@ export class FormComponent implements OnInit {
 	}
 
 	addReview(): void {
-		console.log( this.commentForm.value );
+		if(this.commentForm.status === 'VALID') {
+			let commentData = this.commentForm.value;
+			commentData['postId'] = this.postService.postId;
+			this.commentService.insertComment(commentData)
+				.subscribe(response => {
+					this.commentService.addComment(response);
+				})
+		}
 	}
 
 

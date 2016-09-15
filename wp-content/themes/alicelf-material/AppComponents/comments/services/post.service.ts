@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 declare var AMdefaults: any;
@@ -9,7 +10,8 @@ export class PostService {
 
 	postId: number;
 
-	constructor( private http: Http ) {}
+	constructor( private http: Http ) {
+	}
 
 	setPostId( id: number ): void {
 		this.postId = id;
@@ -19,10 +21,10 @@ export class PostService {
 		return this.postId;
 	}
 
-	getPost() {
+	getPost(): Observable<any> {
 		let params = new URLSearchParams();
-		return this.http.get( AMdefaults.baseurl+"/wp-json/posts/"+this.postId )
-		           .map(res => res.json())
+		return this.http.get( AMdefaults.baseurl + "/wp-json/posts/" + this.postId )
+		           .map( res => res.json() )
 
 	}
 

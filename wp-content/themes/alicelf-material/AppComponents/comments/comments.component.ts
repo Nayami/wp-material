@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 import { CommentService } from './services/comment.service';
 import { PostService } from "./services/post.service";

@@ -13,21 +13,15 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 } )
 
 export class ListingCommentsComponent {
-	commentsAll: any;
 
 	constructor( private postService: PostService,
 	             private CommentsObj: CommentService,
 	             private dynamicComponentLoader: DynamicComponentLoader ) {
-		this.CommentsObj.getComments()
-		    .subscribe( commentsAll => {
-			    this.commentsAll = commentsAll;
-			    console.log( this.commentsAll );
-		    } );
+
 	}
 
 	replyAction( comment ) {
 		console.log( comment );
-
 	}
 
 }
