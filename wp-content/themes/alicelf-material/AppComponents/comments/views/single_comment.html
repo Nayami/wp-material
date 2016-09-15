@@ -1,9 +1,18 @@
 <li *ngFor="let cmnt of commentsAll" class="comment" id="comment-id-{{cmnt.comment_id}}">
-	<div itemprop="name" class="author">
-		<span itemprop="commentTime"> on Friday 3th</span>, <strong>{{cmnt.author}}</strong>
+
+	<div class="mdl-grid">
+		<figure [attr.thumbnailUrl]="cmnt.author.avatar" class="mdl-cell mdl-cell--2-col">
+			<img [src]="cmnt.author.avatar" alt="avatar image">
+		</figure>
+		<div class="mdl-cell mdl-cell--10-col">
+			<h4 itemprop="name" class="author">
+				<span itemprop="commentTime"> on Friday 3th</span>, <strong>{{cmnt.author.name}}</strong>
+			</h4>
+			<div itemprop="commentText" class="content" [innerHTML]="cmnt.content"></div>
+			<button (click)="replyAction(cmnt)" class="mdl-button reply-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+				<i class="material-icons">reply</i>
+			</button>
+		</div>
 	</div>
-	<div itemprop="commentText" class="content"><p>{{cmnt.body}}</p></div>
-	<button (click)="replyAction(cmnt)" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-		<i class="material-icons">reply</i>
-	</button>
+
 </li>

@@ -13,8 +13,8 @@ var post_service_1 = require("./services/post.service");
 var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 var CommentsComponent = (function () {
     function CommentsComponent(elm, postService) {
-        this.title = 'Leave a Reply';
         this.postService = postService;
+        this.title = 'Leave a Reply';
         this.postService.setPostId(parseInt(elm.nativeElement.getAttribute('datapostid')));
     }
     CommentsComponent.prototype.ngOnInit = function () { };

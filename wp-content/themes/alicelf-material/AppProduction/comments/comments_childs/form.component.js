@@ -28,7 +28,7 @@ var FormComponent = (function () {
     FormComponent.prototype.ngOnInit = function () {
         this.postService.getPost()
             .subscribe(function (data) {
-            console.log(data);
+            //console.log( data );
         });
     };
     FormComponent = __decorate([

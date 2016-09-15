@@ -3,7 +3,6 @@
 add_theme_support( 'post-thumbnails' );
 add_filter( 'widget_text', 'do_shortcode' );
 
-
 //add_theme_support( 'woocommerce' );
 
 

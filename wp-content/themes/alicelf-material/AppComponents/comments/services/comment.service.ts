@@ -1,4 +1,4 @@
-import {CommentInterface} from "../mocks/CommentInterface";
+import { CommentInterface } from "../mocks/CommentInterface";
 declare var AMdefaults: any;
 
 import { Injectable } from '@angular/core';
@@ -11,14 +11,13 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 @Injectable()
 export class CommentService {
 
-
 	constructor( private http: Http, private postService: PostService ) {
-
 	}
 
 	getComments() {
-		return this.http.get( componentPath + '/mocks/comments.json' )
-		           .map( response => <CommentInterface[]>response.json().data );
+		let queryUrl = AMdefaults.baseurl + "/wp-json/posts/" + this.postService.postId + "/comments";
+		return this.http.get( queryUrl )
+		    .map( res => res.json() );
 	}
 
 }

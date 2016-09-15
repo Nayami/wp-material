@@ -16,11 +16,8 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 export class FormComponent implements OnInit {
 
 	commentForm: FormGroup;
-	postService: any;
 
-	constructor( fb: FormBuilder, postService: PostService ) {
-
-		this.postService = postService;
+	constructor( fb: FormBuilder, private postService: PostService ) {
 
 		this.commentForm = fb.group( {
 			"name"   : [ "", Validators.required ],
@@ -38,7 +35,7 @@ export class FormComponent implements OnInit {
 	ngOnInit() {
 		this.postService.getPost()
 		    .subscribe( data => {
-			    console.log( data );
+			    //console.log( data );
 		    } );
 	}
 

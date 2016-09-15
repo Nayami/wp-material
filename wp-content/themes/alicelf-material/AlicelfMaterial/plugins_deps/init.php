@@ -75,6 +75,11 @@ function alicelf_theme_register_dependences()
 			'slug'     => 'instagram-feed',
 			'required' => false,
 		),
+		array(
+			'name'     => 'WP REST API (WP API)',
+			'slug'     => 'json-rest-api',
+			'required' => true,
+		),
 
 	);
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DynamicComponentLoader } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { CommentService } from '../services/comment.service';
 import { CommentInterface } from "../mocks/CommentInterface";
@@ -13,11 +13,16 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 } )
 
 export class ListingCommentsComponent {
-	commentsAll: CommentInterface[];
+	commentsAll: any;
 
-	constructor( private CommentsObj: CommentService, private postService:PostService ) {
+	constructor( private postService: PostService,
+	             private CommentsObj: CommentService,
+	             private dynamicComponentLoader: DynamicComponentLoader ) {
 		this.CommentsObj.getComments()
-		    .subscribe(commentsAll => this.commentsAll = commentsAll);
+		    .subscribe( commentsAll => {
+			    this.commentsAll = commentsAll;
+			    console.log( this.commentsAll );
+		    } );
 	}
 
 	replyAction( comment ) {

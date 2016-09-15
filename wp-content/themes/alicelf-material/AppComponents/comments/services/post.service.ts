@@ -21,8 +21,7 @@ export class PostService {
 
 	getPost() {
 		let params = new URLSearchParams();
-		params.set('action', 'ajx20163414083403');
-		return this.http.get( AMdefaults.ajaxurl, { search: params } )
+		return this.http.get( AMdefaults.baseurl+"/wp-json/posts/"+this.postId )
 		           .map(res => res.json())
 
 	}

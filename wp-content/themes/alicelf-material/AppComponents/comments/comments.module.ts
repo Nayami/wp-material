@@ -7,8 +7,8 @@ import { HTTP_PROVIDERS } from '@angular/http';
 import { CommentsComponent }  from './comments.component';
 import { FormComponent }  from './comments_childs/Form.component';
 import { ListingCommentsComponent }  from './comments_childs/ListingComments.component';
-import { CommentService } from "./services/comment.service";
 import { PostService } from "./services/post.service";
+import { CommentService } from "./services/comment.service";
 
 
 @NgModule( {
