@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
-import { CommentsDataService } from '../model/CommentsDataService';
-import { CommentInterface } from "../model/CommentInterface";
+import { CommentService } from '../services/comment.service';
+import { CommentInterface } from "../mocks/CommentInterface";
+import { PostService } from "../services/post.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
@@ -14,13 +15,14 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 export class ListingCommentsComponent {
 	commentsAll: CommentInterface[];
 
-	constructor( private CommentsObj: CommentsDataService ) {
+	constructor( private CommentsObj: CommentService, private postService:PostService ) {
 		this.CommentsObj.getComments()
 		    .subscribe(commentsAll => this.commentsAll = commentsAll);
 	}
 
 	replyAction( comment ) {
 		console.log( comment );
+
 	}
 
 }

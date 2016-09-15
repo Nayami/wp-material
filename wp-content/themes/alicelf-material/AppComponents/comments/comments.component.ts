@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ElementRef } from '@angular/core';
 
-import { CommentsDataService } from './model/CommentsDataService';
+import { CommentService } from './services/comment.service';
 import { PostService } from "./services/post.service";
 
 declare var AMdefaults: any;
@@ -14,10 +14,7 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 export class CommentsComponent implements OnInit {
 	title = 'Leave a Reply';
 
-	postService: any;
-
-	constructor( elm: ElementRef, postService: PostService ) {
-		this.postService = postService;
+	constructor( elm: ElementRef, private postService: PostService ) {
 		this.postService.setPostId( parseInt( elm.nativeElement.getAttribute( 'datapostid' ) ) );
 	}
 

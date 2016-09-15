@@ -1,4 +1,4 @@
-import {CommentInterface} from "./CommentInterface";
+import {CommentInterface} from "../mocks/CommentInterface";
 declare var AMdefaults: any;
 
 import { Injectable } from '@angular/core';
@@ -9,16 +9,15 @@ import { PostService } from "../services/post.service";
 var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 
 @Injectable()
-export class CommentsDataService {
+export class CommentService {
 
-	postService : any;
 
-	constructor( private http: Http, postService: PostService ) {
-		this.postService = postService;
+	constructor( private http: Http, private postService: PostService ) {
+
 	}
 
 	getComments() {
-		return this.http.get( componentPath + '/model/comments.json' )
+		return this.http.get( componentPath + '/mocks/comments.json' )
 		           .map( response => <CommentInterface[]>response.json().data );
 	}
 
