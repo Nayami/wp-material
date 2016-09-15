@@ -1,3 +1,44 @@
+body {
+	&.am-sticky-header {
+		.mdl-layout__drawer-button {
+			position : fixed;
+		}
+		.mdl-layout__header {
+			position : fixed;
+		}
+		.mdl-layout__content {
+			padding-top : 65px;
+		}
+		&.admin-bar {
+			.mdl-layout__drawer-button {
+				top : 31px;
+				/*Tablet*/
+				@media (max-width : 782px) {
+					top : 45px;
+				}
+			}
+		}
+	}
+	/**
+		 * ==================== Fix Admin bar Offset ======================
+		 * 15.09.2016
+		 */
+	&.admin-bar {
+		/*Desktop*/
+		@media (min-width : 783px) {
+			.mdl-layout__container {
+				top : 31px;
+			}
+		}
+		/*Tablet*/
+		@media (max-width : 782px) {
+			.mdl-layout__container {
+				top : 45px;
+			}
+		}
+	}
+}
+
 /**
  * ==================== Menu Trigger ======================
  * 20.08.2016
@@ -18,16 +59,17 @@
 }
 
 .mdl-layout__header {
-	background-color: $gray;
+	background-color : $gray;
 }
+
 .menu-primary-navigation-container {
 	li {
-		list-style: none;
+		list-style : none;
 		&.current-menu-item {
-			background-color: $color-orange;
+			background-color : $color-orange;
 		}
-		&:hover{
-			background-color: transparentize($color-orange, .4);
+		&:hover {
+			background-color : transparentize($color-orange, .4);
 		}
 
 	}
@@ -40,17 +82,17 @@
 .mdl-layout__drawer {
 	li {
 		&.current-menu-item {
-			background-color: transparent;
+			background-color : transparent;
 			a {
 				color : $color-orange;
 			}
 		}
-		&:hover{
-			background-color: transparent;
+		&:hover {
+			background-color : transparent;
 		}
 		a {
-			background-color: transparent;
-			color : #000;
+			background-color : transparent;
+			color            : #000;
 		}
 	}
 }

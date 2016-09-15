@@ -1,7 +1,7 @@
 <?php
 global $_am;
 ?>
-<header class="mdl-layout__header <?php echo am_header_class() ?>">
+<header class="mdl-layout__header">
 	<div class="mdl-layout__header-row">
 		<!-- Title -->
 		<span class="mdl-layout-title"><?php echo material_logo() ?></span>

@@ -30,13 +30,13 @@ if ( ! function_exists( 'material_logo' ) ) {
 	}
 }
 
-// ============= Am_header_class =============
+
 if ( ! function_exists( 'am_header_class' ) ) {
 	function am_header_class()
 	{
 		global $_am;
 
-		return $_am[ 'sticky-header' ] ? 'am-sticky-header' : 'mdl-layout__header--scroll';
+		return $_am[ 'sticky-header' ] ? 'am-sticky-header' : 'non-sticky-header';
 
 	}
 }

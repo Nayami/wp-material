@@ -8,15 +8,15 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>"/>
 	<?php wp_head(); ?>
 </head>
-<body <?php body_class() ?>>
+<body <?php body_class( am_header_class() ) ?>>
 
 <?php do_action( 'AM_afterbody_start' ) ?>
 
 <!-- Always shows a header, even in smaller screens. -->
 <div id="am-appwrap" class="mdl-layout mdl-js-layout">
 
-	<?php include locate_template('templates/menu.php') ?>
+	<?php include locate_template( 'templates/menu.php' ) ?>
 
 	<main class="mdl-layout__content">
 		<div class="page-content">
-			<?php do_action('AM_content') ?>
+		<?php do_action( 'AM_content' ) ?>

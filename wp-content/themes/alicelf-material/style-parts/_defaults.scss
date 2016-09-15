@@ -1,5 +1,10 @@
-body {
-	//overflow-y : hidden;
+.mdl-layout__container {
+	height : auto;
+	top : 0;
+}
+
+#am-appwrap {
+	position : relative;
 }
 
 .AMscope {
