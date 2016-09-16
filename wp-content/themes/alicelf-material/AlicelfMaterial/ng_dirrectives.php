@@ -14,7 +14,8 @@ function aa_func_20163526113508()
 			baseurl  : "<?php echo get_site_url() ?>",
 			themeurl : "<?php echo get_template_directory_uri() ?>",
 			themepath: "<?php echo get_template_directory() ?>",
-			ajaxurl  : "<?php echo admin_url( 'admin-ajax.php' ) ?>"
+			ajaxurl  : "<?php echo admin_url( 'admin-ajax.php' ) ?>",
+			currentUser : "<?php echo get_current_user_id(); ?>"
 		};
 	</script>
 	<?php

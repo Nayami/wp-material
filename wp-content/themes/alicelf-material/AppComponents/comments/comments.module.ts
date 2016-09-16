@@ -10,6 +10,7 @@ import { ListingCommentsComponent }  from './comments_childs/ListingComments.com
 import { PostService } from "./services/post.service";
 import { CommentService } from "./services/comment.service";
 import { ConfirmComponent } from "./comments_childs/confirm.component";
+import { EdittCommentComponent } from "./comments_childs/editcomment.component";
 
 
 @NgModule( {
@@ -22,7 +23,8 @@ import { ConfirmComponent } from "./comments_childs/confirm.component";
 		CommentsComponent,
 		FormComponent,
 		ListingCommentsComponent,
-		ConfirmComponent
+		ConfirmComponent,
+		EdittCommentComponent
 	],
 	bootstrap   : [ CommentsComponent ],
 	providers : [ CommentService, PostService, HTTP_PROVIDERS ]

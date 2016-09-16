@@ -1,4 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+
 import { HTTP_PROVIDERS } from '@angular/http';
 import { CommentService } from '../services/comment.service';
 import { CommentInterface } from "../mocks/CommentInterface";
@@ -15,20 +17,61 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 export class ListingCommentsComponent {
 
 	@Output() launchConfirm = new EventEmitter();
+	userId: number = AMdefaults.currentUser;
 
-	constructor( private postService: PostService,
+	editForm: FormGroup;
+
+	currentlyEdit: number;
+	currentlyEditText: string;
+	currentEditComment: any;
+
+	constructor( private formBuild: FormBuilder,
+	             private postService: PostService,
 	             private CommentsObj: CommentService ) {
-
+		this.editForm = formBuild.group( {} );
 	}
 
 	replyAction( comment, index ) {
 		console.log( comment, index );
 	}
 
-	editAction( comment, index ) {
-		console.log( comment, index );
+	/**
+	 * ==================== UPDATE ACTION ======================
+	 * 16.09.2016
+	 */
+	updateReview() {
+		if ( this.editForm.status === "VALID" ) {
+			this.currentEditComment.content = this.editForm.value.updatedValueReview;
+			this.CommentsObj.updateComment( this.currentEditComment )
+			    .subscribe( response => {
+				    if ( response.status === 'success' ) {
+					    this.cancelEdit();
+				    }
+			    } )
+		}
 	}
 
+	// OPEN EDIT TEXTAREA
+	editAction( comment ) {
+		this.currentlyEdit = comment.ID;
+		this.currentlyEditText = comment.content;
+		this.currentEditComment = comment;
+
+		this.editForm = this.formBuild.group( {
+			"updatedValueReview": [
+				this.currentlyEditText,
+				Validators.required
+			]
+		} );
+	}
+
+	// CANCEL EDIT
+	cancelEdit() {
+		this.currentlyEdit = 0;
+		this.currentlyEditText = null;
+	}
+
+	// DELETE COMMENT
 	deleteAction( comment, index ) {
 		this.launchConfirm.emit( {
 			commentID: comment.ID,

@@ -28,22 +28,23 @@ export class FormComponent implements OnInit {
 	}
 
 	addReview(): void {
-		if(this.commentForm.status === 'VALID') {
+		if ( this.commentForm.status === 'VALID' ) {
 			let commentData = this.commentForm.value;
 			commentData['postId'] = this.postService.postId;
-			this.commentService.insertComment(commentData)
-				.subscribe(response => {
-					this.commentService.addComment(response);
-				})
+			this.commentService.insertComment( commentData )
+			    .subscribe( response => {
+				    this.commentService.addComment( response );
+				    this.commentForm.reset();
+			    } );
 		}
 	}
 
 
 	ngOnInit() {
-		this.postService.getPost()
-		    .subscribe( data => {
-			    //console.log( data );
-		    } );
+		//this.postService.getPost()
+		//    .subscribe( data => {
+		//	    console.log( data );
+		//    } );
 	}
 
 }

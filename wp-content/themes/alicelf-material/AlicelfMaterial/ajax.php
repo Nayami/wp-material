@@ -23,7 +23,7 @@ function ajx20163414083403()
 		'comment_author'       => sanitize_text_field( $data[ 'name' ] ),
 		'comment_author_email' => $data[ 'email' ],
 		'comment_author_url'   => $data[ 'website' ],
-		'comment_content'      => $data[ 'body' ],
+		'comment_content'      => preg_replace( '#<script(.*?)>(.*?)</script>#is', '', $data[ 'body' ] ),
 		'comment_date'         => $time,
 
 		'comment_parent' => 0,
@@ -51,15 +51,41 @@ add_action( 'wp_ajax_nopriv_ajx20165916125929', 'ajx20165916125929' );
 add_action( 'wp_ajax_ajx20165916125929', 'ajx20165916125929' );
 function ajx20165916125929()
 {
-	$data         = $_REQUEST;
+	$data             = $_REQUEST;
 	$data[ 'status' ] = null;
-	$commentID    = $data[ 'commentID' ];
-	$current_user = get_current_user_id();
+	$commentID        = $data[ 'commentID' ];
+	$current_user     = get_current_user_id();
 
 	$comment = get_comment( $commentID );
 
-	if ( ( $comment->user_id === $current_user ) || is_super_admin( $current_user ) ) {
+	if ( (int) $comment->user_id === $current_user ) {
 		wp_delete_comment( $commentID );
+		$data[ 'status' ] = 'success';
+	}
+
+	echo json_encode( $data );
+	die;
+}
+
+/**
+ * ==================== Update Comment ======================
+ * 16.09.2016
+ */
+add_action( 'wp_ajax_nopriv_ajx20161116071151', 'ajx20161116071151' );
+add_action( 'wp_ajax_ajx20161116071151', 'ajx20161116071151' );
+function ajx20161116071151()
+{
+	$data             = $_REQUEST;
+	$data[ 'status' ] = null;
+	$commentID        = $data[ 'ID' ];
+	$comment          = get_comment( $commentID );
+	$current_user     = get_current_user_id();
+
+	if ( (int) $comment->user_id === $current_user ) {
+		wp_update_comment( [
+			"comment_ID"      => $commentID,
+			'comment_content' => preg_replace( '#<script(.*?)>(.*?)</script>#is', '', $data[ 'content' ] ),
+		] );
 		$data[ 'status' ] = 'success';
 	}
 

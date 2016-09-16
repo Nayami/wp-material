@@ -19,6 +19,7 @@ var ListingComments_component_1 = require('./comments_childs/ListingComments.com
 var post_service_1 = require("./services/post.service");
 var comment_service_1 = require("./services/comment.service");
 var confirm_component_1 = require("./comments_childs/confirm.component");
+var editcomment_component_1 = require("./comments_childs/editcomment.component");
 var CommentsModule = (function () {
     function CommentsModule() {
     }
@@ -33,7 +34,8 @@ var CommentsModule = (function () {
                 comments_component_1.CommentsComponent,
                 Form_component_1.FormComponent,
                 ListingComments_component_1.ListingCommentsComponent,
-                confirm_component_1.ConfirmComponent
+                confirm_component_1.ConfirmComponent,
+                editcomment_component_1.EdittCommentComponent
             ],
             bootstrap: [comments_component_1.CommentsComponent],
             providers: [comment_service_1.CommentService, post_service_1.PostService, http_1.HTTP_PROVIDERS]

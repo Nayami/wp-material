@@ -32,14 +32,15 @@ var FormComponent = (function () {
             this.commentService.insertComment(commentData)
                 .subscribe(function (response) {
                 _this.commentService.addComment(response);
+                _this.commentForm.reset();
             });
         }
     };
     FormComponent.prototype.ngOnInit = function () {
-        this.postService.getPost()
-            .subscribe(function (data) {
-            //console.log( data );
-        });
+        //this.postService.getPost()
+        //    .subscribe( data => {
+        //	    console.log( data );
+        //    } );
     };
     FormComponent = __decorate([
         core_1.Component({

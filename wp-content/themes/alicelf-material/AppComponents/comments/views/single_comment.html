@@ -4,22 +4,45 @@
 		<figure [attr.thumbnailUrl]="cmnt.author.avatar" class="mdl-cell mdl-cell--2-col">
 			<img [src]="cmnt.author.avatar" alt="avatar image">
 		</figure>
-		<div class="mdl-cell mdl-cell--10-col">
+		<div class="mdl-cell mdl-cell--10-col relative-container">
 			<h4 itemprop="name" class="author">
-				<span itemprop="commentTime"> on {{cmnt.date | date:'dd/MM/yyyy'}}</span>, <strong>{{cmnt.author.name}}</strong>
+				<span itemprop="commentTime"> on {{cmnt.date | date:'dd/MM/yyyy'}}</span>,
+				<strong>{{cmnt.author.name}}</strong>
 			</h4>
 
 			<div itemprop="commentText" class="content" [innerHTML]="cmnt.content"></div>
 
+			<form
+				[formGroup]="editForm" (ngSubmit)="updateReview()"
+				*ngIf="currentlyEdit == cmnt.ID"
+				[ngClass]="{showeditform: currentlyEdit > 0}"
+				class="wide-fields">
+
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<textarea formControlName="updatedValueReview" class="mdl-textfield__input" type="text" rows="5" id="AM-comment-body">{{currentlyEditText}}</textarea>
+					<label class="mdl-textfield__label" for="AM-comment-body">Edit your review.</label>
+				</div>
+				<footer class="mdl-typography--text-right">
+					<button (click)="cancelEdit()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+						<i class="material-icons">close</i> Cancel
+					</button>
+					<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+						<i class="material-icons">done</i> Submit
+					</button>
+				</footer>
+
+			</form>
+
+
 			<!--Review Actions-->
 			<footer class="mdl-grid">
-				<div class="mdl-cell mdl-cell--2-col">
+				<div class="mdl-cell mdl-cell--2-col" *ngIf="cmnt.author.ID != userId">
 					<button (click)="replyAction(cmnt, elmX)" class="mdl-button mdl-js-button mdl-button--icon">
 						<i class="material-icons">reply</i>
 					</button>
 				</div>
-				<div class="mdl-cell mdl-cell--10-col mdl-typography--text-right">
-					<button (click)="editAction(cmnt, elmX)" class="mdl-button mdl-js-button mdl-button--icon">
+				<div *ngIf="cmnt.author.ID == userId" class="mdl-cell mdl-cell--10-col mdl-typography--text-right">
+					<button (click)="editAction(cmnt)" class="mdl-button mdl-js-button mdl-button--icon">
 						<i class="material-icons">edit</i>
 					</button>
 					<button (click)="deleteAction(cmnt, elmX)" class="mdl-button mdl-js-button mdl-button--icon">
