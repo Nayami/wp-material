@@ -14,13 +14,13 @@ export class CommentService {
 
 	commentsAll: any;
 
-	addComment(data) {
-		this.commentsAll.unshift(data);
+	addComment( data ) {
+		this.commentsAll.unshift( data );
 	}
 
 	constructor( private http: Http, private postService: PostService ) {
 		this.getComments()
-			.subscribe(response => this.commentsAll = response)
+		    .subscribe( response => this.commentsAll = response )
 	}
 
 	getComments(): Observable<any> {
@@ -29,7 +29,9 @@ export class CommentService {
 		           .map( response => response.json() );
 	}
 
-
+	/**
+	 * ==================== INSERT ======================
+	 */
 	insertComment( data ): Observable<any> {
 		let headers = new Headers();
 		const query = requestToString( data, "ajx20163414083403" );
@@ -40,12 +42,30 @@ export class CommentService {
 		           .map( response => response.json() );
 	}
 
+
+	/**
+	 * ==================== DELETE ======================
+	 */
+	delAction(comment){
+		this.destroyComment(comment)
+		    .subscribe( response => {
+			    if(response.status === 'success') {
+				    this.commentsAll.splice(response.index, 1);
+			    }
+		    } );
+	}
+	destroyComment( comment ): Observable<any> {
+		const query = requestToString( comment, "ajx20165916125929" );
+		return this.http.delete( AMdefaults.ajaxurl+"?"+query )
+		           .map( response => response.json() );
+	}
+
 }
 
 function requestToString( object, action ) {
 	let str = "action=" + action + "&";
 	for ( var obj in object ) {
-		let value = object[obj];
+		let value = typeof object[obj] === 'object'? JSON.stringify(object[obj]) : object[obj];
 		str += obj + "=" + value + "&";
 	}
 	return str.substring( 0, str.length - 1 );

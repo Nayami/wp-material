@@ -1,4 +1,20 @@
 #comments {
 	list-style: none;
 	padding-left : 0;
+	h4.author {
+		margin-top : 0;
+	}
+}
+
+.comment {
+	>.mdl-grid {
+		padding-left : 0;
+		padding-right : 0;
+	}
+	/*Desktop*/
+	@media (min-width : 952px) {
+		figure {
+			margin-left : 0;
+		}
+	}
 }

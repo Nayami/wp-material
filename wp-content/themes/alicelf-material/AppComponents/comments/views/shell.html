@@ -1,8 +1,9 @@
 <h3>{{title}}</h3>
+<confirm-component [launchModal]="shelllaunchConfirm"></confirm-component>
 
 <AMformComponent></AMformComponent>
 
 <!--Comments Listing-->
 <ul id="comments" itemscope itemtype="http://schema.org/UserComments">
-	<AMsingleComment>Wait comments...</AMsingleComment>
+	<AMsingleComment (launchConfirm)="handlelaunchConfirm($event)">Wait comments...</AMsingleComment>
 </ul>
