@@ -18,6 +18,9 @@ var CommentsComponent = (function () {
         this.postService.setPostId(parseInt(elm.nativeElement.getAttribute('datapostid')));
     }
     CommentsComponent.prototype.ngOnInit = function () { };
+    CommentsComponent.prototype.handlelaunchConfirm = function (arr) {
+        this.shelllaunchConfirm = arr;
+    };
     CommentsComponent = __decorate([
         core_1.Component({
             selector: 'AMreviewShell',

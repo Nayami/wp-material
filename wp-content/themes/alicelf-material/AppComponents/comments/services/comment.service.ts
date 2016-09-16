@@ -34,7 +34,7 @@ export class CommentService {
 	 */
 	insertComment( data ): Observable<any> {
 		let headers = new Headers();
-		const query = requestToString( data, "ajx20163414083403" );
+		const query = CommentService.requestToString( data, "ajx20163414083403" );
 		headers.append( 'Content-Type', 'application/x-www-form-urlencoded' );
 		return this.http.post( AMdefaults.ajaxurl, query, {
 			           headers: headers
@@ -55,18 +55,18 @@ export class CommentService {
 		    } );
 	}
 	destroyComment( comment ): Observable<any> {
-		const query = requestToString( comment, "ajx20165916125929" );
+		const query = CommentService.requestToString( comment, "ajx20165916125929" );
 		return this.http.delete( AMdefaults.ajaxurl+"?"+query )
 		           .map( response => response.json() );
 	}
 
-}
-
-function requestToString( object, action ) {
-	let str = "action=" + action + "&";
-	for ( var obj in object ) {
-		let value = typeof object[obj] === 'object'? JSON.stringify(object[obj]) : object[obj];
-		str += obj + "=" + value + "&";
+	static requestToString( object, action) {
+		let str = "action=" + action + "&";
+		for ( var obj in object ) {
+			let value = typeof object[obj] === 'object'? JSON.stringify(object[obj]) : object[obj];
+			str += obj + "=" + value + "&";
+		}
+		return str.substring( 0, str.length - 1 );
 	}
-	return str.substring( 0, str.length - 1 );
+
 }
