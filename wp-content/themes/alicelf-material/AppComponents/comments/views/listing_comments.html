@@ -1,0 +1,63 @@
+<li *ngFor="let cmnt of CommentsObj.commentsAll; let elmX=index" class="comment" id="comment-id-{{cmnt.ID}}">
+
+	<div class="mdl-grid">
+		<figure [attr.thumbnailUrl]="cmnt.author.avatar" class="mdl-cell mdl-cell--2-col">
+			<img [src]="cmnt.author.avatar" alt="avatar image">
+		</figure>
+
+		<div class="mdl-cell mdl-cell--10-col relative-container">
+			<h4 itemprop="name" class="author">
+				<span itemprop="commentTime"> on {{cmnt.date | date:'dd/MM/yyyy'}}</span>,
+				<strong>{{cmnt.author.name}}</strong>
+			</h4>
+
+			<div itemprop="commentText" class="content-review-text" [innerHTML]="cmnt.content"></div>
+
+			<form
+				[formGroup]="editForm" (ngSubmit)="updateReview()"
+				*ngIf="currentlyEdit == cmnt.ID"
+				[ngClass]="{showeditform: currentlyEdit > 0}">
+
+				<div class="mdl-grid">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">
+						<textarea formControlName="updatedValueReview" class="mdl-textfield__input" type="text" rows="4" id="AM-comment-body">{{currentlyEditText}}</textarea>
+						<label class="mdl-textfield__label" for="AM-comment-body">Edit your review.</label>
+					</div>
+				</div>
+
+				<footer class="mdl-grid mdl-typography--text-right">
+					<div class="mdl-cell mdl-cell--12-col">
+						<button (click)="cancelEdit()" type="button" class="mdl-button mdl-js-button mdl-button--icon">
+							<i class="material-icons">close</i>
+						</button>
+						<button type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+							<i class="material-icons">done</i>
+						</button>
+					</div>
+				</footer>
+
+			</form>
+
+
+			<!--Review Actions-->
+			<footer class="mdl-grid">
+				<div class="mdl-cell mdl-cell--2-col">
+					<button  *ngIf="cmnt.author.ID != userId" (click)="replyAction(cmnt, elmX)" class="mdl-button mdl-js-button mdl-button--icon">
+						<i class="material-icons">reply</i>
+					</button>
+				</div>
+				<!--@TODO: hide for non logged-->
+				<div *ngIf="cmnt.author.ID == userId" class="mdl-cell mdl-cell--10-col mdl-typography--text-right single-comment-actions">
+					<button (click)="editAction(cmnt)" class="mdl-button mdl-js-button mdl-button--icon">
+						<i class="material-icons">edit</i>
+					</button>
+					<button (click)="deleteAction(cmnt, elmX)" class="mdl-button mdl-js-button mdl-button--icon">
+						<i class="material-icons">delete</i>
+					</button>
+				</div>
+			</footer>
+
+		</div>
+	</div>
+
+</li>

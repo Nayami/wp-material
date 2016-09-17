@@ -15,9 +15,6 @@
 				</ul>
 			</nav>
 			<AMreviewShell datapostid="<?php the_ID() ?>">Waiting...</AMreviewShell>
-			<?php
-//			comments_template( );
-			?>
 		</div>
 
 	<?php endwhile; ?>

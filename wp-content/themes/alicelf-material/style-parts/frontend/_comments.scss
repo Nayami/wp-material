@@ -1,20 +1,41 @@
-#comments {
-	list-style: none;
-	padding-left : 0;
-	h4.author {
+.showeditform {
+	position         : absolute;
+	display          : block;
+	width            : 100%;
+	height           : 100%;
+	right            : 0;
+	top              : 0;
+	z-index          : 2;
+	background-color : #fff;
+	.mdl-grid {
+		padding-right : 0;
+	}
+	.mdl-textfield,
+	textarea {
+		width : 100%;
+	}
+	footer > .mdl-cell {
 		margin-top : 0;
+		width : 100%;
 	}
 }
 
-.comment {
-	>.mdl-grid {
-		padding-left : 0;
-		padding-right : 0;
+#comments {
+	padding    : 0;
+	list-style : none;
+	h4.author {
+		margin-top : 0;
 	}
-	/*Desktop*/
-	@media (min-width : 952px) {
-		figure {
-			margin-left : 0;
+
+	[id^="comment-id-"] {
+		footer.mdl-grid {
+			padding : 0;
+		}
+		/*Desktop*/
+		@media (min-width : 952px) {
+			.mdl-cell--10-col {
+				margin-right : 0;
+			}
 		}
 	}
 }

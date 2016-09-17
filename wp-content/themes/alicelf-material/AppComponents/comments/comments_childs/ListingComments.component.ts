@@ -10,8 +10,8 @@ declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 
 @Component( {
-	selector   : 'AMsingleComment',
-	templateUrl: componentPath + 'views/single_comment.html'
+	selector   : 'listingComments',
+	templateUrl: componentPath + 'views/listing_comments.html'
 } )
 
 export class ListingCommentsComponent {

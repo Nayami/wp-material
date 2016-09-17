@@ -16,6 +16,7 @@ var http_1 = require('@angular/http');
 var comments_component_1 = require('./comments.component');
 var Form_component_1 = require('./comments_childs/Form.component');
 var ListingComments_component_1 = require('./comments_childs/ListingComments.component');
+var user_service_1 = require("./services/user.service");
 var post_service_1 = require("./services/post.service");
 var comment_service_1 = require("./services/comment.service");
 var confirm_component_1 = require("./comments_childs/confirm.component");
@@ -38,7 +39,12 @@ var CommentsModule = (function () {
                 editcomment_component_1.EdittCommentComponent
             ],
             bootstrap: [comments_component_1.CommentsComponent],
-            providers: [comment_service_1.CommentService, post_service_1.PostService, http_1.HTTP_PROVIDERS]
+            providers: [
+                user_service_1.UserService,
+                post_service_1.PostService,
+                comment_service_1.CommentService,
+                http_1.HTTP_PROVIDERS
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], CommentsModule);

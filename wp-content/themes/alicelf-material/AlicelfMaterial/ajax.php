@@ -23,7 +23,7 @@ function ajx20163414083403()
 		'comment_author'       => sanitize_text_field( $data[ 'name' ] ),
 		'comment_author_email' => $data[ 'email' ],
 		'comment_author_url'   => $data[ 'website' ],
-		'comment_content'      => preg_replace( '#<script(.*?)>(.*?)</script>#is', '', $data[ 'body' ] ),
+		'comment_content'      => wp_strip_all_tags( $data[ 'body' ] ),
 		'comment_date'         => $time,
 
 		'comment_parent' => 0,
@@ -58,7 +58,7 @@ function ajx20165916125929()
 
 	$comment = get_comment( $commentID );
 
-	if ( (int) $comment->user_id === $current_user ) {
+	if ( ((int) $comment->user_id === $current_user) && is_user_logged_in() ) {
 		wp_delete_comment( $commentID );
 		$data[ 'status' ] = 'success';
 	}
@@ -84,11 +84,46 @@ function ajx20161116071151()
 	if ( (int) $comment->user_id === $current_user ) {
 		wp_update_comment( [
 			"comment_ID"      => $commentID,
-			'comment_content' => preg_replace( '#<script(.*?)>(.*?)</script>#is', '', $data[ 'content' ] ),
+			'comment_content' => wp_strip_all_tags( $data[ 'content' ] ),
 		] );
 		$data[ 'status' ] = 'success';
 	}
 
 	echo json_encode( $data );
+	die;
+}
+
+/**
+ * ==================== USER ======================
+ * 17.09.2016
+ */
+add_action( 'wp_ajax_nopriv_ajx20163917023918', 'ajx20163917023918' );
+add_action( 'wp_ajax_ajx20163917023918', 'ajx20163917023918' );
+function ajx20163917023918()
+{
+	$return_values = [ ];
+	if ( is_user_logged_in() ) {
+		$user          = wp_get_current_user();
+		$return_values = [
+			'ID'              => $user->ID,
+			'display_name'    => $user->data->display_name,
+			'user_email'      => $user->data->user_email,
+			'user_login'      => $user->data->user_login,
+			'user_nicename'   => $user->data->user_nicename,
+			'user_registered' => $user->data->user_registered,
+			'user_url'        => $user->data->user_url,
+			'roles'           => $user->roles,
+			'administrator'   => $user->allcaps[ 'administrator' ],
+			'logged_in'       => true
+		];
+
+	} else {
+		$return_values = [
+			'ID'        => null,
+			'logged_in' => false
+		];
+	}
+
+	echo json_encode( $return_values );
 	die;
 }

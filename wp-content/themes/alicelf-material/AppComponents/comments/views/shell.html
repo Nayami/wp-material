@@ -1,9 +1,12 @@
-<h3>{{title}}</h3>
+<div class="mdl-grid">
+	<div class="mdl-cell">
+		<h4>{{title}}</h4>
+	</div>
+</div>
 <confirm-component [launchModal]="shelllaunchConfirm"></confirm-component>
 
 <AMformComponent></AMformComponent>
 
-<!--Comments Listing-->
 <ul id="comments" itemscope itemtype="http://schema.org/UserComments">
-	<AMsingleComment (launchConfirm)="handlelaunchConfirm($event)">Wait comments...</AMsingleComment>
+	<listingComments (launchConfirm)="handlelaunchConfirm($event)">Wait comments...</listingComments>
 </ul>
