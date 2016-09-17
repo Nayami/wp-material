@@ -21,6 +21,7 @@ var FormComponent = (function () {
         this.user = user;
         this.postService = postService;
         this.commentService = commentService;
+        this.userId = AMdefaults.currentUser;
         this.currentCommenter = {
             ID: null,
             logged_in: false,
@@ -42,9 +43,9 @@ var FormComponent = (function () {
                 "website": response.logged_in ? response.user_url : "",
             };
             //this.commentForm.controls['name']
-            _this.commentForm.controls['name'].setValue(fDefaults.name);
-            _this.commentForm.controls['email'].setValue(fDefaults.email);
-            _this.commentForm.controls['website'].setValue(fDefaults.website);
+            _this.commentForm.controls['name'].setValue(fDefaults.name, {});
+            _this.commentForm.controls['email'].setValue(fDefaults.email, {});
+            _this.commentForm.controls['website'].setValue(fDefaults.website, {});
             _this.currentCommenter = response;
         });
     }
@@ -57,7 +58,7 @@ var FormComponent = (function () {
             this.commentService.insertComment(commentData)
                 .subscribe(function (response) {
                 _this.commentService.addComment(response);
-                _this.commentForm.reset();
+                _this.commentForm.controls['body'].setValue(null, {});
             });
         }
     };

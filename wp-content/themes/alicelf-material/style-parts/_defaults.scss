@@ -1,7 +1,12 @@
+.page-content,
+.mdl-layout__content {
+	height : 100%;
+}
 .mdl-layout__container {
 	height : auto;
 	top    : 0;
 }
+
 
 .relative-container {
 	position : relative;

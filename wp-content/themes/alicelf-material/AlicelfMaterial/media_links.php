@@ -33,6 +33,11 @@ function aa_func_20163119123146()
 add_action('admin_enqueue_scripts', 'aa_func_20163220053219');
 function aa_func_20163220053219()
 {
+	$template_path = get_stylesheet_directory_uri();
+	$cdnjs = "https://cdnjs.cloudflare.com/ajax/libs/";
 	// Font Awesome
-	wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css');
+	wp_enqueue_style('font-awesome', $cdnjs.'font-awesome/4.6.3/css/font-awesome.min.css');
+	wp_enqueue_style( 'mdl-icons', "https://fonts.googleapis.com/icon?family=Material+Icons" );
+
+	wp_enqueue_style( 'alicelf-icons', $template_path."/style-parts/backend/init.css" );
 }
