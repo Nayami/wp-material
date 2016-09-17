@@ -81,7 +81,7 @@ function ajx20161116071151()
 	$comment          = get_comment( $commentID );
 	$current_user     = get_current_user_id();
 
-	if ( (int) $comment->user_id === $current_user ) {
+	if ( ((int) $comment->user_id === $current_user) && is_user_logged_in() ) {
 		wp_update_comment( [
 			"comment_ID"      => $commentID,
 			'comment_content' => wp_strip_all_tags( $data[ 'content' ] ),

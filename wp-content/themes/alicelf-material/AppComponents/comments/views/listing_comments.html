@@ -47,7 +47,7 @@
 					</button>
 				</div>
 				<!--@TODO: hide for non logged-->
-				<div *ngIf="cmnt.author.ID == userId" class="mdl-cell mdl-cell--10-col mdl-typography--text-right single-comment-actions">
+				<div *ngIf="cmnt.author.ID == userId && userId > 0" class="mdl-cell mdl-cell--10-col mdl-typography--text-right single-comment-actions">
 					<button (click)="editAction(cmnt)" class="mdl-button mdl-js-button mdl-button--icon">
 						<i class="material-icons">edit</i>
 					</button>

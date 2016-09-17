@@ -16,7 +16,10 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 
 export class FormComponent implements OnInit {
 
+	userId: number = AMdefaults.currentUser;
+
 	commentForm: FormGroup;
+
 	currentCommenter: any = {
 		ID           : null,
 		logged_in    : false,
@@ -46,9 +49,9 @@ export class FormComponent implements OnInit {
 					"website": response.logged_in ? response.user_url : "",
 				};
 				 //this.commentForm.controls['name']
-				(<FormControl>this.commentForm.controls['name']).setValue(fDefaults.name);
-				(<FormControl>this.commentForm.controls['email']).setValue(fDefaults.email);
-				(<FormControl>this.commentForm.controls['website']).setValue(fDefaults.website);
+				(<FormControl>this.commentForm.controls['name']).setValue(fDefaults.name, {});
+				(<FormControl>this.commentForm.controls['email']).setValue(fDefaults.email, {});
+				(<FormControl>this.commentForm.controls['website']).setValue(fDefaults.website, {});
 
 				this.currentCommenter = response;
 			})
@@ -64,7 +67,7 @@ export class FormComponent implements OnInit {
 			this.commentService.insertComment( commentData )
 			    .subscribe( response => {
 				    this.commentService.addComment( response );
-				    this.commentForm.reset();
+				    (<FormControl>this.commentForm.controls['body']).setValue(null, {});
 			    } );
 		}
 	}
