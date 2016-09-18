@@ -3,6 +3,16 @@ import { CommentService } from "../services/comment.service";
 
 @Component( {
 	selector: 'confirm-component',
+	styles : [
+		`
+		h3 {
+			margin-top: 10px;
+			margin-bottom: 15px;
+			font-size: 25px;
+			line-height: 25px;
+		}
+		`
+	],
 	template: `
 		<div id="destroy-comment-confirmation" dataDestroy class="modal-backdrop" [ngClass]="{show: launchInfo.showclass, blockClass: launchInfo.block}" itemscope="aa-modal" (click)="unplugModal($event)">
 			<div class="aa-modal-container" data-animation="scale">
@@ -11,10 +21,8 @@ import { CommentService } from "../services/comment.service";
 					<i dataDestroy class="material-icons">close</i>
 				</button>
 				<div class="modal-body-content mdl-typography--text-center">
-					<h3>Are you sure?</h3>
-					<button (click)="confirmDeleteComment()" class="mdl-button mdl-js-button mdl-color-text--cyan-100 mdl-js-ripple-effect mdl-color--cyan-800">
-						Yes
-					</button>
+					<h3 class="mdl-color-text--red-900">Are you sure?</h3>
+					<button (click)="confirmDeleteComment()" class="mdl-button mdl-js-button mdl-color-text--red-50 mdl-js-ripple-effect mdl-color--red-800">Yes</button>
 				</div>
 			</div>
 		</div>

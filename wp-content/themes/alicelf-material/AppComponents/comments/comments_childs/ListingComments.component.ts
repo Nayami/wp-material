@@ -55,7 +55,6 @@ export class ListingCommentsComponent {
 
 	replyAction( comment, index ) {
 		console.log( comment, index );
-		comment.animations.flyinout = 'inactive';
 	}
 
 	/**
