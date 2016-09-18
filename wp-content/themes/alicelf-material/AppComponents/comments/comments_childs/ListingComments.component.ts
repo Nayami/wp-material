@@ -1,4 +1,8 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, Input,
+	OnInit, EventEmitter,
+	trigger, state, style, transition, animate
+} from '@angular/core';
+
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import { HTTP_PROVIDERS } from '@angular/http';
@@ -11,13 +15,31 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 
 @Component( {
 	selector   : 'listingComments',
-	templateUrl: componentPath + 'views/listing_comments.html'
+	templateUrl: componentPath + 'views/listing_comments.html',
+	animations : [
+		trigger('checkState', [
+			state('inactive', style({
+				transform: 'scale(0.7)',
+				opacity : 0
+			})),
+			state('active',   style({
+				transform: 'scale(1)',
+				opacity : 1
+			})),
+			transition('inactive => active, active => inactive',
+				animate('200ms ease-out'))
+		])
+	]
 } )
 
 export class ListingCommentsComponent {
 
 	@Output() launchConfirm = new EventEmitter();
 	userId: number = AMdefaults.currentUser;
+
+	toggleState(comment) {
+		comment.animations.flyinout = comment.animations.flyinout === 'active' ? 'inactive' : 'active';
+	}
 
 	editForm: FormGroup;
 
@@ -33,6 +55,7 @@ export class ListingCommentsComponent {
 
 	replyAction( comment, index ) {
 		console.log( comment, index );
+		comment.animations.flyinout = 'inactive';
 	}
 
 	/**

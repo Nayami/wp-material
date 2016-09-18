@@ -1,4 +1,9 @@
-<li *ngFor="let cmnt of CommentsObj.commentsAll; let elmX=index" class="comment" id="comment-id-{{cmnt.ID}}">
+<li
+	*ngFor="let cmnt of CommentsObj.commentsAll; let elmX=index"
+	class="comment"
+	id="comment-id-{{cmnt.ID}}"
+	[@checkState]="cmnt.animations.flyinout"
+>
 
 	<div class="mdl-grid">
 		<figure [attr.thumbnailUrl]="cmnt.author.avatar" class="mdl-cell mdl-cell--2-col">

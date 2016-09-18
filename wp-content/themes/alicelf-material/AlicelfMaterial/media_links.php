@@ -27,6 +27,10 @@ function aa_func_20163119123146()
 	wp_enqueue_script('ngSystem', $nodesrc. "systemjs/dist/system.src.js", [], false, true);
 	wp_enqueue_script('systemConfig', $template_path. "/systemjs.config.js", [], false, true);
 
+	// Regular JS
+	// @TODO: convert to production with gulp watcher
+	wp_enqueue_script('AMscript', $template_path . "/script/dev/script.js", ['jquery'], false, true);
+
 }
 
 

@@ -12,15 +12,39 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 @Injectable()
 export class CommentService {
 
-	commentsAll: any;
+	commentsAll: any = [];
 
 	addComment( data ) {
+		data['animations'] = {
+			flyinout : 'inactive'
+		};
 		this.commentsAll.unshift( data );
+		setTimeout(()=>{
+			this.commentsAll[0].animations.flyinout = 'active';
+		}, 50);
 	}
 
 	constructor( private http: Http, private postService: PostService ) {
 		this.getComments()
-		    .subscribe( response => this.commentsAll = response );
+		    .subscribe( response => {
+			    if ( response.length > 0 ) {
+				    for ( var cm in response ) {
+					    let c = response[cm];
+					    c['animations'] = {};
+					    c.animations['flyinout'] = 'inactive';
+				    }
+
+				    this.commentsAll = response;
+
+				    let counter = this.commentsAll.length, e = 0;
+				    let i = setInterval(() => {
+					    this.commentsAll[e].animations.flyinout = 'active';
+					    counter--; e++;
+					    if(counter < 1) clearInterval(i);
+				    }, 100);
+
+			    }
+		    } );
 	}
 
 	getComments(): Observable<any> {

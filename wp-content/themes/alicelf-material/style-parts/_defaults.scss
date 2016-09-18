@@ -5,8 +5,25 @@
 .mdl-layout__container {
 	height : auto;
 	top    : 0;
+	&.height-full {
+		height : 100%;
+	}
 }
 
+#menu-primary-navigation {
+	height : 100%;
+	li {
+		display : flex;
+		height : 100%;
+		a {
+			line-height : 90px;
+		}
+	}
+}
+.menu-primary-navigation-container {
+	align-self: stretch;
+
+}
 
 .relative-container {
 	position : relative;
