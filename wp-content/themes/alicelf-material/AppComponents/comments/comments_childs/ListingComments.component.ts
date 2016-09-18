@@ -26,8 +26,7 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 				transform: 'scale(1)',
 				opacity : 1
 			})),
-			transition('inactive => active, active => inactive',
-				animate('200ms ease-out'))
+			transition('active <=> inactive',animate('200ms ease-out'))
 		])
 	]
 } )
