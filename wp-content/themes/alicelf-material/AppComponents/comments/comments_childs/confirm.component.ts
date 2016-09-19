@@ -49,7 +49,6 @@ export class ConfirmComponent implements OnInit {
 
 	confirmDeleteComment() {
 		this.CommentsObj.delAction( this.launchInfo );
-		this.CommentsObj.commentsAll[this.launchInfo.index].animations.flyinout = 'inactive';
 		this.launchInfo.showclass = false;
 		setTimeout( ()=> {
 			this.launchInfo.block = false;

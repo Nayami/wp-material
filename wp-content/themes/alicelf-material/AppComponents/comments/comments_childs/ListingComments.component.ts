@@ -16,17 +16,17 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 @Component( {
 	selector   : 'listingComments',
 	templateUrl: componentPath + 'views/listing_comments.html',
-	animations : [
-		trigger('checkState', [
-			state('inactive', style({
-				transform: 'scale(0.7)',
-				opacity : 0
-			})),
-			state('active',   style({
-				transform: 'scale(1)',
-				opacity : 1
-			})),
-			transition('active <=> inactive',animate('200ms ease-out'))
+	animations: [
+		trigger('flyInOut', [
+			state('in', style({transform: 'translateY(0)', opacity : 0})),
+
+			transition('void => *', [
+				style({transform: 'translateY(-40%)', opacity : 1}),
+				animate('300ms ease-in')
+			]),
+			transition('* => void', [
+				animate('300ms ease-out', style({transform: 'translateX(100%)', opacity : 0}))
+			])
 		])
 	]
 } )
@@ -35,10 +35,6 @@ export class ListingCommentsComponent {
 
 	@Output() launchConfirm = new EventEmitter();
 	userId: number = AMdefaults.currentUser;
-
-	toggleState(comment) {
-		comment.animations.flyinout = comment.animations.flyinout === 'active' ? 'inactive' : 'active';
-	}
 
 	editForm: FormGroup;
 

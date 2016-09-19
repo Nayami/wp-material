@@ -2,7 +2,7 @@
 	*ngFor="let cmnt of CommentsObj.commentsAll; let elmX=index"
 	class="comment"
 	id="comment-id-{{cmnt.ID}}"
-	[@checkState]="cmnt.animations.flyinout"
+	[@flyInOut]
 >
 
 	<div class="mdl-grid">
