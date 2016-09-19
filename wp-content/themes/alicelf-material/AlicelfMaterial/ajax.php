@@ -104,7 +104,11 @@ add_action( 'wp_ajax_nopriv_ajx20163917023918', 'ajx20163917023918' );
 add_action( 'wp_ajax_ajx20163917023918', 'ajx20163917023918' );
 function ajx20163917023918()
 {
-	$return_values = [ ];
+	$return_values = [
+		'ID'        => null,
+		'logged_in' => false
+	];
+
 	if ( is_user_logged_in() ) {
 		$user          = wp_get_current_user();
 		$return_values = [
@@ -120,11 +124,6 @@ function ajx20163917023918()
 			'logged_in'       => true
 		];
 
-	} else {
-		$return_values = [
-			'ID'        => null,
-			'logged_in' => false
-		];
 	}
 
 	echo json_encode( $return_values );

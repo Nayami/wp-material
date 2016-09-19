@@ -39,7 +39,12 @@ body {
 	}
 }
 
-
+.mdl-layout__drawer-button {
+	/*Desktop*/
+	@media (min-width : 1025px) {
+		display: none;
+	}
+}
 .mdl-layout__header-row {
 	height : auto;
 }

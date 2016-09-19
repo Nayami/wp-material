@@ -5,6 +5,12 @@ add_filter( 'widget_text', 'do_shortcode' );
 
 //add_theme_support( 'woocommerce' );
 
+add_filter( 'wp_revisions_to_keep', 'custom_revisions_number', 10, 2 );
+function custom_revisions_number( $num, $post )
+{
+	$num = 3;
+	return $num;
+}
 
 /**
  * ==================== Change Title Defaults ======================
@@ -24,4 +30,39 @@ function aa_func_20164019094058($title)
 	}
 
 	return $title;
+}
+
+add_action('admin_print_footer_scripts', 'aa_func_20164419044418');
+function aa_func_20164419044418()
+{
+	if ( wp_script_is( 'quicktags' ) ) {
+		?>
+		<script type="text/javascript">
+			QTags.addButton('ghostly_wrap', 'Wrap', '<div class="am-wrap">', '</div>', 'p', 'Wrap', 140);
+		</script>
+		<?php
+	}
+}
+
+/**
+ * ==================== Custom style ======================
+ * 19.09.2016
+ */
+add_action('wp_head', 'aa_func_20163901013945', 30);
+function aa_func_20163901013945()
+{
+	global $_am;
+	if(!empty($_am['opt-snippet-css']))
+		echo "<style>{$_am['opt-snippet-css']}</style>";
+}
+/**
+ * ==================== JS after body tag ======================
+ * 01.06.2016
+ */
+add_action( 'AM_afterbody_start', 'aa_func_20165314065329', 10 );
+function aa_func_20165314065329()
+{
+	global $_am;
+	if ( ! empty( $_am[ 'opt-snippet-js' ] ) )
+		echo "<script>{$_am['opt-snippet-js']}</script>";
 }
