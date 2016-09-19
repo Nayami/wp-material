@@ -1,9 +1,13 @@
 export interface CommentInterface {
-	post_id   : number;
-	comment_id : number;
-	author_id  : number;
-	author     : string;
-	body       : string;
-	replyTo    : number;
-	status     : string;
+	ID        : number;     // coment Id
+	author    : any;        // obj author (url, avatar name)
+	content   : string;     // text
+	date      : any;
+	date_gmt? : any;
+	date_tz?  : any;        // utc etc.
+	meta?     : any;
+	parent    : number;     // reply to
+	post      : number;     // post id
+	status    : string;     // approoved?
+	type      : string;     // commment
 }

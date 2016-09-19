@@ -16,18 +16,18 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
 @Component( {
 	selector   : 'listingComments',
 	templateUrl: componentPath + 'views/listing_comments.html',
-	animations: [
-		trigger('flyInOut', [
-			state('in', style({transform: 'translateY(0)', opacity : 0})),
+	animations : [
+		trigger( 'flyInOut', [
+			state( 'in', style( { transform: 'translateY(0)', opacity: 0 } ) ),
 
-			transition('void => *', [
-				style({transform: 'translateY(-40%)', opacity : 1}),
-				animate('300ms ease-in')
-			]),
-			transition('* => void', [
-				animate('300ms ease-out', style({transform: 'translateX(100%)', opacity : 0}))
-			])
-		])
+			transition( 'void => *', [
+				style( { transform: 'translateY(-40%)', opacity: 1 } ),
+				animate( '300ms ease-in' )
+			] ),
+			transition( '* => void', [
+				animate( '300ms ease-out', style( { transform: 'translateX(100%)', opacity: 0 } ) )
+			] )
+		] )
 	]
 } )
 
@@ -48,8 +48,9 @@ export class ListingCommentsComponent {
 		this.editForm = formBuild.group( {} );
 	}
 
+	// @TODO: Create Reply action
 	replyAction( comment, index ) {
-		console.log( comment, index );
+		//console.log( comment, index );
 	}
 
 	/**

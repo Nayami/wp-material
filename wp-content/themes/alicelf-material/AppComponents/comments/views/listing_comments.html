@@ -47,7 +47,8 @@
 			<!--Review Actions-->
 			<footer class="mdl-grid">
 				<div class="mdl-cell mdl-cell--2-col">
-					<button  *ngIf="cmnt.author.ID != userId" (click)="replyAction(cmnt, elmX)" class="mdl-button mdl-js-button mdl-button--icon">
+					<!--Unlock Reply action-->
+					<button  *ngIf="cmnt.author.ID != userId" (click)="replyAction(cmnt, elmX)" class="mdl-button mdl-js-button mdl-button--icon hidden">
 						<i class="material-icons">reply</i>
 					</button>
 				</div>

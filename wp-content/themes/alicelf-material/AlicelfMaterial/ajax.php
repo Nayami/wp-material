@@ -58,7 +58,7 @@ function ajx20165916125929()
 
 	$comment = get_comment( $commentID );
 
-	if ( ((int) $comment->user_id === $current_user) && is_user_logged_in() ) {
+	if ( ( (int) $comment->user_id === $current_user ) && is_user_logged_in() ) {
 		wp_delete_comment( $commentID );
 		$data[ 'status' ] = 'success';
 	}
@@ -77,11 +77,14 @@ function ajx20161116071151()
 {
 	$data             = $_REQUEST;
 	$data[ 'status' ] = null;
-	$commentID        = $data[ 'ID' ];
-	$comment          = get_comment( $commentID );
-	$current_user     = get_current_user_id();
+	$data[ 'author' ] = json_decode( stripslashes( $data[ 'author' ] ) );
+	$data[ 'meta' ]   = json_decode( stripslashes( $data[ 'meta' ] ) );
 
-	if ( ((int) $comment->user_id === $current_user) && is_user_logged_in() ) {
+	$commentID    = $data[ 'ID' ];
+	$comment      = get_comment( $commentID );
+	$current_user = get_current_user_id();
+
+	if ( ( (int) $comment->user_id === $current_user ) && is_user_logged_in() ) {
 		wp_update_comment( [
 			"comment_ID"      => $commentID,
 			'comment_content' => wp_strip_all_tags( $data[ 'content' ] ),
