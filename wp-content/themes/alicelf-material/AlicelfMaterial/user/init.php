@@ -6,7 +6,7 @@
 if ( ! function_exists( 'am_profile_slug' ) ) {
 	function am_profile_slug()
 	{
-		return "~user~";
+		return "user";
 	}
 }
 

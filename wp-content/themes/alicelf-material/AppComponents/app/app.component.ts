@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
 	selector: 'AMcontent',
-	template: `<div>{{title}}</div>`
+	template: ``
 })
 
-export class AppComponent {
-	title = 'ROOT ';
-}
+export class AppComponent {}

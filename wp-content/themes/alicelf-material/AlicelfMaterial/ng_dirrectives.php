@@ -18,6 +18,7 @@ function aa_func_20163526113508()
 			currentUser : "<?php echo get_current_user_id(); ?>"
 		};
 	</script>
+	<base href="<?php echo get_site_url() ?>">
 	<?php
 }
 
@@ -31,14 +32,9 @@ function aa_func_20162526072510()
 		 * 29.08.2016
 		 */
 		var activeModules = [
-			{
-				name    : 'app',
-				selector: 'AMcontent'
-			},
-			{
-				name    : 'comments',
-				selector: 'AMreviewShell'
-			}
+			{ name    : 'app', selector: 'AMcontent' },
+			{ name    : 'comments', selector: 'AMreviewShell' },
+			{ name    : 'user', selector: 'user-profile-component' }
 		];
 
 		for (var mdlcnt = activeModules.length; mdlcnt--;) {
@@ -80,7 +76,7 @@ function aa_func_20161226031250()
 {
 	?>
 	<div class="am-wrap">
-		<AMcontent>Loading...</AMcontent>
+		<AMcontent></AMcontent>
 	</div>
 	<?php
 }
