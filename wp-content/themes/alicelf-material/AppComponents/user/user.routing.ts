@@ -6,11 +6,12 @@ import { NotFoundComponent} from "./user_components/notfound.component";
 import { ProfileComponent } from "./user_components/profile.component";
 
 const appRoutes: Routes = [
-	{ path: 'user', component: ProfileComponent },
-	{ path: 'user/:user?/:param?', component: ProfileComponent },
+	{ path: '', component: ProfileComponent },
+	{ path: 'screen/:param?', component: ProfileComponent },
 
 	{ path: '**', component: NotFoundComponent }
 ];
+
 
 export const appRoutingProviders: any[] = [];
 

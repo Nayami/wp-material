@@ -8,18 +8,30 @@
 add_action( 'wp_head', 'aa_func_20163526113508', 10 );
 function aa_func_20163526113508()
 {
+	$site_url = get_site_url();
 	?>
 	<script>
 		var AMdefaults = {
-			baseurl  : "<?php echo get_site_url() ?>",
+			baseurl  : "<?php echo $site_url ?>",
 			themeurl : "<?php echo get_template_directory_uri() ?>",
 			themepath: "<?php echo get_template_directory() ?>",
 			ajaxurl  : "<?php echo admin_url( 'admin-ajax.php' ) ?>",
 			currentUser : "<?php echo get_current_user_id(); ?>"
 		};
 	</script>
-	<base href="<?php echo get_site_url() ?>">
+	<base href="<?php echo apply_filters('AMbaseHref', $site_url) ?>">
 	<?php
+}
+/**
+ * ==================== Change Base Href for user endpoint ======================
+ * 22.09.2016
+ */
+add_filter('AMbaseHref', 'aa_func_20165122045113', 10, 1);
+function aa_func_20165122045113($site_url)
+{
+	if(is_amuserpage())
+		$site_url = $site_url.'/'.am_profile_slug();
+	return $site_url;
 }
 
 add_action( 'wp_footer', 'aa_func_20162526072510', 20 );

@@ -6,9 +6,11 @@
 if ( ! function_exists( 'am_profile_slug' ) ) {
 	function am_profile_slug()
 	{
-		return "user";
+		global $_am;
+		return $_am['users-page-slug'];
 	}
 }
+
 
 add_action('wp_loaded', 'aa_func_20162801112818');
 function aa_func_20162801112818()

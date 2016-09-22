@@ -135,11 +135,9 @@ $section = array(
 			'default'    => '1'
 		),
 
-
 	)
 );
 Redux::setSection( $opt_name, $section );
-
 
 $section = [
 	'title'  => 'Styling',
@@ -150,16 +148,16 @@ $section = [
 		[
 			'id'       => 'opt-color',
 			'type'     => 'color',
-			'title'    => __('Body Background Color', 'alicelf-adaptive'),
-			'subtitle' => __('Pick a background color (default: #fff).', 'alicelf-adaptive'),
+			'title'    => __( 'Body Background Color', 'alicelf-adaptive' ),
+			'subtitle' => __( 'Pick a background color (default: #fff).', 'alicelf-adaptive' ),
 			'default'  => '#FFFFFF',
 			'validate' => 'color',
 		],
 		[
 			'id'       => 'opt-link-color',
 			'type'     => 'color',
-			'title'    => __('Link text Color', 'alicelf-adaptive'),
-			'subtitle' => __('Pick a link color (default: #000).', 'alicelf-adaptive'),
+			'title'    => __( 'Link text Color', 'alicelf-adaptive' ),
+			'subtitle' => __( 'Pick a link color (default: #000).', 'alicelf-adaptive' ),
 			'default'  => '#000000',
 			'validate' => 'color',
 		]
@@ -446,18 +444,18 @@ $section = array(
 			'default' => 'http://localhost/redux'
 		],
 		[
-			'id'      => 'instagram-shortcode',
-			'type'    => 'text',
-			'title'   => __( 'Insta Shortcode', 'alicelf-adaptive' ),
+			'id'          => 'instagram-shortcode',
+			'type'        => 'text',
+			'title'       => __( 'Insta Shortcode', 'alicelf-adaptive' ),
 			'description' => 'Footer shortcode by "Instagram Feed" plugin',
-			'default' => '[instagram-feed num=15 showfollow=false showheader=false showbutton=false]'
+			'default'     => '[instagram-feed num=15 showfollow=false showheader=false showbutton=false]'
 		],
 		[
-			'id'      => 'instagram-shortcode-mobile',
-			'type'    => 'text',
-			'title'   => __( 'Insta Shortcode mobile', 'alicelf-adaptive' ),
+			'id'          => 'instagram-shortcode-mobile',
+			'type'        => 'text',
+			'title'       => __( 'Insta Shortcode mobile', 'alicelf-adaptive' ),
 			'description' => 'Footer shortcode by "Instagram Feed" plugin',
-			'default' => '[instagram-feed num=8 showfollow=false showheader=false showbutton=false]'
+			'default'     => '[instagram-feed num=8 showfollow=false showheader=false showbutton=false]'
 		]
 	)
 );
@@ -535,14 +533,37 @@ $section = array(
 Redux::setSection( $opt_name, $section );
 
 /**
+ * ==================== Users Section ======================
+ * 22.09.2016
+ */
+$section = [
+	'title'  => 'Users Section',
+	'id'     => 'users-section',
+	'desc'   => '',
+	'icon'   => 'el el-group',
+	'fields' => [
+		[
+			'id'       => 'users-page-slug',
+			'type'     => 'text',
+			'title'    => __( 'Users page slug', 'alicelf-adaptive' ),
+			'subtitle' => __( 'Users page slug', 'alicelf-adaptive' ),
+			'desc'     => __( 'Don\'t forget to resave your permalinks.', 'alicelf-adaptive' ),
+			'default'  => 'user',
+			'validate' => 'not_empty',
+			'msg'      => 'Users endpoind slug cannot be blank'
+		]
+	]
+];
+Redux::setSection( $opt_name, $section );
+
+/**
  * Company info data section
  */
-
 $section = array(
 	'title'  => 'Company Info',
 	'id'     => 'company-info',
 	'desc'   => '',
-	'icon'   => 'el el-group',
+	'icon'   => 'el el-briefcase',
 	'fields' => array(
 		array(
 			'id'       => 'opt-company-email',

@@ -1,10 +1,5 @@
 @import "grid";
 @import "style_partials/varmix";
-@import "style_partials/loader";
-
-#plugin-admin-container {
-
-}
 
 /*Desktop*/
 @media (min-width : 952px) {
@@ -13,6 +8,7 @@
 		margin-right : 15px;
 	}
 }
+
 
 .aa-pluginsloader-holder {
 	position : relative;

@@ -129,3 +129,26 @@ function ajx20163917023918()
 	echo json_encode( $return_values );
 	die;
 }
+
+/**
+ * Convert tables to utf8 encoding
+ */
+add_action( 'wp_ajax_aa_func_20150827030852', 'aa_func_20150827030852' );
+function aa_func_20150827030852()
+{
+	if ( isset( $_POST[ 'do_the_conversion' ] ) ) {
+		global $wpdb;
+		$set_encoding = $_POST['set_encoding'];
+		$tables   = $wpdb->get_results( "SHOW TABLES" );
+		$method   = "Tables_in_" . $wpdb->dbname;
+		$messages = "<div class='updated notice notice-success'><br>";
+		foreach ( $tables as $table ) {
+			$wpdb->query( "ALTER TABLE {$table->$method} DEFAULT CHARACTER SET utf8 COLLATE {$set_encoding};" );
+			$wpdb->query( "ALTER TABLE {$table->$method} CONVERT TO CHARACTER SET utf8 COLLATE {$set_encoding};" );
+			$messages .= "Table " . $table->$method . " has been converted to {$set_encoding}<br>";
+		}
+		$messages .= "<hr>Conversion complete. <br><br></div>";
+		echo $messages;
+		die;
+	}
+}

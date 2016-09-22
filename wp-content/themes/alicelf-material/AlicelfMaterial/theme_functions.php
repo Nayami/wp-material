@@ -30,7 +30,6 @@ if ( ! function_exists( 'material_logo' ) ) {
 	}
 }
 
-
 if ( ! function_exists( 'am_header_class' ) ) {
 	function am_header_class()
 	{
@@ -38,5 +37,16 @@ if ( ! function_exists( 'am_header_class' ) ) {
 
 		return $_am[ 'sticky-header' ] ? 'am-sticky-header' : 'non-sticky-header';
 
+	}
+}
+
+// ============= Is_amuserpage =============
+if ( ! function_exists( 'is_amuserpage' ) ) {
+	function is_amuserpage()
+	{
+		global $wp_query;
+		$isuser = $wp_query->query_vars[ am_profile_slug() ];
+
+		return isset( $isuser );
 	}
 }
