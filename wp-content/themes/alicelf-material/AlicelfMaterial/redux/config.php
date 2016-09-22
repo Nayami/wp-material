@@ -551,6 +551,16 @@ $section = [
 			'default'  => 'user',
 			'validate' => 'not_empty',
 			'msg'      => 'Users endpoind slug cannot be blank'
+		],
+		[
+			'id'       => 'users-page-title',
+			'type'     => 'text',
+			'title'    => __( 'Users page title', 'alicelf-adaptive' ),
+			'subtitle' => __( 'Users page title', 'alicelf-adaptive' ),
+			'desc'     => __( 'Set title for your network', 'alicelf-adaptive' ),
+			'default'  => 'My Network',
+			'validate' => 'not_empty',
+			'msg'      => 'The title cannot be blank'
 		]
 	]
 ];

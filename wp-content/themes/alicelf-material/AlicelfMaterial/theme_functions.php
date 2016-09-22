@@ -57,3 +57,13 @@ function aa_func_20161722091746($body_classes)
 		$body_classes .= " am-user-page";
 	return $body_classes;
 }
+add_filter('wp_title', 'aa_func_20163122093122', 11, 1);
+function aa_func_20163122093122($title)
+{
+	if(is_amuserpage()) {
+		global $_am;
+		$title = $title = $_am['users-page-title']." | " . get_bloginfo( 'name' );
+	}
+
+	return $title;
+}
