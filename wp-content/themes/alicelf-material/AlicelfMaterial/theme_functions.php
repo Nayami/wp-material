@@ -30,13 +30,13 @@ if ( ! function_exists( 'material_logo' ) ) {
 	}
 }
 
-if ( ! function_exists( 'am_header_class' ) ) {
-	function am_header_class()
+if ( ! function_exists( 'am_body_classes' ) ) {
+	function am_body_classes()
 	{
 		global $_am;
+		$body_class = $_am[ 'sticky-header' ] ? 'am-sticky-header' : 'non-sticky-header';
 
-		return $_am[ 'sticky-header' ] ? 'am-sticky-header' : 'non-sticky-header';
-
+		return apply_filters('AM_body_classes', $body_class);
 	}
 }
 
@@ -49,4 +49,11 @@ if ( ! function_exists( 'is_amuserpage' ) ) {
 
 		return isset( $isuser );
 	}
+}
+add_filter('AM_body_classes', 'aa_func_20161722091746', 10, 1);
+function aa_func_20161722091746($body_classes)
+{
+	if(is_amuserpage())
+		$body_classes .= " am-user-page";
+	return $body_classes;
 }

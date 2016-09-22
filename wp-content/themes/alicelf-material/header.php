@@ -1,5 +1,5 @@
 <!doctype html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> style="margin-top: 0 !Important;">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>"/>
 	<meta name="description" content="<?php bloginfo( 'description' ); ?>"/>
@@ -8,7 +8,7 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>"/>
 	<?php wp_head(); ?>
 </head>
-<body <?php body_class( am_header_class() ) ?>>
+<body <?php body_class( am_body_classes() ) ?>>
 
 <?php do_action( 'AM_afterbody_start' ) ?>
 

@@ -1,0 +1,13 @@
+body {
+	&.am-user-page {
+		&:before {
+			content         : "";
+			display         : block;
+			position        : fixed;
+			background      : url("img/aa-blur.jpg") center center no-repeat;
+			background-size : cover;
+			width           : 100%;
+			height          : 100%;
+		}
+	}
+}
