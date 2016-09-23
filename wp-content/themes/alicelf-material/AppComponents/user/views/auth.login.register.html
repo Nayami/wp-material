@@ -1,0 +1,62 @@
+<div class="am-wrap">
+	<div *ngIf="renderAuthLayout" [@renderAuthTrigger]>
+		<h1 class="text-center">Auth Component.</h1>
+		<div id="auth-forms" class="content-grid mdl-grid">
+
+			<form [formGroup]="loginFormHandler" (ngSubmit)="doLogin()" class="mdl-cell mdl-cell--6-col">
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--12-col">
+						<h3>Login</h3>
+					</div>
+				</div>
+				<div class="mdl-grid">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+						<input class="mdl-textfield__input" type="text" id="fnamelg" formControlName="fname">
+						<label class="mdl-textfield__label" for="fnamelg">Login</label>
+					</div>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+						<input class="mdl-textfield__input" type="password" id="u-pass" formControlName="passw">
+						<label class="mdl-textfield__label" for="u-pass">Password</label>
+					</div>
+				</div>
+
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--12-col">
+						<a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="#">Forgot Password?</a>
+						<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--orange-900 mdl-color-text--red-50">Login</button>
+					</div>
+				</div>
+			</form>
+
+			<form [formGroup]="registerFormHandler" (ngSubmit)="doRegister()" class="mdl-cell mdl-cell--6-col">
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--12-col">
+						<h3>Register</h3>
+					</div>
+				</div>
+				<div class="mdl-grid">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+						<input class="mdl-textfield__input" type="text" id="user-register" formControlName="login">
+						<label class="mdl-textfield__label" for="user-register">Login</label>
+					</div>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+						<input class="mdl-textfield__input" type="password" id="user-register-pass" formControlName="passw">
+						<label class="mdl-textfield__label" for="user-register-pass">Password</label>
+					</div>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+						<input class="mdl-textfield__input" type="password" id="user-register-confirm" formControlName="confirm">
+						<label class="mdl-textfield__label" for="user-register-confirm">Password Confirmation</label>
+					</div>
+				</div>
+
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--12-col mdl-typography--text-right">
+						<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--orange-900 mdl-color-text--red-50">Register</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+
+	</div>
+</div>

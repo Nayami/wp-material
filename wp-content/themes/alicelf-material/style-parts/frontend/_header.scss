@@ -29,11 +29,17 @@ body {
 			.mdl-layout__container {
 				top : 31px;
 			}
+			.mdl-layout__drawer {
+				padding-top : 50px;
+			}
 		}
 		/*Tablet*/
 		@media (max-width : 782px) {
 			.mdl-layout__container {
 				top : 45px;
+			}
+			.mdl-layout__drawer {
+				padding-top : 60px;
 			}
 		}
 	}
@@ -53,7 +59,7 @@ body {
  * 20.08.2016
  */
 .mdl-layout__drawer {
-	padding-top : 60px;
+	padding-top : 40px;
 	position : fixed;
 	.mdl-layout-title {
 		padding-left  : 15px;
@@ -76,10 +82,10 @@ body {
 	li {
 		list-style : none;
 		&.current-menu-item {
-			background-color : $color-orange;
+			background-color : $brandColor;
 		}
 		&:hover {
-			background-color : transparentize($color-orange, .4);
+			background-color : transparentize($brandColor, .4);
 		}
 
 	}
@@ -94,7 +100,7 @@ body {
 		&.current-menu-item {
 			background-color : transparent;
 			a {
-				color : $color-orange;
+				color : $brandColor;
 			}
 		}
 		&:hover {

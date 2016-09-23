@@ -36,7 +36,7 @@ if ( ! function_exists( 'am_body_classes' ) ) {
 		global $_am;
 		$body_class = $_am[ 'sticky-header' ] ? 'am-sticky-header' : 'non-sticky-header';
 
-		return apply_filters('AM_body_classes', $body_class);
+		return apply_filters( 'AM_body_classes', $body_class );
 	}
 }
 
@@ -50,20 +50,31 @@ if ( ! function_exists( 'is_amuserpage' ) ) {
 		return isset( $isuser );
 	}
 }
-add_filter('AM_body_classes', 'aa_func_20161722091746', 10, 1);
-function aa_func_20161722091746($body_classes)
+add_filter( 'AM_body_classes', 'aa_func_20161722091746', 10, 1 );
+function aa_func_20161722091746( $body_classes )
 {
-	if(is_amuserpage())
+	if ( is_amuserpage() )
 		$body_classes .= " am-user-page";
+
 	return $body_classes;
 }
-add_filter('wp_title', 'aa_func_20163122093122', 11, 1);
-function aa_func_20163122093122($title)
+
+add_filter( 'wp_title', 'aa_func_20163122093122', 11, 1 );
+function aa_func_20163122093122( $title )
 {
-	if(is_amuserpage()) {
+	if ( is_amuserpage() ) {
 		global $_am;
-		$title = $title = $_am['users-page-title']." | " . get_bloginfo( 'name' );
+		$title = $title = $_am[ 'users-page-title' ] . " | " . get_bloginfo( 'name' );
 	}
 
 	return $title;
+}
+
+
+// ============= Get_am_network_endpoint =============
+if ( ! function_exists( 'get_am_network_endpoint' ) ) {
+	function get_am_network_endpoint()
+	{
+		return get_site_url().'/'.am_profile_slug();
+	}
 }

@@ -2,8 +2,11 @@
 
 add_theme_support( 'post-thumbnails' );
 add_filter( 'widget_text', 'do_shortcode' );
-
 //add_theme_support( 'woocommerce' );
+
+if ( ! current_user_can( 'manage_options' ) ) {
+	show_admin_bar( false );
+}
 
 add_filter( 'wp_revisions_to_keep', 'custom_revisions_number', 10, 2 );
 function custom_revisions_number( $num, $post )

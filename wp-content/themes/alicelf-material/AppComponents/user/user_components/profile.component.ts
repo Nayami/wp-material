@@ -1,22 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../services/user.service";
+import { UserService } from "../services/user.service";
+import { Router } from "@angular/router";
+
+declare var AMdefaults: any;
+var componentPath = AMdefaults.themeurl + '/AppComponents/user/views/';
 
 @Component( {
-	template : `
-		<div class="am-wrap">
-			<br>
-			<h1 class="text-center">Profile Component</h1>
-			<hr>
-		</div>
-	`
+	templateUrl: componentPath + 'profile.html'
 } )
+
 export class ProfileComponent implements OnInit {
 
+	constructor( private router: Router, private userService: UserService ) {
+		if ( ! userService.currentUser.loaded ) {
+			userService.getCurrentUser()
+			           .subscribe( user => {
+				           user.loaded = true;
+				           userService.currentUser = user;
 
-	constructor(private userService: UserService) {
+				           if ( !userService.currentUser.ID )
+					           router.navigate( ['screen/auth'] )
+			           } );
+		}
 	}
 
 	ngOnInit() {
-
 	}
+
+
 }

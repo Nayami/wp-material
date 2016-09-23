@@ -1,5 +1,18 @@
 <?php
 /**
+ * ==================== Change Base Href for user endpoint ======================
+ * 22.09.2016
+ */
+add_filter( 'AMbaseHref', 'aa_func_20165122045113', 10, 1 );
+function aa_func_20165122045113( $site_url )
+{
+	if ( is_amuserpage() )
+		$site_url = get_am_network_endpoint();
+
+	return $site_url;
+}
+
+/**
  * ==================== Defaults ======================
  * 26.08.2016
  * npm run tsc
@@ -12,26 +25,16 @@ function aa_func_20163526113508()
 	?>
 	<script>
 		var AMdefaults = {
-			baseurl  : "<?php echo $site_url ?>",
-			themeurl : "<?php echo get_template_directory_uri() ?>",
-			themepath: "<?php echo get_template_directory() ?>",
-			ajaxurl  : "<?php echo admin_url( 'admin-ajax.php' ) ?>",
-			currentUser : "<?php echo get_current_user_id(); ?>"
+			baseurl        : "<?php echo $site_url ?>",
+			themeurl       : "<?php echo get_template_directory_uri() ?>",
+			themepath      : "<?php echo get_template_directory() ?>",
+			ajaxurl        : "<?php echo admin_url( 'admin-ajax.php' ) ?>",
+			currentUser    : "<?php echo get_current_user_id(); ?>",
+			networkEndpoint: "<?php echo get_am_network_endpoint() ?>"
 		};
 	</script>
-	<base href="<?php echo apply_filters('AMbaseHref', $site_url) ?>">
+	<base href="<?php echo apply_filters( 'AMbaseHref', $site_url ) ?>">
 	<?php
-}
-/**
- * ==================== Change Base Href for user endpoint ======================
- * 22.09.2016
- */
-add_filter('AMbaseHref', 'aa_func_20165122045113', 10, 1);
-function aa_func_20165122045113($site_url)
-{
-	if(is_amuserpage())
-		$site_url = $site_url.'/'.am_profile_slug();
-	return $site_url;
 }
 
 add_action( 'wp_footer', 'aa_func_20162526072510', 20 );
@@ -44,9 +47,9 @@ function aa_func_20162526072510()
 		 * 29.08.2016
 		 */
 		var activeModules = [
-			{ name    : 'app', selector: 'AMcontent' },
-			{ name    : 'comments', selector: 'AMreviewShell' },
-			{ name    : 'user', selector: 'user-profile-component' }
+			{name     : 'app', selector: 'AMcontent' },
+			{name     : 'comments', selector: 'AMreviewShell' },
+			{name     : 'user', selector: 'user-profile-component' }
 		];
 
 		for (var mdlcnt = activeModules.length; mdlcnt--;) {
@@ -66,12 +69,12 @@ function aa_func_20162526072510()
 			}
 		}, 200);
 
-		var observer = new MutationObserver(function () {
+		var observer = new MutationObserver(function() {
 			mdlUpgradeDom = true;
 		});
 		observer.observe(document.body, {
 			childList: true,
-			subtree: true
+			subtree  : true
 		});
 		/* support <= IE 10
 		 angular.element(document).bind('DOMNodeInserted', function(e) {
@@ -80,15 +83,5 @@ function aa_func_20162526072510()
 		 */
 
 	</script>
-	<?php
-}
-
-//add_action( 'AM_content', 'aa_func_20161226031250' );
-function aa_func_20161226031250()
-{
-	?>
-	<div class="am-wrap">
-		<AMcontent></AMcontent>
-	</div>
 	<?php
 }

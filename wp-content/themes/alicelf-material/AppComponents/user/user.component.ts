@@ -1,8 +1,4 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
-import { UserService } from './services/user.service';
-
-declare var AMdefaults: any;
-var componentPath = AMdefaults.themeurl + '/AppComponents/user/';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component( {
 	selector: 'user-profile-component',
@@ -10,9 +6,7 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/user/';
 } )
 export class UserComponent implements OnInit {
 
-	constructor( private  elm: ElementRef, private  userService: UserService ) {
-		//userService.someprop = elm.nativeElement.getAttribute( 'dataBasehrefprop' );
-	}
+	constructor( private  elm: ElementRef ) {}
 
 	ngOnInit() {
 

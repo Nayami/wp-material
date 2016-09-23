@@ -1,0 +1,6 @@
+<div class="am-wrap">
+	<div *ngIf="userService.currentUser.ID">
+		<h1 class="text-center">Profile Component.</h1>
+		{{userService.currentUser | json}}
+	</div>
+</div>
