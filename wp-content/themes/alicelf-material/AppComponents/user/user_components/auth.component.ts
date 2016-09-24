@@ -82,7 +82,6 @@ export class AMAuthComponent implements OnDestroy {
 						case 'notfound' :
 							console.log( data );
 							break;
-
 						case 'notmatch' :
 							console.log( data );
 							break;
