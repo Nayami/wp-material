@@ -3,7 +3,7 @@ import { UserService } from "../services/user.service";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
-import {AuthService} from "../services/auth.service";
+import { AuthService } from "../services/auth.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/user/views/';
@@ -28,9 +28,10 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/user/views/';
 export class AMAuthComponent implements OnDestroy {
 
 	private userSubscription: Subscription;
-
 	private loginFormHandler: FormGroup;
 	private registerFormHandler: FormGroup;
+
+	spinner : boolean = false;
 
 	constructor( private router: Router,
 	             private userService: UserService,
@@ -68,7 +69,27 @@ export class AMAuthComponent implements OnDestroy {
 	 */
 	doLogin() {
 		if ( this.loginFormHandler.status === "VALID" ) {
-
+			this.spinner = true;
+			this.userSubscription = this.auth.authorizeMe(this.loginFormHandler.value)
+				.subscribe( data => {
+					switch (data.message) {
+						case 'success' :
+							this.userService.currentUser = data.user;
+							this.auth.loaded = true;
+							this.auth.authorized = true;
+							this.router.navigate( [''] );
+							break;
+						case 'notfound' :
+							console.log( data );
+							break;
+						case 'notmatch' :
+							console.log( data );
+							break;
+						default:
+							console.log( 'something wrong' );
+					}
+					this.spinner = false;
+				});
 		}
 	}
 

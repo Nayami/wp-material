@@ -7,12 +7,12 @@ import { UserService } from "./services/user.service";
 import { UserComponent } from './user.component';
 import { routing, appRoutingProviders } from './user.routing';
 import { NotFoundComponent } from "./user_components/notfound.component";
-import { ProfileComponent } from "./user_components/profile.component";
+import { NetworkComponent } from "./user_components/network.component";
 import { AMAuthComponent } from "./user_components/auth.component";
-import {AuthService} from "./services/auth.service";
+import { AuthService } from "./services/auth.service";
 
 @NgModule( {
-	imports: [
+	imports     : [
 		BrowserModule,
 		HttpModule,
 		ReactiveFormsModule,
@@ -22,11 +22,11 @@ import {AuthService} from "./services/auth.service";
 	declarations: [
 		UserComponent,
 		NotFoundComponent,
-		ProfileComponent,
+		NetworkComponent,
 		AMAuthComponent
 	],
-	bootstrap: [ UserComponent ],
-	providers: [
+	bootstrap   : [UserComponent],
+	providers   : [
 		AuthService,
 		UserService,
 		appRoutingProviders

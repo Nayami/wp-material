@@ -44,3 +44,9 @@ body {
 .content-grid {
 	@extend .default-container;
 }
+
+.login-spinner-handler {
+	position : absolute;
+	right : 0;
+	top : -25px;
+}

@@ -6,6 +6,34 @@ if ( ! function_exists( 'AMapiurl' ) ) {
 		return get_site_url() . '/wp-json/';
 	}
 }
+/**
+ * Convert tables to utf8 encoding
+ */
+add_action( 'wp_ajax_aa_func_20150827030852', 'aa_func_20150827030852' );
+function aa_func_20150827030852()
+{
+	if ( isset( $_POST[ 'do_the_conversion' ] ) ) {
+		global $wpdb;
+		$set_encoding = $_POST['set_encoding'];
+		$tables   = $wpdb->get_results( "SHOW TABLES" );
+		$method   = "Tables_in_" . $wpdb->dbname;
+		$messages = "<div class='updated notice notice-success'><br>";
+		foreach ( $tables as $table ) {
+			$wpdb->query( "ALTER TABLE {$table->$method} DEFAULT CHARACTER SET utf8 COLLATE {$set_encoding};" );
+			$wpdb->query( "ALTER TABLE {$table->$method} CONVERT TO CHARACTER SET utf8 COLLATE {$set_encoding};" );
+			$messages .= "Table " . $table->$method . " has been converted to {$set_encoding}<br>";
+		}
+		$messages .= "<hr>Conversion complete. <br><br></div>";
+		echo $messages;
+		die;
+	}
+}
+
+/**
+ * ====================================================
+ * ==================== COMMENTS ======================
+ * ====================================================
+ */
 
 /**
  * ==================== Create Comment ======================
@@ -97,8 +125,9 @@ function ajx20161116071151()
 }
 
 /**
+ * ================================================
  * ==================== USER ======================
- * 17.09.2016
+ * ================================================
  */
 add_action( 'wp_ajax_nopriv_ajx20163917023918', 'ajx20163917023918' );
 add_action( 'wp_ajax_ajx20163917023918', 'ajx20163917023918' );
@@ -130,25 +159,51 @@ function ajx20163917023918()
 	die;
 }
 
+
 /**
- * Convert tables to utf8 encoding
+ * ==================== AUTH ======================
+ * 24.09.2016
  */
-add_action( 'wp_ajax_aa_func_20150827030852', 'aa_func_20150827030852' );
-function aa_func_20150827030852()
+add_action('wp_ajax_nopriv_ajx20162924062955', 'ajx20162924062955');
+add_action('wp_ajax_ajx20162924062955', 'ajx20162924062955');
+function ajx20162924062955()
 {
-	if ( isset( $_POST[ 'do_the_conversion' ] ) ) {
-		global $wpdb;
-		$set_encoding = $_POST['set_encoding'];
-		$tables   = $wpdb->get_results( "SHOW TABLES" );
-		$method   = "Tables_in_" . $wpdb->dbname;
-		$messages = "<div class='updated notice notice-success'><br>";
-		foreach ( $tables as $table ) {
-			$wpdb->query( "ALTER TABLE {$table->$method} DEFAULT CHARACTER SET utf8 COLLATE {$set_encoding};" );
-			$wpdb->query( "ALTER TABLE {$table->$method} CONVERT TO CHARACTER SET utf8 COLLATE {$set_encoding};" );
-			$messages .= "Table " . $table->$method . " has been converted to {$set_encoding}<br>";
-		}
-		$messages .= "<hr>Conversion complete. <br><br></div>";
-		echo $messages;
+	$data = str_replace('\\','', $_POST['body_data']);
+	$decoded_data = json_decode($data);
+	$login = $decoded_data->fname;
+	$response = [
+		'message'=> null
+	];
+	$user = get_user_by( 'login', $login );
+
+	if ( ! $user ) {
+		$response[ 'message' ] = 'notfound';
+		echo json_encode( $response );
 		die;
 	}
+	if ( $user && wp_check_password( $decoded_data->passw, $user->data->user_pass, $user->ID ) ) {
+		wp_set_auth_cookie($user->ID);
+
+		$filtered_user = [
+			'ID'              => $user->ID,
+			'display_name'    => $user->data->display_name,
+			'user_email'      => $user->data->user_email,
+			'user_login'      => $user->data->user_login,
+			'user_nicename'   => $user->data->user_nicename,
+			'user_registered' => $user->data->user_registered,
+			'user_url'        => $user->data->user_url,
+			'roles'           => $user->roles,
+			'administrator'   => $user->allcaps[ 'administrator' ],
+			'logged_in'       => true
+		];
+		$response[ 'user' ] = $filtered_user;
+		$response[ 'message' ] = 'success';
+		echo json_encode( $response );
+		die;
+	} else {
+		$response[ 'message' ] = 'notmatch';
+		echo json_encode( $response );
+		die;
+	}
+
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-import {AuthService} from "./auth.service";
+import 'rxjs/Rx';
+import { AuthService } from "./auth.service";
 
 declare var AMdefaults: any;
 
@@ -17,7 +17,7 @@ export class UserService {
 	getCurrentUser(): Observable<any> {
 		let queryUrl = AMdefaults.ajaxurl + "?action=ajx20163917023918";
 		return this.http.get( queryUrl )
-		           .map( response => response.json() );
+		           .map( (response: Response ) => response.json() );
 	}
 
 

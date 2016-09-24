@@ -1,6 +1,9 @@
 <div class="am-wrap">
-	<div *ngIf="auth.authorized">
+	<div *ngIf="auth.authorized" [@renderAuthTrigger]>
+
 		<h1 class="text-center">Profile Component.</h1>
-		{{userService.currentUser | json}}
+		<div class="content-grid">
+			{{userService.currentUser | json}}
+		</div>
 	</div>
 </div>

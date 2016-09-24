@@ -1,8 +1,10 @@
 <div class="am-wrap">
 	<div *ngIf="!auth.authorized" [@renderAuthTrigger]>
-		<h1 class="text-center">Auth Component</h1>
+		<h1 class="text-center">Auth Components</h1>
+		<div class="relative-container mdl-grid">
+			<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
+		</div>
 		<div id="auth-forms" class="content-grid mdl-grid">
-
 			<form [formGroup]="loginFormHandler" (ngSubmit)="doLogin()" class="mdl-cell mdl-cell--6-col">
 				<div class="mdl-grid">
 					<div class="mdl-cell mdl-cell--12-col">
