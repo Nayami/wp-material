@@ -1,6 +1,6 @@
 <div class="am-wrap">
-	<div *ngIf="renderAuthLayout" [@renderAuthTrigger]>
-		<h1 class="text-center">Auth Component.</h1>
+	<div *ngIf="!auth.authorized" [@renderAuthTrigger]>
+		<h1 class="text-center">Auth Component</h1>
 		<div id="auth-forms" class="content-grid mdl-grid">
 
 			<form [formGroup]="loginFormHandler" (ngSubmit)="doLogin()" class="mdl-cell mdl-cell--6-col">
@@ -22,7 +22,7 @@
 
 				<div class="mdl-grid">
 					<div class="mdl-cell mdl-cell--12-col">
-						<a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="#">Forgot Password?</a>
+						<a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" (click)="invokeForgotPassword()">Forgot Password?</a>
 						<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--orange-900 mdl-color-text--red-50">Login</button>
 					</div>
 				</div>

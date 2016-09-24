@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from "../services/user.service";
 import { Router } from "@angular/router";
+import { Subscription } from 'rxjs/Rx';
+import {AuthService} from "../services/auth.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/user/views/';
@@ -9,22 +11,28 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/user/views/';
 	templateUrl: componentPath + 'profile.html'
 } )
 
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnDestroy {
 
-	constructor( private router: Router, private userService: UserService ) {
-		if ( ! userService.currentUser.loaded ) {
-			userService.getCurrentUser()
+	private userSubscription : Subscription;
+
+	constructor( private router: Router,
+	             private auth : AuthService,
+	             private userService: UserService ) {
+		if ( !auth.loaded ) {
+			this.userSubscription = userService.getCurrentUser()
 			           .subscribe( user => {
-				           user.loaded = true;
+				           auth.loaded = true;
+				           auth.authorized = user.ID ? true : false;
 				           userService.currentUser = user;
 
-				           if ( !userService.currentUser.ID )
+				           if ( !auth.authorized )
 					           router.navigate( ['screen/auth'] )
 			           } );
 		}
 	}
 
-	ngOnInit() {
+	ngOnDestroy() {
+		this.userSubscription.unsubscribe();
 	}
 
 

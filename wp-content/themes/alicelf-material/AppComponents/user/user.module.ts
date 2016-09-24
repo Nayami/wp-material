@@ -9,6 +9,7 @@ import { routing, appRoutingProviders } from './user.routing';
 import { NotFoundComponent } from "./user_components/notfound.component";
 import { ProfileComponent } from "./user_components/profile.component";
 import { AMAuthComponent } from "./user_components/auth.component";
+import {AuthService} from "./services/auth.service";
 
 @NgModule( {
 	imports: [
@@ -26,6 +27,7 @@ import { AMAuthComponent } from "./user_components/auth.component";
 	],
 	bootstrap: [ UserComponent ],
 	providers: [
+		AuthService,
 		UserService,
 		appRoutingProviders
 	],

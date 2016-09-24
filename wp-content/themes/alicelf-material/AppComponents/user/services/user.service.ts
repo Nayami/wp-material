@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import {AuthService} from "./auth.service";
 
 declare var AMdefaults: any;
 
@@ -9,15 +10,9 @@ declare var AMdefaults: any;
 
 export class UserService {
 
-	currentUser: any = {
-		ID       : null,
-		logged_in: false,
-		loaded   : false
-	};
+	currentUser: any;
 
-	constructor( private http: Http ) {
-
-	}
+	constructor( private http: Http, private auth: AuthService ) {}
 
 	getCurrentUser(): Observable<any> {
 		let queryUrl = AMdefaults.ajaxurl + "?action=ajx20163917023918";
