@@ -13,7 +13,7 @@ var forms_1 = require('@angular/forms');
 var comment_service_1 = require('../services/comment.service');
 var post_service_1 = require("../services/post.service");
 var user_service_1 = require("../services/user.service");
-var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
+var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 var FormComponent = (function () {
     function FormComponent(fb, user, postService, commentService) {
         var _this = this;

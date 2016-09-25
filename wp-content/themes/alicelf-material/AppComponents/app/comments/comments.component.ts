@@ -4,7 +4,7 @@ import { CommentService } from './services/comment.service';
 import { PostService } from "./services/post.service";
 
 declare var AMdefaults: any;
-var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
+var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 
 @Component( {
 	selector   : 'AMreviewShell',
@@ -21,6 +21,7 @@ export class CommentsComponent implements OnInit {
 	}
 
 	ngOnInit() {}
+
 
 	handlelaunchConfirm(arr) {
 		this.shelllaunchConfirm = arr;

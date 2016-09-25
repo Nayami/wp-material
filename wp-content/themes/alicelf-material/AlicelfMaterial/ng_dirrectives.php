@@ -42,25 +42,9 @@ function aa_func_20162526072510()
 {
 	?>
 	<script>
-		/**
-		 * ==================== Import and bootstrapping ======================
-		 * 29.08.2016
-		 */
-		var activeModules = [
-			{name     : 'app', selector: 'AMcontent' },
-			{name     : 'comments', selector: 'AMreviewShell' },
-			{name     : 'user', selector: 'user-profile-component' }
-		];
-
-		for (var mdlcnt = activeModules.length; mdlcnt--;) {
-			var LaunchModule = activeModules[mdlcnt];
-			if (document.getElementsByTagName(LaunchModule.selector).length > 0) {
-				System.import(LaunchModule.name).catch(function(err) {
-					console.error(err);
-				});
-			}
-		}
-
+		System.import('app').catch(function(err) {
+			console.error(err);
+		});
 		var mdlUpgradeDom = false;
 		setInterval(function() {
 			if (mdlUpgradeDom) {

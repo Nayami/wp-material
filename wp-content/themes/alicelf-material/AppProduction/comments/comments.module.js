@@ -9,42 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
-var forms_1 = require('@angular/forms');
-var forms_2 = require("@angular/forms");
-var http_1 = require('@angular/http');
-var comments_component_1 = require('./comments.component');
-var Form_component_1 = require('./comments_childs/Form.component');
-var ListingComments_component_1 = require('./comments_childs/ListingComments.component');
 var user_service_1 = require("./services/user.service");
 var post_service_1 = require("./services/post.service");
 var comment_service_1 = require("./services/comment.service");
-var confirm_component_1 = require("./comments_childs/confirm.component");
-var editcomment_component_1 = require("./comments_childs/editcomment.component");
 var CommentsModule = (function () {
     function CommentsModule() {
     }
     CommentsModule = __decorate([
         core_1.NgModule({
-            imports: [
-                platform_browser_1.BrowserModule,
-                forms_1.FormsModule,
-                forms_2.ReactiveFormsModule
-            ],
-            declarations: [
-                comments_component_1.CommentsComponent,
-                Form_component_1.FormComponent,
-                ListingComments_component_1.ListingCommentsComponent,
-                confirm_component_1.ConfirmComponent,
-                editcomment_component_1.EdittCommentComponent
-            ],
-            bootstrap: [comments_component_1.CommentsComponent],
             providers: [
                 user_service_1.UserService,
                 post_service_1.PostService,
-                comment_service_1.CommentService,
-                http_1.HTTP_PROVIDERS
-            ]
+                comment_service_1.CommentService
+            ],
         }), 
         __metadata('design:paramtypes', [])
     ], CommentsModule);

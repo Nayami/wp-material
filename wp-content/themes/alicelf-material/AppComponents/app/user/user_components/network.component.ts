@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy, trigger, state, style, transition, animat
 import { UserService } from "../services/user.service";
 import { Router } from "@angular/router";
 import { Subscription } from 'rxjs/Rx';
-import {AuthService} from "../services/auth.service";
+import { AuthService } from "../services/auth.service";
 
 declare var AMdefaults: any;
-var componentPath = AMdefaults.themeurl + '/AppComponents/user/views/';
+var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 
 @Component( {
 	templateUrl: componentPath + 'profile.html',

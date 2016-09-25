@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Rx';
 import { AuthService } from "../services/auth.service";
 
 declare var AMdefaults: any;
-var componentPath = AMdefaults.themeurl + '/AppComponents/user/views/';
+var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 
 @Component( {
 	templateUrl: componentPath + 'auth.login.register.html',
@@ -106,7 +106,6 @@ export class AMAuthComponent implements OnDestroy {
 	 * 23.09.2016
 	 */
 	invokeForgotPassword() {
-
 	}
 
 

@@ -1,3 +1,4 @@
+<footer-component></footer-component>
 			</div>
 		</main>
 	</div>

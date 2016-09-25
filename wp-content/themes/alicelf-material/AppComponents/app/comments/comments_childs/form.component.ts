@@ -7,7 +7,7 @@ import { PostService } from "../services/post.service";
 import { UserService } from "../services/user.service";
 
 declare var AMdefaults: any;
-var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
+var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 
 @Component( {
 	selector   : 'AMformComponent',

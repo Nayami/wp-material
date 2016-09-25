@@ -7,12 +7,10 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { PostService } from "../services/post.service";
 
-var componentPath = AMdefaults.themeurl + '/AppComponents/comments/';
-
 @Injectable()
 export class CommentService {
 
-	commentsAll: CommentInterface[];
+	commentsAll: CommentInterface[] = [];
 
 	addComment( data ) {
 		this.commentsAll.unshift( data );

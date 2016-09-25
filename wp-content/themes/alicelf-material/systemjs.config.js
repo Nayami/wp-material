@@ -6,9 +6,7 @@
 	// map tells the System loader where to look for things
 	var componetsPath = AMdefaults.themeurl + '/AppProduction/';
 	var map = {
-		'app'     : componetsPath + 'app',
-		'comments': componetsPath + 'comments',
-		'user'    : componetsPath + 'user',
+		'app'     : componetsPath,
 
 		'@angular'                  : AMdefaults.themeurl + '/node_modules/@angular',
 		'angular2-in-memory-web-api': AMdefaults.themeurl + '/node_modules/angular2-in-memory-web-api',
@@ -17,9 +15,6 @@
 	// packages tells the System loader how to load when no filename and/or no extension
 	var packages = {
 		'app':      { main: 'main.js',  defaultExtension: 'js' },
-		'comments': { main: 'main.js',  defaultExtension: 'js' },
-		'user':     { main: 'main.js',  defaultExtension: 'js' },
-
 		'rxjs':                       { defaultExtension: 'js' },
 		'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
 	};
@@ -48,6 +43,7 @@
 	// Add package entries for angular packages
 	ngPackageNames.forEach(setPackageConfig);
 	var config = {
+		defaultJSExtensions: true,
 		map: map,
 		packages: packages
 	};
