@@ -4,17 +4,18 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { userRouting } from './user/user.routing';
 
-import { UserModule } from "./user/user.module";
-import { CommentsModule } from "./comments/comments.module";
+// SHARED SERVICES
 import { SharedModule } from './shared/shared.module';
 
 import { FooterComponent } from './footer/footer.component';
 
+import { UserModule } from "./user/user.module"; // * Module
 import { UserComponent } from './user/user.component';
 import { NotFoundComponent } from "./user/user_components/notfound.component";
 import { NetworkComponent } from "./user/user_components/network.component";
 import { AMAuthComponent } from "./user/user_components/auth.component";
 
+import { CommentsModule } from "./comments/comments.module"; // * Module
 import { CommentsComponent }  from './comments/comments.component';
 import { FormComponent }  from './comments/comments_childs/Form.component';
 import { ListingCommentsComponent }  from './comments/comments_childs/ListingComments.component';
@@ -61,12 +62,12 @@ let totalimplode = prepareImports.concat(possibleImports);
 	declarations: [
 		FooterComponent,
 
-		UserComponent,
+		UserComponent, // user-profile-component
 		NotFoundComponent,
 		NetworkComponent,
 		AMAuthComponent,
 
-		CommentsComponent,
+		CommentsComponent, // AMreviewShell
 		FormComponent,
 		ListingCommentsComponent,
 		ConfirmComponent,
