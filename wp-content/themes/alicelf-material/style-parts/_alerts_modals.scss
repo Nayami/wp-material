@@ -8,6 +8,7 @@
 
 .blockClass {
 	display: block !important;
+	height : 100% !important;
 }
 
 @mixin scaleModal($scale: 0.5) {
@@ -54,10 +55,14 @@
 }
 
 // selector | width | perspective | origin
+@include modalMix('#forgot-pass-modal', 500, 700, top);
 @include modalMix('#destroy-comment-confirmation', 500, 700, top);
 
 body.aa-modal-overlay {
 	overflow-y : hidden;
+	.mdl-layout__content {
+		z-index: 4;
+	}
 }
 
 /**
@@ -66,7 +71,7 @@ body.aa-modal-overlay {
  * ==================================================
  */
 .modal-backdrop[itemscope="aa-modal"] {
-	background-color : rgba(101, 101, 101, 0.67);
+	@include gradient(#251210, rgba(63, 31, 27, 0.35));
 	position         : fixed;
 	display          : none;
 	width            : 100%;

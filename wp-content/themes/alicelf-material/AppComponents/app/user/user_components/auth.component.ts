@@ -1,4 +1,7 @@
-import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, Output,
+	EventEmitter, OnInit, OnDestroy,
+	trigger, state, style, transition, animate } from '@angular/core';
+
 import { UserService } from "../services/user.service";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -30,6 +33,7 @@ export class AMAuthComponent implements OnDestroy {
 	private userSubscription: Subscription;
 	private loginFormHandler: FormGroup;
 	private registerFormHandler: FormGroup;
+	private forgotEmitter : boolean = false;
 
 	spinner : boolean = false;
 
@@ -106,6 +110,10 @@ export class AMAuthComponent implements OnDestroy {
 	 * 23.09.2016
 	 */
 	invokeForgotPassword() {
+		this.forgotEmitter = true;
+	}
+	launchInfoBack(event) {
+		this.forgotEmitter = event;
 	}
 
 

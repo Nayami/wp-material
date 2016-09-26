@@ -21,6 +21,7 @@ import { FormComponent }  from './comments/comments_childs/Form.component';
 import { ListingCommentsComponent }  from './comments/comments_childs/ListingComments.component';
 import { ConfirmComponent } from "./comments/comments_childs/confirm.component";
 import { EdittCommentComponent } from "./comments/comments_childs/editcomment.component";
+import {EnterEmailComponent} from "./user/user_components/enteremail.form.component";
 
 const componentMaybeExists = [
 	{ selector: 'AMreviewShell', component: CommentsComponent },
@@ -66,6 +67,7 @@ let totalimplode = prepareImports.concat(possibleImports);
 		NotFoundComponent,
 		NetworkComponent,
 		AMAuthComponent,
+		EnterEmailComponent,
 
 		CommentsComponent, // AMreviewShell
 		FormComponent,

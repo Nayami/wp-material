@@ -1,6 +1,6 @@
 <div class="am-wrap">
 	<div *ngIf="!auth.authorized" [@renderAuthTrigger]>
-		<h1 class="text-center">Auth Components</h1>
+		<h1 class="text-center">Auth Component</h1>
 		<div class="relative-container mdl-grid">
 			<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
 		</div>
@@ -62,3 +62,5 @@
 
 	</div>
 </div>
+
+<enter-your-email (launchInfoBack)="launchInfoBack($event)" [launchINfo]="forgotEmitter"></enter-your-email>

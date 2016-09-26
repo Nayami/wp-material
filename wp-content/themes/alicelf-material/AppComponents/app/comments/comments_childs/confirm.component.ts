@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommentService } from "../services/comment.service";
 
 @Component( {
 	selector: 'confirm-component',
-	styles : [
-		`
+	styles : [`
 		h3 {
 			margin-top: 10px;
 			margin-bottom: 15px;
@@ -28,7 +27,7 @@ import { CommentService } from "../services/comment.service";
 		</div>
 	`
 } )
-export class ConfirmComponent implements OnInit {
+export class ConfirmComponent {
 
 	@Input() launchModal;
 
@@ -42,9 +41,6 @@ export class ConfirmComponent implements OnInit {
 	};
 
 	constructor( private CommentsObj: CommentService ) {
-	}
-
-	ngOnInit() {
 	}
 
 	confirmDeleteComment() {
@@ -77,7 +73,6 @@ export class ConfirmComponent implements OnInit {
 					this.launchInfo.index = referLaunch.index;
 				}, 50 );
 			}
-
 		}
 	}
 
