@@ -56,9 +56,11 @@
 						<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--orange-900 mdl-color-text--red-50">Register</button>
 					</div>
 				</div>
-
 			</form>
 		</div>
+
+		<a [routerLink]="['/screen/restorepass/']"
+			 [queryParams]="{authtoken:'sometoken', email : 'alicelfdev@gmail.com'}">Restore password</a>
 
 	</div>
 </div>

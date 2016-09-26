@@ -1,13 +1,15 @@
-import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, OnDestroy,
+	trigger, state, style, transition, animate } from '@angular/core';
 import { UserService } from "../services/user.service";
 import { Router } from "@angular/router";
 import { AuthService } from "../services/auth.service";
+import {Subscription} from 'rxjs/Rx';
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 
 @Component( {
-	templateUrl: componentPath + 'profile.html',
+	templateUrl: componentPath + 'restore.password.html',
 	animations : [
 		trigger( 'renderAuthTrigger', [
 			state( 'in', style( { transform: 'translateY(0)', opacity: 1 } ) ),
@@ -22,32 +24,22 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 		] )
 	]
 } )
+export class RestorePasswordComponent implements OnInit, OnDestroy {
 
-export class NetworkComponent {
+	tokenInfo: any;
+	private tokenSubscription: Subscription;
 
 	constructor( private router: Router,
 	             private auth: AuthService,
 	             private userService: UserService ) {
-		if ( !auth.loaded ) {
-			userService.getCurrentUser()
-			           .subscribe( user => {
-				           auth.loaded = true;
-				           auth.authorized = user.ID ? true : false;
-				           userService.currentUser = user;
-
-				           if ( !auth.authorized )
-					           router.navigate( ['screen/auth'] )
-			           } );
-		} else {
-			this.router.events.subscribe( event => {
-				if ( event.constructor.name === 'NavigationEnd' ) {
-					if ( event.url === '/' && !auth.authorized ) {
-						router.navigate( ['screen/auth'] )
-					}
-				}
-			} );
-		}
-
+		this.tokenSubscription = router.routerState.queryParams
+		                               .subscribe( ( query: any ) => this.tokenInfo = query );
 	}
 
+	ngOnInit() {
+	}
+
+	ngOnDestroy() {
+		this.tokenSubscription.unsubscribe();
+	}
 }

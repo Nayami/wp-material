@@ -28,14 +28,13 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 	]
 } )
 
-export class AMAuthComponent implements OnDestroy {
+export class AMAuthComponent {
 
-	private userSubscription: Subscription;
 	private loginFormHandler: FormGroup;
 	private registerFormHandler: FormGroup;
-	private forgotEmitter : boolean = false;
+	private forgotEmitter: boolean = false;
 
-	spinner : boolean = false;
+	spinner: boolean = false;
 
 	constructor( private router: Router,
 	             private userService: UserService,
@@ -43,17 +42,17 @@ export class AMAuthComponent implements OnDestroy {
 	             private fbuilder: FormBuilder ) {
 		// User not load yet. maybe direct access.
 		if ( !auth.loaded ) {
-			this.userSubscription = userService.getCurrentUser()
-			                                   .subscribe( user => {
-				                                   auth.loaded = true;
-				                                   auth.authorized = user.ID ? true : false;
-				                                   userService.currentUser = user;
-				                                   auth.authorized ? router.navigate( [''] ) : this.authCallback();
-			                                   } );
+			userService.getCurrentUser()
+			           .subscribe( user => {
+				           auth.loaded = true;
+				           auth.authorized = user.ID ? true : false;
+				           userService.currentUser = user;
+				           auth.authorized ? router.navigate( [''] ) : this.authCallback();
+			           } );
 
 			// User is loaded and will be checked auth
 		} else {
-			userService.currentUser.ID ? router.navigate( [''] ) : this.authCallback();
+			auth.authorized ? router.navigate( [''] ) : this.authCallback();
 		}
 
 		this.loginFormHandler = this.fbuilder.group( {
@@ -74,26 +73,26 @@ export class AMAuthComponent implements OnDestroy {
 	doLogin() {
 		if ( this.loginFormHandler.status === "VALID" ) {
 			this.spinner = true;
-			this.userSubscription = this.auth.authorizeMe(this.loginFormHandler.value)
-				.subscribe( data => {
-					switch (data.message) {
-						case 'success' :
-							this.userService.currentUser = data.user;
-							this.auth.loaded = true;
-							this.auth.authorized = true;
-							this.router.navigate( [''] );
-							break;
-						case 'notfound' :
-							console.log( data );
-							break;
-						case 'notmatch' :
-							console.log( data );
-							break;
-						default:
-							console.log( 'something wrong' );
-					}
-					this.spinner = false;
-				});
+			this.auth.authorizeMe( this.loginFormHandler.value )
+			    .subscribe( data => {
+				    switch ( data.message ) {
+					    case 'success' :
+						    this.userService.currentUser = data.user;
+						    this.auth.loaded = true;
+						    this.auth.authorized = true;
+						    this.router.navigate( [''] );
+						    break;
+					    case 'notfound' :
+						    console.log( data );
+						    break;
+					    case 'notmatch' :
+						    console.log( data );
+						    break;
+					    default:
+						    console.log( 'something wrong' );
+				    }
+				    this.spinner = false;
+			    } );
 		}
 	}
 
@@ -112,7 +111,8 @@ export class AMAuthComponent implements OnDestroy {
 	invokeForgotPassword() {
 		this.forgotEmitter = true;
 	}
-	launchInfoBack(event) {
+
+	launchInfoBack( event ) {
 		this.forgotEmitter = event;
 	}
 
@@ -120,10 +120,5 @@ export class AMAuthComponent implements OnDestroy {
 	authCallback() {
 
 	}
-
-	ngOnDestroy() {
-		this.userSubscription.unsubscribe();
-	}
-
 
 }

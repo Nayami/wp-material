@@ -6,6 +6,5 @@ export class ConfirmService {
 	private confirmDialogs : any[] = [];
 
 	constructor() {
-
 	}
 }

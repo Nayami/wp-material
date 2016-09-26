@@ -1,6 +1,10 @@
 import { Component,
-	Input, Output, EventEmitter, Renderer,
+	Input, Output, EventEmitter,
 	OnChanges, SimpleChanges } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Http, Response, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/Rx';
 
 @Component( {
 	selector: 'enter-your-email',
@@ -12,7 +16,7 @@ import { Component,
 					<i dataDestroy class="material-icons">close</i>
 				</a>
 				<div class="modal-body-content mdl-typography--text-center">
-					There will be a form
+					<form ></form>
 				</div>
 			</div>
 		</div>
@@ -28,9 +32,7 @@ export class EnterEmailComponent {
 		block : false
 	};
 
-	constructor(private renderer: Renderer) {
-		console.log( renderer );
-	}
+	constructor() {}
 
 	ngOnChanges( changes: SimpleChanges ) {
 		let referLaunch = changes['launchINfo'].currentValue;

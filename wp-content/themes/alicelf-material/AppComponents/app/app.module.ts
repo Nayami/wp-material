@@ -6,7 +6,6 @@ import { userRouting } from './user/user.routing';
 
 // SHARED SERVICES
 import { SharedModule } from './shared/shared.module';
-
 import { FooterComponent } from './footer/footer.component';
 
 import { UserModule } from "./user/user.module"; // * Module
@@ -21,62 +20,81 @@ import { FormComponent }  from './comments/comments_childs/Form.component';
 import { ListingCommentsComponent }  from './comments/comments_childs/ListingComments.component';
 import { ConfirmComponent } from "./comments/comments_childs/confirm.component";
 import { EdittCommentComponent } from "./comments/comments_childs/editcomment.component";
-import {EnterEmailComponent} from "./user/user_components/enteremail.form.component";
+import { EnterEmailComponent } from "./user/user_components/enteremail.form.component";
+import {RestorePasswordComponent} from "./user/user_components/restore.password.component";
+import {FlashNotificationsComponent} from "./shared/components/notifications.component";
 
+/**
+ * ==================== COMPONENTS ======================
+ * 26.09.2016
+ */
 const componentMaybeExists = [
-	{ selector: 'AMreviewShell', component: CommentsComponent },
-	{ selector: 'footer-component', component: FooterComponent },
-	{ selector: 'user-profile-component', component: UserComponent },
+	{ selector: 'footer-component', component: FooterComponent, childs: [] },
+	{ selector: 'FlashNotificationsComponent', component: FlashNotificationsComponent, childs: [] },
+	{
+	selector: 'AMreviewShell', component: CommentsComponent, childs: [
+		FormComponent,
+		ListingCommentsComponent,
+		ConfirmComponent,
+		EdittCommentComponent
+	]
+},
+	{
+		selector: 'user-profile-component', component: UserComponent, childs: [
+		NotFoundComponent,
+		NetworkComponent,
+		AMAuthComponent,
+		EnterEmailComponent,
+		RestorePasswordComponent
+	]
+	},
+	// ADD THERE COMPONENTS
 ];
+let totalBootstrap     = [],
+    totalDelclarations = [];
 
-let totalBootstrap = [];
-for (let it = componentMaybeExists.length; it--;) {
+for ( let it = componentMaybeExists.length; it--; ) {
 	let amMdl = componentMaybeExists[it];
-	if (document.getElementsByTagName(amMdl.selector).length > 0) {
-		totalBootstrap.push(amMdl.component);
+	if ( document.getElementsByTagName( amMdl.selector ).length > 0 ) {
+		totalBootstrap.push( amMdl.component );
+		totalDelclarations.push( amMdl.component );
+		totalDelclarations = totalDelclarations.concat( amMdl.childs );
 	}
 }
 
-let prepareImports = [
+/**
+ * ==================== IMPORTS ======================
+ * 26.09.2016
+ */
+let defaultImports = [
 	BrowserModule,
 	HttpModule,
 	FormsModule,
 	ReactiveFormsModule,
 	SharedModule.forRoot(),
 	UserModule,
-	CommentsModule
+	CommentsModule,
 ];
-let possibleImports = [];
-let possibleRoutes = [
+let newImports = [];
+let availableRoutes = [
 	{ selector: 'user-profile-component', route: userRouting },
+	// ADD THERE ROUTING
 ];
-for (let lt = possibleRoutes.length; lt--;) {
-	let amMdl = possibleRoutes[lt];
-	if (document.getElementsByTagName(amMdl.selector).length > 0) {
-		possibleImports.push(amMdl.route);
+for ( let lt = availableRoutes.length; lt--; ) {
+	let amMdl = availableRoutes[lt];
+	if ( document.getElementsByTagName( amMdl.selector ).length > 0 ) {
+		newImports.push( amMdl.route );
 	}
 }
-let totalimplode = prepareImports.concat(possibleImports);
 
-@NgModule({
-	imports: totalimplode,
-	declarations: [
-		FooterComponent,
+let totalimplode = defaultImports.concat( newImports );
 
-		UserComponent, // user-profile-component
-		NotFoundComponent,
-		NetworkComponent,
-		AMAuthComponent,
-		EnterEmailComponent,
-
-		CommentsComponent, // AMreviewShell
-		FormComponent,
-		ListingCommentsComponent,
-		ConfirmComponent,
-		EdittCommentComponent
-	],
-	bootstrap: totalBootstrap
-})
+@NgModule( {
+	imports     : totalimplode,
+	declarations: totalDelclarations,
+	bootstrap   : totalBootstrap
+} )
 
 
-export class AppModule { }
+export class AppModule {
+}

@@ -69,3 +69,9 @@ function aa_func_20162526072510()
 	</script>
 	<?php
 }
+
+add_action('AM_content', 'aa_func_20164926084929');
+function aa_func_20164926084929()
+{
+	echo "<FlashNotificationsComponent></FlashNotificationsComponent>";
+}
