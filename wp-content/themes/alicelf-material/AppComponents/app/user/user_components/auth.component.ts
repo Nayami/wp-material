@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 import { AuthService } from "../services/auth.service";
+import {FlashNoticeService} from "../../shared/services/alert.dialog.modal/flash.notices";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -39,6 +40,7 @@ export class AMAuthComponent {
 	constructor( private router: Router,
 	             private userService: UserService,
 	             private auth: AuthService,
+	             private flashes : FlashNoticeService,
 	             private fbuilder: FormBuilder ) {
 		// User not load yet. maybe direct access.
 		if ( !auth.loaded ) {
@@ -81,12 +83,25 @@ export class AMAuthComponent {
 						    this.auth.loaded = true;
 						    this.auth.authorized = true;
 						    this.router.navigate( [''] );
+						    this.flashes.attachNotifications({
+							    message : 'Success !',
+							    cssClass : 'mdl-color--green-900 mdl-color-text--green-50',
+							    type : 'dismissable',
+						    });
 						    break;
 					    case 'notfound' :
-						    console.log( data );
+						    this.flashes.attachNotifications({
+							    message : 'User not found',
+							    cssClass : 'mdl-color--red-900 mdl-color-text--red-50',
+							    type : 'dismissable',
+						    });
 						    break;
 					    case 'notmatch' :
-						    console.log( data );
+						    this.flashes.attachNotifications({
+							    message : 'Password not match',
+							    cssClass : 'mdl-color--amber-900 mdl-color-text--amber-50',
+							    type : 'dismissable',
+						    });
 						    break;
 					    default:
 						    console.log( 'something wrong' );

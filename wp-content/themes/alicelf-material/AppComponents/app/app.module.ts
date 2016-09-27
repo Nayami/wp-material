@@ -21,8 +21,8 @@ import { ListingCommentsComponent }  from './comments/comments_childs/ListingCom
 import { ConfirmComponent } from "./comments/comments_childs/confirm.component";
 import { EdittCommentComponent } from "./comments/comments_childs/editcomment.component";
 import { EnterEmailComponent } from "./user/user_components/enteremail.form.component";
-import {RestorePasswordComponent} from "./user/user_components/restore.password.component";
-import {FlashNotificationsComponent} from "./shared/components/notifications.component";
+import { RestorePasswordComponent } from "./user/user_components/restore.password.component";
+import { FlashNotificationsComponent } from "./shared/components/notifications.component";
 
 /**
  * ==================== COMPONENTS ======================

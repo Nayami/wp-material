@@ -7,19 +7,17 @@
 }
 
 .blockClass {
-	display: block !important;
-	height : 100% !important;
+	display : block !important;
+	height  : 100% !important;
 }
 
 @mixin scaleModal($scale: 0.5) {
 	@include transformPref(scale($scale));
 }
 
-
 @mixin flipXModal($modificator:45) {
 	@include transformPref(rotateX($modificator+deg))
 }
-
 
 @mixin flipYModal( $modificator:45) {
 	@include transformPref(rotateY($modificator+deg))
@@ -61,11 +59,11 @@
 body.aa-modal-overlay {
 	overflow-y : hidden;
 	.mdl-layout__header {
-		display: block;
+		display  : block;
 		position : static;
 	}
 	.mdl-layout__content {
-		z-index: 4;
+		z-index  : 4;
 		overflow : visible;
 	}
 }
@@ -76,15 +74,15 @@ body.aa-modal-overlay {
  * ==================================================
  */
 .modal-backdrop[itemscope="aa-modal"] {
-	@include gradient(#251210, rgba(63, 31, 27, 0.35));
-	position         : fixed;
-	display          : none;
-	width            : 100%;
-	height           : 100%;
-	z-index          : 99;
-	opacity          : 0;
-	top : 0;
-	left : 0;
+	@include gradient(#1e0d0c, rgba(63, 31, 27, 0.35));
+	position : fixed;
+	display  : none;
+	width    : 100%;
+	height   : 100%;
+	z-index  : 99;
+	opacity  : 0;
+	top      : 0;
+	left     : 0;
 	@include transition();
 	.aa-modal-container {
 		position         : absolute;
@@ -150,9 +148,9 @@ body.aa-modal-overlay {
 	}
 	.destroy-button {
 		position : absolute;
-		top : 10px;
-		right : 10px;
-		color : $dangerColor;
+		top      : 10px;
+		right    : 10px;
+		color    : $dangerColor;
 	}
 }
 
@@ -204,6 +202,28 @@ body.aa-modal-overlay {
 			-ms-transform     : scale(1);
 			-webkit-transform : scale(1);
 			transform         : scale(1);
+		}
+	}
+}
+
+/**
+ * ==================== Notifications ======================
+ * 27.09.2016
+ */
+#header-notifications {
+	position : relative;
+	ul {
+		position : absolute;
+		top      : 0;
+		right    : 0;
+		li {
+			display                   : block;
+			margin-bottom             : 5px;
+			padding                   : 10px 15px;
+			border-top-left-radius    : 2px;
+			border-bottom-left-radius : 2px;
+			min-width                 : 170px;
+			box-shadow                : 0 5px 10px rgba(0, 0, 0, 0.26);
 		}
 	}
 }
