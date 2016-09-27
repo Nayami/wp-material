@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserGlobalService } from './services/user.global.service';
 import { FlashNoticeService } from "./services/alert.dialog.modal/flash.notices";
+import {AuthGlobalService} from "./services/auth.service";
 
 @NgModule( {} )
 
@@ -10,6 +11,7 @@ export class SharedModule {
 		return {
 			ngModule : SharedModule,
 			providers: [
+				AuthGlobalService,
 				UserGlobalService,
 				FlashNoticeService
 			]
@@ -18,6 +20,7 @@ export class SharedModule {
 }
 
 export {
+	AuthGlobalService,
 	UserGlobalService,
 	FlashNoticeService
 }

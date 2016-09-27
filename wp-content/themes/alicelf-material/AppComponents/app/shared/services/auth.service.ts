@@ -5,7 +5,7 @@ import { Observable } from  'rxjs/Rx';
 declare var AMdefaults: any;
 
 @Injectable()
-export class AuthService {
+export class AuthGlobalService {
 
 	authorized: boolean = false;
 	loaded: boolean = false;

@@ -2,12 +2,12 @@ import { Component, Output,
 	EventEmitter, OnInit, OnDestroy,
 	trigger, state, style, transition, animate } from '@angular/core';
 
-import { UserService } from "../services/user.service";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
-import { AuthService } from "../services/auth.service";
-import {FlashNoticeService} from "../../shared/services/alert.dialog.modal/flash.notices";
+import { FlashNoticeService } from "../../shared/services/alert.dialog.modal/flash.notices";
+import { UserGlobalService } from "../../shared/services/user.global.service";
+import { AuthGlobalService } from "../../shared/services/auth.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -38,8 +38,8 @@ export class AMAuthComponent {
 	spinner: boolean = false;
 
 	constructor( private router: Router,
-	             private userService: UserService,
-	             private auth: AuthService,
+	             private userService: UserGlobalService,
+	             private auth: AuthGlobalService,
 	             private flashes : FlashNoticeService,
 	             private fbuilder: FormBuilder ) {
 		// User not load yet. maybe direct access.

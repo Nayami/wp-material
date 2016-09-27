@@ -16,7 +16,7 @@ import 'rxjs/Rx';
 					<i dataDestroy class="material-icons">close</i>
 				</a>
 				<div class="modal-body-content mdl-typography--text-center">
-					<form ></form>
+					There will be form.
 				</div>
 			</div>
 		</div>

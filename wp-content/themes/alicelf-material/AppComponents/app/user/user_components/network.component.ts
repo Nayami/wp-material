@@ -1,7 +1,7 @@
 import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
-import { UserService } from "../services/user.service";
 import { Router } from "@angular/router";
-import { AuthService } from "../services/auth.service";
+import { UserGlobalService } from "../../shared/services/user.global.service";
+import { AuthGlobalService } from "../../shared/services/auth.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -26,8 +26,8 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 export class NetworkComponent {
 
 	constructor( private router: Router,
-	             private auth: AuthService,
-	             private userService: UserService ) {
+	             private auth: AuthGlobalService,
+	             private userService: UserGlobalService ) {
 		if ( !auth.loaded ) {
 			userService.getCurrentUser()
 			           .subscribe( user => {

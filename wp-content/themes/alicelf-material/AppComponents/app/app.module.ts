@@ -4,15 +4,19 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { userRouting } from './user/user.routing';
 
-// SHARED SERVICES
+// SHARED and GLOBS
 import { SharedModule } from './shared/shared.module';
 import { FooterComponent } from './footer/footer.component';
+import { FlashNotificationsComponent } from "./shared/components/notifications.component";
 
+// USER
 import { UserModule } from "./user/user.module"; // * Module
 import { UserComponent } from './user/user.component';
 import { NotFoundComponent } from "./user/user_components/notfound.component";
 import { NetworkComponent } from "./user/user_components/network.component";
 import { AMAuthComponent } from "./user/user_components/auth.component";
+import { EnterEmailComponent } from "./user/user_components/enteremail.form.component";
+import { RestorePasswordComponent } from "./user/user_components/restore.password.component";
 
 import { CommentsModule } from "./comments/comments.module"; // * Module
 import { CommentsComponent }  from './comments/comments.component';
@@ -20,9 +24,7 @@ import { FormComponent }  from './comments/comments_childs/Form.component';
 import { ListingCommentsComponent }  from './comments/comments_childs/ListingComments.component';
 import { ConfirmComponent } from "./comments/comments_childs/confirm.component";
 import { EdittCommentComponent } from "./comments/comments_childs/editcomment.component";
-import { EnterEmailComponent } from "./user/user_components/enteremail.form.component";
-import { RestorePasswordComponent } from "./user/user_components/restore.password.component";
-import { FlashNotificationsComponent } from "./shared/components/notifications.component";
+
 
 /**
  * ==================== COMPONENTS ======================
@@ -32,13 +34,13 @@ const componentMaybeExists = [
 	{ selector: 'footer-component', component: FooterComponent, childs: [] },
 	{ selector: 'FlashNotificationsComponent', component: FlashNotificationsComponent, childs: [] },
 	{
-	selector: 'AMreviewShell', component: CommentsComponent, childs: [
+		selector: 'AMreviewShell', component: CommentsComponent, childs: [
 		FormComponent,
 		ListingCommentsComponent,
 		ConfirmComponent,
 		EdittCommentComponent
 	]
-},
+	},
 	{
 		selector: 'user-profile-component', component: UserComponent, childs: [
 		NotFoundComponent,
@@ -61,6 +63,7 @@ for ( let it = componentMaybeExists.length; it--; ) {
 		totalDelclarations = totalDelclarations.concat( amMdl.childs );
 	}
 }
+
 
 /**
  * ==================== IMPORTS ======================

@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
-import { UserService } from "./services/user.service";
-import { AuthService } from "./services/auth.service";
 import { userRoutingProviders } from "./user.routing";
+import { UserGlobalService } from "../shared/services/user.global.service";
+import { AuthGlobalService } from "../shared/services/auth.service";
 
 @NgModule( {
 	providers: [
-		AuthService,
-		UserService,
+		AuthGlobalService,
+		UserGlobalService,
 		userRoutingProviders
 	],
 } )
 export class UserModule {
+
 }
