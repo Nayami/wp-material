@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Rx';
 import { FlashNoticeService } from "../../shared/services/alert.dialog.modal/flash.notices";
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
-import {AppSettingsService} from "../../shared/services/app.settings.service";
+import { AppSettingsService } from "../../shared/services/app.settings.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';

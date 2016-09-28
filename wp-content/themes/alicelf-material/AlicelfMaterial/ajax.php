@@ -7,6 +7,10 @@ if ( ! function_exists( 'AMapiurl' ) ) {
 	}
 }
 
+/**
+ * ==================== SETTINGS ======================
+ * 28.09.2016
+ */
 add_action( 'wp_ajax_nopriv_ajx20162128122131', 'ajx20162128122131' );
 add_action( 'wp_ajax_ajx20162128122131', 'ajx20162128122131' );
 function ajx20162128122131()
@@ -221,4 +225,21 @@ function ajx20162924062955()
 		die;
 	}
 
+}
+
+/**
+ * ==================== REMIND EMAIL REQUEST ======================
+ * 28.09.2016
+ */
+add_action( 'wp_ajax_nopriv_ajx20165728055701', 'ajx20165728055701' );
+add_action( 'wp_ajax_ajx20165728055701', 'ajx20165728055701' );
+function ajx20165728055701()
+{
+	$email   = str_replace( '\\', '', $_POST[ 'body_data' ] );
+	$ret_val = [
+		'data' => $email,
+		'uniq' => sha1( uniqid() . $email )
+	];
+	echo json_encode( $ret_val );
+	die;
 }
