@@ -11,7 +11,7 @@ function aa_func_20161027071039()
 		[ 'hash', 'varchar' ],
 		[ 'email', 'varchar' ],
 		[ 'action', 'varchar' ], // reset or activation
-		[ 'time', 'date' ]
+		[ 'time', 'datetime' ]
 	];
 	AmDb::createTable( 'user_reset_passwords', $fields, true );
 }

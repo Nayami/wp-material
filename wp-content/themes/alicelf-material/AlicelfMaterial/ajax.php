@@ -6,6 +6,11 @@ if ( ! function_exists( 'AMapiurl' ) ) {
 		return get_site_url() . '/wp-json/';
 	}
 }
+add_filter( 'wp_mail_content_type', 'aa_func_20162528072509' );
+function aa_func_20162528072509()
+{
+	return "text/html";
+}
 
 /**
  * ==================== SETTINGS ======================
@@ -235,11 +240,33 @@ add_action( 'wp_ajax_nopriv_ajx20165728055701', 'ajx20165728055701' );
 add_action( 'wp_ajax_ajx20165728055701', 'ajx20165728055701' );
 function ajx20165728055701()
 {
-	$email   = str_replace( '\\', '', $_POST[ 'body_data' ] );
-	$ret_val = [
-		'data' => $email,
-		'uniq' => sha1( uniqid() . $email )
+	$email      = str_replace( '\\"', '', $_POST[ 'body_data' ] );
+	$link       = get_am_network_endpoint() . "/screen/restorepass";
+	$token      = sha1( uniqid() . $email );
+	$email_link = $link . "?token=" . $token . "&email=" . $email;
+	$ret_val    = [
+		'data'    => $email,
+		'status'  => 'fail',
+		'message' => null
 	];
+	$mail_body  = "Your activation link: <br>";
+	$mail_body .= "<a href='{$email_link}'>Reset Password</a>";
+	$from         = get_option( 'admin_email' );
+	$headers      = "From: {$from}\r\n";
+	$sent_message = wp_mail( $email, 'Reset Password', $mail_body, $headers );
+
+	if ( $sent_message ) {
+		global $wpdb;
+		$table = $wpdb->prefix . "user_reset_passwords";
+		$wpdb->insert( $table, [
+			'hash'   => $token,
+			'email'  => $email,
+			'action' => 'reset',
+			'time'   => date( 'Y-m-d H:i:s' )
+		], [ '%s', '%s', '%s', '%s' ] );
+		$ret_val[ 'status' ] = 'success';
+	}
+
 	echo json_encode( $ret_val );
 	die;
 }

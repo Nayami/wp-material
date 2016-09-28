@@ -109,7 +109,8 @@ export class EnterEmailComponent implements OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.confirmForm.unsubscribe();
+		if ( this.confirmForm !== undefined )
+			this.confirmForm.unsubscribe();
 	}
 
 	static validateEmail( email ) {
