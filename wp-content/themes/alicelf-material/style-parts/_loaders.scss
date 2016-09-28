@@ -386,3 +386,13 @@ body {
 		height : 5px;
 	}
 }
+
+
+
+.mdl-progress.mdl-progress__indeterminate>.bar1 {
+	background-color : $brandColor !important;
+}
+.mdl-progress>.bufferbar,
+.mdl-progress:not(.mdl-progress--indeterminate):not(.mdl-progress--indeterminate)>.auxbar {
+	background-image: linear-gradient(to right, rgba(255,255,255, 0.7), rgba(255,255,255, 0.7)),linear-gradient(to right, rgb(231, 203, 205), rgb(231, 203, 205)) !important;
+}

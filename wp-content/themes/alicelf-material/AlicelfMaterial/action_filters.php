@@ -1,4 +1,20 @@
 <?php
+use AlicelfMaterial\Helpers\AmDb;
+/**
+ * ==================== Deploy additional tables ======================
+ */
+add_action( 'after_switch_theme', 'aa_func_20161027071039' );
+function aa_func_20161027071039()
+{
+	// text, varchar, int
+	$fields = [
+		[ 'hash', 'varchar' ],
+		[ 'email', 'varchar' ],
+		[ 'action', 'varchar' ], // reset or activation
+		[ 'time', 'date' ]
+	];
+	AmDb::createTable( 'user_reset_passwords', $fields, true );
+}
 
 add_theme_support( 'post-thumbnails' );
 add_filter( 'widget_text', 'do_shortcode' );
@@ -12,15 +28,17 @@ add_filter( 'wp_revisions_to_keep', 'custom_revisions_number', 10, 2 );
 function custom_revisions_number( $num, $post )
 {
 	$num = 3;
+
 	return $num;
 }
+
 
 /**
  * ==================== Change Title Defaults ======================
  * 19.08.2016
  */
-add_filter('wp_title', 'aa_func_20164019094058', 10, 1);
-function aa_func_20164019094058($title)
+add_filter( 'wp_title', 'aa_func_20164019094058', 10, 1 );
+function aa_func_20164019094058( $title )
 {
 	if ( is_home() || is_front_page() ) {
 		$title = get_bloginfo( 'name' ) . " | " . get_bloginfo( 'description', 'display' );
@@ -35,7 +53,7 @@ function aa_func_20164019094058($title)
 	return $title;
 }
 
-add_action('admin_print_footer_scripts', 'aa_func_20164419044418');
+add_action( 'admin_print_footer_scripts', 'aa_func_20164419044418' );
 function aa_func_20164419044418()
 {
 	if ( wp_script_is( 'quicktags' ) ) {
@@ -51,13 +69,14 @@ function aa_func_20164419044418()
  * ==================== Custom style ======================
  * 19.09.2016
  */
-add_action('wp_head', 'aa_func_20163901013945', 30);
+add_action( 'wp_head', 'aa_func_20163901013945', 30 );
 function aa_func_20163901013945()
 {
 	global $_am;
-	if(!empty($_am['opt-snippet-css']))
+	if ( ! empty( $_am[ 'opt-snippet-css' ] ) )
 		echo "<style>{$_am['opt-snippet-css']}</style>";
 }
+
 /**
  * ==================== JS after body tag ======================
  * 01.06.2016

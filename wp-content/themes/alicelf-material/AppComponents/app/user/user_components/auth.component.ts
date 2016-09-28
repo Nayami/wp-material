@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs/Rx';
 import { FlashNoticeService } from "../../shared/services/alert.dialog.modal/flash.notices";
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
+import {AppSettingsService} from "../../shared/services/app.settings.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -30,7 +31,6 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 } )
 
 export class AMAuthComponent {
-
 	private loginFormHandler: FormGroup;
 	private registerFormHandler: FormGroup;
 	private forgotEmitter: boolean = false;
@@ -38,34 +38,41 @@ export class AMAuthComponent {
 	spinner: boolean = false;
 
 	constructor( private router: Router,
+	             private appSettings: AppSettingsService,
 	             private userService: UserGlobalService,
 	             private auth: AuthGlobalService,
-	             private flashes : FlashNoticeService,
+	             private flashes: FlashNoticeService,
 	             private fbuilder: FormBuilder ) {
-		// User not load yet. maybe direct access.
 		if ( !auth.loaded ) {
-			userService.getCurrentUser()
-			           .subscribe( user => {
-				           auth.loaded = true;
-				           auth.authorized = user.ID ? true : false;
-				           userService.currentUser = user;
-				           auth.authorized ? router.navigate( [''] ) : this.authCallback();
-			           } );
-
-			// User is loaded and will be checked auth
+			this.loadAuthInfo();
 		} else {
-			auth.authorized ? router.navigate( [''] ) : this.authCallback();
+			if ( this.auth.authorized )
+				this.router.navigate( [''] )
 		}
+		if(!appSettings.loaded)
+			appSettings.setSettings();
 
 		this.loginFormHandler = this.fbuilder.group( {
-			"fname": ["", Validators.required],
-			"passw": ["", Validators.required]
+			fname: ["", Validators.required],
+			passw: ["", Validators.required]
 		} );
 		this.registerFormHandler = this.fbuilder.group( {
-			"login"  : ["", Validators.required],
-			"passw"  : ["", Validators.required],
-			"confirm": ["", Validators.required]
+			login  : ["", Validators.required],
+			passw  : ["", Validators.required],
+			confirm: ["", Validators.required]
 		} );
+	}
+
+
+	loadAuthInfo() {
+		return this.userService.getCurrentUser()
+		           .subscribe( user => {
+			           this.auth.loaded = true;
+			           this.auth.authorized = user.ID ? true : false;
+			           this.userService.currentUser = user;
+			           if ( this.auth.authorized )
+				           this.router.navigate( [''] )
+		           } );
 	}
 
 	/**
@@ -83,25 +90,25 @@ export class AMAuthComponent {
 						    this.auth.loaded = true;
 						    this.auth.authorized = true;
 						    this.router.navigate( [''] );
-						    this.flashes.attachNotifications({
+						    this.flashes.attachNotifications( {
 							    message : 'Success !',
-							    cssClass : 'mdl-color--green-900 mdl-color-text--green-50',
-							    type : 'dismissable',
-						    });
+							    cssClass: 'mdl-color--green-900 mdl-color-text--green-50',
+							    type    : 'dismissable',
+						    } );
 						    break;
 					    case 'notfound' :
-						    this.flashes.attachNotifications({
+						    this.flashes.attachNotifications( {
 							    message : 'User not found',
-							    cssClass : 'mdl-color--red-900 mdl-color-text--red-50',
-							    type : 'dismissable',
-						    });
+							    cssClass: 'mdl-color--red-900 mdl-color-text--red-50',
+							    type    : 'dismissable',
+						    } );
 						    break;
 					    case 'notmatch' :
-						    this.flashes.attachNotifications({
+						    this.flashes.attachNotifications( {
 							    message : 'Password not match',
-							    cssClass : 'mdl-color--amber-900 mdl-color-text--amber-50',
-							    type : 'dismissable',
-						    });
+							    cssClass: 'mdl-color--amber-900 mdl-color-text--amber-50',
+							    type    : 'dismissable',
+						    } );
 						    break;
 					    default:
 						    console.log( 'something wrong' );
@@ -131,9 +138,5 @@ export class AMAuthComponent {
 		this.forgotEmitter = event;
 	}
 
-
-	authCallback() {
-
-	}
 
 }

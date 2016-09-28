@@ -52,9 +52,7 @@
 	}
 }
 
-// selector | width | perspective | origin
-@include modalMix('#forgot-pass-modal', 500, 700, top);
-@include modalMix('#destroy-comment-confirmation', 500, 700, top);
+
 
 body.aa-modal-overlay {
 	overflow-y : hidden;
@@ -225,5 +223,19 @@ body.aa-modal-overlay {
 			min-width                 : 170px;
 			box-shadow                : 0 5px 10px rgba(0, 0, 0, 0.26);
 		}
+	}
+}
+
+/**
+ * ==================== Modal settings ======================
+ * 28.09.2016
+ */
+// selector | width | perspective | origin
+@include modalMix('#forgot-pass-modal', 500, 700, top);
+@include modalMix('#destroy-comment-confirmation', 500, 700, top);
+#forgot-pass-modal {
+	.loader-line-modal {
+		margin-top : -5px;
+		min-height : 4px;
 	}
 }

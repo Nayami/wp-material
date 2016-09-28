@@ -6,6 +6,22 @@ if ( ! function_exists( 'AMapiurl' ) ) {
 		return get_site_url() . '/wp-json/';
 	}
 }
+
+add_action( 'wp_ajax_nopriv_ajx20162128122131', 'ajx20162128122131' );
+add_action( 'wp_ajax_ajx20162128122131', 'ajx20162128122131' );
+function ajx20162128122131()
+{
+	global $_am;
+	$values = [
+		'auth_info' => [
+			'registration_info'     => $_am[ 'network-registration' ],
+			'registration_strategy' => $_am[ 'network-confirmation-flow' ]
+		]
+	];
+	echo json_encode( $values );
+	die;
+}
+
 /**
  * Convert tables to utf8 encoding
  */
@@ -14,10 +30,10 @@ function aa_func_20150827030852()
 {
 	if ( isset( $_POST[ 'do_the_conversion' ] ) ) {
 		global $wpdb;
-		$set_encoding = $_POST['set_encoding'];
-		$tables   = $wpdb->get_results( "SHOW TABLES" );
-		$method   = "Tables_in_" . $wpdb->dbname;
-		$messages = "<div class='updated notice notice-success'><br>";
+		$set_encoding = $_POST[ 'set_encoding' ];
+		$tables       = $wpdb->get_results( "SHOW TABLES" );
+		$method       = "Tables_in_" . $wpdb->dbname;
+		$messages     = "<div class='updated notice notice-success'><br>";
 		foreach ( $tables as $table ) {
 			$wpdb->query( "ALTER TABLE {$table->$method} DEFAULT CHARACTER SET utf8 COLLATE {$set_encoding};" );
 			$wpdb->query( "ALTER TABLE {$table->$method} CONVERT TO CHARACTER SET utf8 COLLATE {$set_encoding};" );
@@ -159,22 +175,21 @@ function ajx20163917023918()
 	die;
 }
 
-
 /**
  * ==================== AUTH ======================
  * 24.09.2016
  */
-add_action('wp_ajax_nopriv_ajx20162924062955', 'ajx20162924062955');
-add_action('wp_ajax_ajx20162924062955', 'ajx20162924062955');
+add_action( 'wp_ajax_nopriv_ajx20162924062955', 'ajx20162924062955' );
+add_action( 'wp_ajax_ajx20162924062955', 'ajx20162924062955' );
 function ajx20162924062955()
 {
-	$data = str_replace('\\','', $_POST['body_data']);
-	$decoded_data = json_decode($data);
-	$login = $decoded_data->fname;
-	$response = [
-		'message'=> null
+	$data         = str_replace( '\\', '', $_POST[ 'body_data' ] );
+	$decoded_data = json_decode( $data );
+	$login        = $decoded_data->fname;
+	$response     = [
+		'message' => null
 	];
-	$user = get_user_by( 'login', $login );
+	$user         = get_user_by( 'login', $login );
 
 	if ( ! $user ) {
 		$response[ 'message' ] = 'notfound';
@@ -182,9 +197,9 @@ function ajx20162924062955()
 		die;
 	}
 	if ( $user && wp_check_password( $decoded_data->passw, $user->data->user_pass, $user->ID ) ) {
-		wp_set_auth_cookie($user->ID);
+		wp_set_auth_cookie( $user->ID );
 
-		$filtered_user = [
+		$filtered_user         = [
 			'ID'              => $user->ID,
 			'display_name'    => $user->data->display_name,
 			'user_email'      => $user->data->user_email,
@@ -196,7 +211,7 @@ function ajx20162924062955()
 			'administrator'   => $user->allcaps[ 'administrator' ],
 			'logged_in'       => true
 		];
-		$response[ 'user' ] = $filtered_user;
+		$response[ 'user' ]    = $filtered_user;
 		$response[ 'message' ] = 'success';
 		echo json_encode( $response );
 		die;

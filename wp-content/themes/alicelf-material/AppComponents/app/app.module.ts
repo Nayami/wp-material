@@ -5,11 +5,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { userRouting } from './user/user.routing';
 
 // SHARED and GLOBS
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './shared/shared.module'; // user, auth, flash
 import { FooterComponent } from './footer/footer.component';
 import { FlashNotificationsComponent } from "./shared/components/notifications.component";
 
-// USER
+// NETWORK MODULE
 import { UserModule } from "./user/user.module"; // * Module
 import { UserComponent } from './user/user.component';
 import { NotFoundComponent } from "./user/user_components/notfound.component";
@@ -18,6 +18,7 @@ import { AMAuthComponent } from "./user/user_components/auth.component";
 import { EnterEmailComponent } from "./user/user_components/enteremail.form.component";
 import { RestorePasswordComponent } from "./user/user_components/restore.password.component";
 
+// COMMENTS
 import { CommentsModule } from "./comments/comments.module"; // * Module
 import { CommentsComponent }  from './comments/comments.component';
 import { FormComponent }  from './comments/comments_childs/Form.component';
@@ -55,15 +56,13 @@ const componentMaybeExists = [
 let totalBootstrap     = [],
     totalDelclarations = [];
 
-for ( let it = componentMaybeExists.length; it--; ) {
-	let amMdl = componentMaybeExists[it];
-	if ( document.getElementsByTagName( amMdl.selector ).length > 0 ) {
-		totalBootstrap.push( amMdl.component );
-		totalDelclarations.push( amMdl.component );
-		totalDelclarations = totalDelclarations.concat( amMdl.childs );
+componentMaybeExists.forEach( ( object, index ) => {
+	if ( document.getElementsByTagName( object.selector ).length > 0 ) {
+		totalBootstrap.push( object.component );
+		totalDelclarations.push( object.component );
+		totalDelclarations = totalDelclarations.concat( object.childs );
 	}
-}
-
+} );
 
 /**
  * ==================== IMPORTS ======================
@@ -78,26 +77,26 @@ let defaultImports = [
 	UserModule,
 	CommentsModule,
 ];
-let newImports = [];
-let availableRoutes = [
-	{ selector: 'user-profile-component', route: userRouting },
-	// ADD THERE ROUTING
-];
-for ( let lt = availableRoutes.length; lt--; ) {
-	let amMdl = availableRoutes[lt];
-	if ( document.getElementsByTagName( amMdl.selector ).length > 0 ) {
-		newImports.push( amMdl.route );
-	}
-}
 
-let totalimplode = defaultImports.concat( newImports );
+let newImports      = [],
+    availableRoutes = [
+	    { selector: 'user-profile-component', route: userRouting },
+	    // ADD THERE ROUTING
+    ];
+
+availableRoutes.forEach( ( object, index ) => {
+	if ( document.getElementsByTagName( object.selector ).length > 0 ) {
+		newImports.push( object.route );
+	}
+} );
+
+let totalImports = defaultImports.concat( newImports );
 
 @NgModule( {
-	imports     : totalimplode,
+	imports     : totalImports,
 	declarations: totalDelclarations,
 	bootstrap   : totalBootstrap
 } )
-
 
 export class AppModule {
 }

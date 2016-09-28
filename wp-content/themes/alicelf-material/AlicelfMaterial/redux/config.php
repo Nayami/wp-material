@@ -537,9 +537,9 @@ Redux::setSection( $opt_name, $section );
  * 22.09.2016
  */
 $section = [
-	'title'  => 'Users Section',
+	'title'  => 'Network',
 	'id'     => 'users-section',
-	'desc'   => '',
+	'desc'   => 'User settiongs, network behavior, registration and authentification flow.',
 	'icon'   => 'el el-group',
 	'fields' => [
 		[
@@ -561,6 +561,33 @@ $section = [
 			'default'  => 'My Network',
 			'validate' => 'not_empty',
 			'msg'      => 'The title cannot be blank'
+		],
+		[
+			'id'       => 'network-registration',
+			'type'     => 'button_set',
+			'title'    => __( 'Enable Registration', 'alicelf-adaptive' ),
+			'subtitle' => __( 'Your website does registration?', 'alicelf-adaptive' ),
+			'desc'     => __( '', 'alicelf-adaptive' ),
+			'multi'    => false,
+			'options'  => [
+				'yes' => 'Yes',
+				'no'  => 'No',
+			],
+			'default'  => 'yes',
+		],
+		[
+			'id'       => 'network-confirmation-flow',
+			'type'     => 'button_set',
+			'title'    => __( 'Registration process', 'alicelf-adaptive' ),
+			'subtitle' => __( 'Email confirmation options', 'alicelf-adaptive' ),
+			'desc'     => __( 'Note: "Without confirmation" can be vulnerable for dumy emails', 'alicelf-adaptive.' ),
+			'multi'    => false,
+			'options'  => [
+				'confirm_before' => 'Confirm email before registration',
+				'confirm_after'  => 'Confirm after registration',
+				'no_confirm'     => 'Without confirmation'
+			],
+			'default'  => 'no_confirm',
 		]
 	]
 ];

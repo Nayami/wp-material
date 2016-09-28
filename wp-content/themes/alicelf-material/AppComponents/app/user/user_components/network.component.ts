@@ -2,6 +2,7 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
 import { Router } from "@angular/router";
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
+import { AppSettingsService } from "../../shared/services/app.settings.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -26,18 +27,14 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 export class NetworkComponent {
 
 	constructor( private router: Router,
+	             private appSettings: AppSettingsService,
 	             private auth: AuthGlobalService,
 	             private userService: UserGlobalService ) {
-		if ( !auth.loaded ) {
-			userService.getCurrentUser()
-			           .subscribe( user => {
-				           auth.loaded = true;
-				           auth.authorized = user.ID ? true : false;
-				           userService.currentUser = user;
+		if(!appSettings.loaded)
+			appSettings.setSettings();
 
-				           if ( !auth.authorized )
-					           router.navigate( ['screen/auth'] )
-			           } );
+		if ( !auth.loaded ) {
+			this.loadAuthInfo();
 		} else {
 			this.router.events.subscribe( event => {
 				if ( event.constructor.name === 'NavigationEnd' ) {
@@ -47,7 +44,18 @@ export class NetworkComponent {
 				}
 			} );
 		}
+	}
 
+	loadAuthInfo() {
+		return this.userService.getCurrentUser()
+		           .subscribe( user => {
+			           this.auth.loaded = true;
+			           this.auth.authorized = user.ID ? true : false;
+			           this.userService.currentUser = user;
+			           if ( !this.auth.authorized ) {
+				           this.router.navigate( ['screen/auth'] )
+			           }
+		           } );
 	}
 
 }

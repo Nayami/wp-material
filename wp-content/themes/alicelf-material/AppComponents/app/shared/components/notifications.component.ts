@@ -29,11 +29,8 @@ import {FlashNoticeService} from '../services/alert.dialog.modal/flash.notices'
 } )
 export class FlashNotificationsComponent {
 
-	private componentNotices;
-
 	constructor( private flashes: FlashNoticeService ) {
-		flashes.notificationsChange.subscribe( changes => {
-			this.componentNotices = changes;
+		flashes.notificationsChange.subscribe( () => {
 			if ( flashes.notifications.length > 2 ) {
 				let cntr = flashes.notifications.length;
 				if ( cntr > 3 ) {

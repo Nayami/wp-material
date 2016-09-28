@@ -6,8 +6,6 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 } )
 export class UserComponent implements OnInit {
 
-
-
 	constructor( private  elm: ElementRef ) {
 	}
 
