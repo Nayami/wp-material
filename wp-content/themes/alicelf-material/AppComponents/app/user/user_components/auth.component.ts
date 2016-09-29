@@ -34,7 +34,7 @@ export class AMAuthComponent {
 	private loginFormHandler: FormGroup;
 	private registerFormHandler: FormGroup;
 	private forgotEmitter: boolean = false;
-	private strategy : string = null;
+	private strategy: string = null;
 
 	spinner: boolean = false;
 
@@ -52,7 +52,7 @@ export class AMAuthComponent {
 		}
 
 		this.loginFormHandler = this.fbuilder.group( {
-			fname: ["", Validators.required],
+			fname: ["", [Validators.required, Validators.minLength(5)]],
 			passw: ["", Validators.required]
 		} );
 
@@ -61,36 +61,44 @@ export class AMAuthComponent {
 			           appSettings.settings = data;
 			           appSettings.loaded = true;
 
-			           if(appSettings.settings.auth_info.registration_info === 'yes') {
+			           if ( appSettings.settings.auth_info.registration_info === 'yes' ) {
 				           this.strategy = appSettings.settings.auth_info.registration_strategy;
 				           this.setRegistrationForm();
 			           }
 
-		           } )
+		           } );
 
+	}
+
+	static authEmailValidation( control: FormControl ): {[s:string]:boolean} {
+		let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+		if ( !pattern.test( control.value ) ) {
+			return { email: true };
+		}
+		return null;
 	}
 
 	/**
 	 * ==================== Set form rules ======================
-	 * 29.09.2016
 	 */
 	setRegistrationForm() {
-		switch (this.strategy) {
+		switch ( this.strategy ) {
 			case "no_confirm" :
 				this.registerFormHandler = this.fbuilder.group( {
-					login  : ["", Validators.required],
+					login  : ["", [AMAuthComponent.authEmailValidation]],
 					passw  : ["", Validators.required],
 					confirm: ["", Validators.required]
 				} );
 				break;
 			case "confirm_before" :
 				this.registerFormHandler = this.fbuilder.group( {
-					login  : ["", Validators.required]
+					login: ["", AMAuthComponent.authEmailValidation]
 				} );
 				break;
 			case "confirm_after" :
 				this.registerFormHandler = this.fbuilder.group( {
-					login  : ["", Validators.required],
+					login  : ["", AMAuthComponent.authEmailValidation],
 					passw  : ["", Validators.required],
 					confirm: ["", Validators.required]
 				} );
@@ -111,10 +119,8 @@ export class AMAuthComponent {
 		           } );
 	}
 
-
 	/**
 	 * ==================== Login Action ======================
-	 * 23.09.2016
 	 */
 	doLogin() {
 		if ( this.loginFormHandler.status === "VALID" ) {
@@ -157,18 +163,43 @@ export class AMAuthComponent {
 
 	/**
 	 * ==================== Registration Action ======================
-	 * 23.09.2016
 	 */
 	doRegister() {
-		console.log( this.registerFormHandler.value );
 		if ( this.registerFormHandler.status === "VALID" ) {
+			let formData = this.registerFormHandler.value;
 
+			if ( this.strategy === 'confirm_before' ) {
+
+			} else {
+				// Confirm after or withour confirmaiton at all
+				if ( formData.passw === formData.confirm ) {
+
+
+					this.flashes.attachNotifications( {
+						message : 'Success!',
+						cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
+						type    : 'dismissable',
+					} );
+				} else {
+					this.flashes.attachNotifications( {
+						message : 'Password and confirmation should match!',
+						cssClass: 'mdl-color--amber-800 mdl-color-text--amber-50',
+						type    : 'dismissable',
+					} );
+				}
+			}
+
+		} else {
+			this.flashes.attachNotifications( {
+				message : 'Fill correct all fields!',
+				cssClass: 'mdl-color--red-800 mdl-color-text--red-50',
+				type    : 'dismissable',
+			} );
 		}
 	}
 
 	/**
 	 * ==================== Forgot Password click ======================
-	 * 23.09.2016
 	 */
 	invokeForgotPassword() {
 		this.forgotEmitter = true;
@@ -177,6 +208,5 @@ export class AMAuthComponent {
 	launchInfoBack( event ) {
 		this.forgotEmitter = event;
 	}
-
 
 }
