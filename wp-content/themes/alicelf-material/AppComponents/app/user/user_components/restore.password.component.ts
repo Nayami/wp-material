@@ -75,7 +75,12 @@ export class RestorePasswordComponent implements OnDestroy {
 						    if ( !this.auth.authorized ) {
 							    this.router.navigate( ['screen/auth'] )
 						    } else {
-							    this.router.navigate( ['/'] )
+							    this.router.navigate( ['/'] );
+							    this.flashes.attachNotifications( {
+								    message : 'Success, you are logged in!',
+								    cssClass: 'mdl-color--success-800 mdl-color-text--success-50',
+								    type    : 'dismissable',
+							    } );
 						    }
 					    } else {
 						    this.flashes.attachNotifications( {
