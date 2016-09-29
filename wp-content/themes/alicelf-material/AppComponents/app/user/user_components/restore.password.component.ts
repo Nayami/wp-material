@@ -47,6 +47,7 @@ export class RestorePasswordComponent implements OnDestroy {
 			                               this.checkInfo( data )
 			                                   .subscribe( response => {
 				                                   if ( response ) {
+					                                   console.log( response ); // @TODO: Confirm Before
 					                                   this.checkdata.data = response;
 				                                   }
 				                                   this.checkdata.loaded = true;

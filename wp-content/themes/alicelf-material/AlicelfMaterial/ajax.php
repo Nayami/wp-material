@@ -260,8 +260,8 @@ function ajx20165728055701()
 	$mail_type = $decoded_data->action === 'reset' ? 'Reset Password' : 'Confirmation Link';
 	$mail_body = "Your activation link: <br>";
 	$mail_body .= "<a href='{$email_link}'>{$mail_type}</a>";
-	$from         = get_option( 'admin_email' );
-	$headers      = "From: {$from}\r\n";
+	$from    = get_option( 'admin_email' );
+	$headers = "From: {$from}\r\n";
 
 	$sent_message = wp_mail( $email, $mail_type, $mail_body, $headers );
 
@@ -345,5 +345,82 @@ function ajx20160928110922()
 	}
 
 	echo json_encode( $ret_val );
+	die;
+}
+
+/**
+ * ==================== REGISTRATION FLOW ======================
+ * 29.09.2016
+ */
+add_action( 'wp_ajax_nopriv_ajx20162929092956', 'ajx20162929092956' );
+add_action( 'wp_ajax_ajx20162929092956', 'ajx20162929092956' );
+function ajx20162929092956()
+{
+	global $wpdb, $_am;
+	$strategy             = $_am[ 'network-confirmation-flow' ]; // confirm_before confirm_after no_confirm
+	$registration_allowed = $_am[ 'network-registration' ];
+	$table                = $wpdb->prefix . "user_reset_passwords";
+	$data                 = str_replace( '\\', '', $_POST[ 'body_data' ] );
+	$decoded_data         = json_decode( $data );
+	$response_data        = [
+		'status'     => 'failed',
+		'user'       => null,
+		'check_mail' => null
+	];
+	if ( $registration_allowed === 'yes' ) {
+		$user = get_user_by( 'email', $decoded_data->login );
+
+		if ( $user ) {
+			$response_data[ 'status' ] = 'user_exists';
+			echo json_encode( $response_data );
+			die;
+		}
+
+		$link       = get_am_network_endpoint() . "/screen/restorepass";
+		$token      = sha1( uniqid() . $decoded_data->login );
+		$email_link = $link . "?token=" . $token . "&email=" . $decoded_data->login;
+		$mail_body  = "Your activation link: <br>";
+		$mail_body .= "<a href='{$email_link}'>Confirmation Link</a>";
+		$from    = get_option( 'admin_email' );
+		$headers = "From: {$from}\r\n";
+
+		if ( $strategy === 'confirm_before' ) {
+
+		} else { // confirm_after no_confirm
+			$userdata = [
+				'user_login' => $decoded_data->login,
+				'user_email' => $decoded_data->login,
+				'user_pass'  => $decoded_data->passw
+			];
+			wp_insert_user( $userdata );
+			$new_user = get_user_by( 'email', $decoded_data->login );
+			$response_data[ 'user' ] = [
+				'ID'              => $new_user->ID,
+				'display_name'    => $new_user->data->display_name,
+				'user_email'      => $new_user->data->user_email,
+				'user_login'      => $new_user->data->user_login,
+				'user_nicename'   => $new_user->data->user_nicename,
+				'user_registered' => $new_user->data->user_registered,
+				'user_url'        => $new_user->data->user_url,
+				'roles'           => $new_user->roles,
+				'administrator'   => $new_user->allcaps[ 'administrator' ],
+				'logged_in'       => true
+			];
+			if ( $strategy === 'confirm_after' ) {
+				$wpdb->insert( $table, [
+					'hash'   => $token,
+					'email'  => $decoded_data->login,
+					'action' => 'confirm',
+					'time'   => date( 'Y-m-d H:i:s' )
+				], [ '%s', '%s', '%s', '%s' ] );
+				wp_mail( $decoded_data->login, "Confirmation Link", $mail_body, $headers );
+				$response_data[ 'check_mail' ] = true;
+			}
+			$response_data[ 'status' ]     = 'success';
+			wp_set_auth_cookie($new_user->ID);
+		}
+
+	}
+	echo json_encode( $response_data );
 	die;
 }

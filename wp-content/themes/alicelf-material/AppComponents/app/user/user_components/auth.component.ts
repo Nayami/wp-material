@@ -4,7 +4,10 @@ import { Component, Output,
 
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs/Rx';
+import { Http, Response, Headers } from '@angular/http';
+import { Observable, Subscription } from 'rxjs/Rx';
+import 'rxjs/Rx';
+
 import { FlashNoticeService } from "../../shared/services/alert.dialog.modal/flash.notices";
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
@@ -39,6 +42,7 @@ export class AMAuthComponent {
 	spinner: boolean = false;
 
 	constructor( private router: Router,
+	             private http: Http,
 	             private appSettings: AppSettingsService,
 	             private userService: UserGlobalService,
 	             private auth: AuthGlobalService,
@@ -52,7 +56,7 @@ export class AMAuthComponent {
 		}
 
 		this.loginFormHandler = this.fbuilder.group( {
-			fname: ["", [Validators.required, Validators.minLength(5)]],
+			fname: ["", [Validators.required, Validators.minLength( 5 )]],
 			passw: ["", Validators.required]
 		} );
 
@@ -169,17 +173,52 @@ export class AMAuthComponent {
 			let formData = this.registerFormHandler.value;
 
 			if ( this.strategy === 'confirm_before' ) {
-
+				// @TODO: Confirm Before
 			} else {
 				// Confirm after or withour confirmaiton at all
 				if ( formData.passw === formData.confirm ) {
 
+					let headers = new Headers( { "Content-Type": "application/x-www-form-urlencoded" } );
+					const body = "action=ajx20162929092956&body_data=" + JSON.stringify( formData );
+					this.http.post( AMdefaults.ajaxurl, body, { headers: headers } )
+					    .map( ( response: Response ) => response.json() )
+					    .subscribe( data => {
 
-					this.flashes.attachNotifications( {
-						message : 'Success!',
-						cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
-						type    : 'dismissable',
-					} );
+						    switch (data.status) {
+							    case "user_exists" :
+								    this.flashes.attachNotifications( {
+								    	message : 'Sorry, this email already taken!',
+								    	cssClass: 'mdl-color--amber-800 mdl-color-text--amber-50',
+								    	type    : 'dismissable',
+								    } );
+								    break;
+							    case "success" :
+								    this.flashes.attachNotifications( {
+									    message : 'You successfully registered!',
+									    cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
+									    type    : 'dismissable',
+								    } );
+								    if(data.check_mail) {
+									    this.flashes.attachNotifications( {
+										    message : 'Check your email',
+										    cssClass: 'mdl-color--blue-800 mdl-color-text--blue-50',
+										    type    : 'dismissable',
+									    } );
+								    }
+								    this.userService.currentUser = data.user;
+								    this.auth.loaded = true;
+								    this.auth.authorized = true;
+								    this.router.navigate( [''] );
+								    break;
+							    default :
+								    console.log( "unknown" );
+						    }
+						    (<FormControl>this.registerFormHandler.controls['login']).setValue("", {});
+						    (<FormControl>this.registerFormHandler.controls['passw']).setValue("", {});
+						    (<FormControl>this.registerFormHandler.controls['confirm']).setValue("", {});
+					    } );
+
+
 				} else {
 					this.flashes.attachNotifications( {
 						message : 'Password and confirmation should match!',
