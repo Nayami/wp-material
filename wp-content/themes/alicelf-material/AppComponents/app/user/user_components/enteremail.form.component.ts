@@ -65,7 +65,7 @@ export class EnterEmailComponent implements OnDestroy {
 	submitProcess( value ) {
 		this.progress = true;
 		if ( EnterEmailComponent.validateEmail( value ) ) {
-			this.confirmForm = this.sendData( value )
+			this.confirmForm = this.sendData( {email : value, action : 'reset'} )
 			                       .subscribe( data => {
 				                       switch (data.status) {
 					                       case 'notfound' :

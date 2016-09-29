@@ -34,6 +34,7 @@ export class AMAuthComponent {
 	private loginFormHandler: FormGroup;
 	private registerFormHandler: FormGroup;
 	private forgotEmitter: boolean = false;
+	private strategy : string = null;
 
 	spinner: boolean = false;
 
@@ -49,20 +50,55 @@ export class AMAuthComponent {
 			if ( this.auth.authorized )
 				this.router.navigate( [''] )
 		}
-		if(!appSettings.loaded)
-			appSettings.setSettings();
 
 		this.loginFormHandler = this.fbuilder.group( {
 			fname: ["", Validators.required],
 			passw: ["", Validators.required]
 		} );
-		this.registerFormHandler = this.fbuilder.group( {
-			login  : ["", Validators.required],
-			passw  : ["", Validators.required],
-			confirm: ["", Validators.required]
-		} );
+
+		appSettings.getSettings()
+		           .subscribe( data => {
+			           appSettings.settings = data;
+			           appSettings.loaded = true;
+
+			           if(appSettings.settings.auth_info.registration_info === 'yes') {
+				           this.strategy = appSettings.settings.auth_info.registration_strategy;
+				           this.setRegistrationForm();
+			           }
+
+		           } )
+
 	}
 
+	/**
+	 * ==================== Set form rules ======================
+	 * 29.09.2016
+	 */
+	setRegistrationForm() {
+		switch (this.strategy) {
+			case "no_confirm" :
+				this.registerFormHandler = this.fbuilder.group( {
+					login  : ["", Validators.required],
+					passw  : ["", Validators.required],
+					confirm: ["", Validators.required]
+				} );
+				break;
+			case "confirm_before" :
+				this.registerFormHandler = this.fbuilder.group( {
+					login  : ["", Validators.required]
+				} );
+				break;
+			case "confirm_after" :
+				this.registerFormHandler = this.fbuilder.group( {
+					login  : ["", Validators.required],
+					passw  : ["", Validators.required],
+					confirm: ["", Validators.required]
+				} );
+				break;
+			default :
+				console.log( "unknown" );
+		}
+	}
 
 	loadAuthInfo() {
 		return this.userService.getCurrentUser()
@@ -124,7 +160,10 @@ export class AMAuthComponent {
 	 * 23.09.2016
 	 */
 	doRegister() {
+		console.log( this.registerFormHandler.value );
+		if ( this.registerFormHandler.status === "VALID" ) {
 
+		}
 	}
 
 	/**

@@ -240,11 +240,13 @@ add_action( 'wp_ajax_nopriv_ajx20165728055701', 'ajx20165728055701' );
 add_action( 'wp_ajax_ajx20165728055701', 'ajx20165728055701' );
 function ajx20165728055701()
 {
-	$email      = str_replace( '\\"', '', $_POST[ 'body_data' ] );
-	$link       = get_am_network_endpoint() . "/screen/restorepass";
-	$token      = sha1( uniqid() . $email );
-	$email_link = $link . "?token=" . $token . "&email=" . $email;
-	$ret_val    = [
+	$data         = str_replace( '\\', '', $_POST[ 'body_data' ] );
+	$decoded_data = json_decode( $data );
+	$email        = $decoded_data->email;
+	$link         = get_am_network_endpoint() . "/screen/restorepass";
+	$token        = sha1( uniqid() . $email );
+	$email_link   = $link . "?token=" . $token . "&email=" . $email;
+	$ret_val      = [
 		'email'  => $email,
 		'status' => 'fail',
 		'reason' => null
@@ -255,12 +257,13 @@ function ajx20165728055701()
 		echo json_encode( $ret_val );
 		die;
 	}
-
+	$mail_type = $decoded_data->action === 'reset' ? 'Reset Password' : 'Confirmation Link';
 	$mail_body = "Your activation link: <br>";
-	$mail_body .= "<a href='{$email_link}'>Reset Password</a>";
+	$mail_body .= "<a href='{$email_link}'>{$mail_type}</a>";
 	$from         = get_option( 'admin_email' );
 	$headers      = "From: {$from}\r\n";
-	$sent_message = wp_mail( $email, 'Reset Password', $mail_body, $headers );
+
+	$sent_message = wp_mail( $email, $mail_type, $mail_body, $headers );
 
 	if ( $sent_message ) {
 		global $wpdb;
@@ -268,7 +271,7 @@ function ajx20165728055701()
 		$wpdb->insert( $table, [
 			'hash'   => $token,
 			'email'  => $email,
-			'action' => 'reset',
+			'action' => $decoded_data->action,
 			'time'   => date( 'Y-m-d H:i:s' )
 		], [ '%s', '%s', '%s', '%s' ] );
 		$ret_val[ 'status' ] = 'success';
@@ -337,7 +340,7 @@ function ajx20160928110922()
 				'logged_in'       => true
 			];
 			$ret_val[ 'status' ] = 'success';
-			$wpdb->delete( $table, ['email'=> $decoded_data->email], ['%s'] );
+			$wpdb->delete( $table, [ 'email' => $decoded_data->email ], [ '%s' ] );
 		}
 	}
 

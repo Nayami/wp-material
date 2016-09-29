@@ -52,8 +52,6 @@
 	}
 }
 
-
-
 body.aa-modal-overlay {
 	overflow-y : hidden;
 	.mdl-layout__header {
@@ -208,6 +206,24 @@ body.aa-modal-overlay {
  * ==================== Notifications ======================
  * 27.09.2016
  */
+@mixin am-alert() {
+	display                   : block;
+	margin-bottom             : 5px;
+	padding                   : 10px 15px;
+	border-top-left-radius    : 2px;
+	border-bottom-left-radius : 2px;
+	min-width                 : 170px;
+	box-shadow                : 0 5px 10px rgba(0, 0, 0, 0.26);
+}
+
+.am-alert {
+	display       : block;
+	margin-bottom : 5px;
+	padding       : 7px 12px;
+	border-radius : 2px;
+	box-shadow    : 0 3px 10px rgba(0, 0, 0, 0.26);
+}
+
 #header-notifications {
 	position : relative;
 	ul {
@@ -215,13 +231,7 @@ body.aa-modal-overlay {
 		top      : 0;
 		right    : 0;
 		li {
-			display                   : block;
-			margin-bottom             : 5px;
-			padding                   : 10px 15px;
-			border-top-left-radius    : 2px;
-			border-bottom-left-radius : 2px;
-			min-width                 : 170px;
-			box-shadow                : 0 5px 10px rgba(0, 0, 0, 0.26);
+			@include am-alert();
 		}
 	}
 }
