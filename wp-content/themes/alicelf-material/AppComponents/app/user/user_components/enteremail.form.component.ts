@@ -67,7 +67,24 @@ export class EnterEmailComponent implements OnDestroy {
 		if ( EnterEmailComponent.validateEmail( value ) ) {
 			this.confirmForm = this.sendData( value )
 			                       .subscribe( data => {
-				                       console.log( data );
+				                       switch (data.status) {
+					                       case 'notfound' :
+						                       this.flashes.attachNotifications( {
+							                       message : 'User with this email doesn`t exist',
+							                       cssClass: 'mdl-color--red-900 mdl-color-text--red-50',
+							                       type    : 'dismissable',
+						                       } );
+						                       break;
+					                       case 'success' :
+						                       this.flashes.attachNotifications( {
+							                       message : 'Check your email '+ data.email,
+							                       cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
+							                       type    : 'dismissable',
+						                       } );
+						                       break;
+					                       default :
+						                       console.log( "unknown" );
+				                       }
 				                       this.closeModal();
 			                       } )
 		} else {
@@ -84,7 +101,7 @@ export class EnterEmailComponent implements OnDestroy {
 		let headers = new Headers( { "Content-Type": "application/x-www-form-urlencoded" } );
 		const body = "action=ajx20165728055701&body_data=" + JSON.stringify( value );
 		return this.http.post( AMdefaults.ajaxurl, body, { headers: headers } )
-		           .map( response => response.json() )
+		           .map( ( response: Response ) => response.json() );
 	}
 
 	// close modal via click

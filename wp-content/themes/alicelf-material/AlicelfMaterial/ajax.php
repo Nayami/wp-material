@@ -245,11 +245,18 @@ function ajx20165728055701()
 	$token      = sha1( uniqid() . $email );
 	$email_link = $link . "?token=" . $token . "&email=" . $email;
 	$ret_val    = [
-		'data'    => $email,
-		'status'  => 'fail',
-		'message' => null
+		'email'  => $email,
+		'status' => 'fail',
+		'reason' => null
 	];
-	$mail_body  = "Your activation link: <br>";
+
+	if ( ! get_user_by( 'email', $email ) ) {
+		$ret_val[ 'status' ] = 'notfound';
+		echo json_encode( $ret_val );
+		die;
+	}
+
+	$mail_body = "Your activation link: <br>";
 	$mail_body .= "<a href='{$email_link}'>Reset Password</a>";
 	$from         = get_option( 'admin_email' );
 	$headers      = "From: {$from}\r\n";
@@ -265,6 +272,73 @@ function ajx20165728055701()
 			'time'   => date( 'Y-m-d H:i:s' )
 		], [ '%s', '%s', '%s', '%s' ] );
 		$ret_val[ 'status' ] = 'success';
+	}
+
+	echo json_encode( $ret_val );
+	die;
+}
+
+/**
+ * ==================== Check if hash exists in db ======================
+ * 28.09.2016
+ */
+add_action( 'wp_ajax_nopriv_ajx20161128111129', 'ajx20161128111129' );
+add_action( 'wp_ajax_ajx20161128111129', 'ajx20161128111129' );
+function ajx20161128111129()
+{
+	global $wpdb;
+	$table        = $wpdb->prefix . "user_reset_passwords";
+	$data         = str_replace( '\\', '', $_POST[ 'body_data' ] );
+	$decoded_data = json_decode( $data );
+	$reset_data   = $wpdb->get_row( "SELECT hash, email, action, time
+																		FROM {$table}
+																		WHERE hash='{$decoded_data->token}'" );
+	echo json_encode( $reset_data );
+	die;
+}
+
+/**
+ * ==================== Restore Pass request ======================
+ * 28.09.2016
+ */
+add_action( 'wp_ajax_nopriv_ajx20160928110922', 'ajx20160928110922' );
+add_action( 'wp_ajax_ajx20160928110922', 'ajx20160928110922' );
+function ajx20160928110922()
+{
+	global $wpdb;
+	$table        = $wpdb->prefix . "user_reset_passwords";
+	$data         = str_replace( '\\', '', $_POST[ 'body_data' ] );
+	$decoded_data = json_decode( $data );
+	$newpassword  = $decoded_data->newpass;
+	$ret_val      = [
+		'status' => 'fail',
+		'email'  => $decoded_data->email,
+		'user'   => null
+	];
+	$reset_data   = $wpdb->get_row( "SELECT hash, email, action, time
+																		FROM {$table}
+																		WHERE hash='{$decoded_data->hash}'" );
+
+	if ( $reset_data ) {
+		$user = get_user_by( 'email', $decoded_data->email );
+		if ( $user ) {
+			wp_set_password( $newpassword, $user->ID );
+			wp_set_auth_cookie( $user->ID );
+			$ret_val[ 'user' ]   = [
+				'ID'              => $user->ID,
+				'display_name'    => $user->data->display_name,
+				'user_email'      => $user->data->user_email,
+				'user_login'      => $user->data->user_login,
+				'user_nicename'   => $user->data->user_nicename,
+				'user_registered' => $user->data->user_registered,
+				'user_url'        => $user->data->user_url,
+				'roles'           => $user->roles,
+				'administrator'   => $user->allcaps[ 'administrator' ],
+				'logged_in'       => true
+			];
+			$ret_val[ 'status' ] = 'success';
+			$wpdb->delete( $table, ['email'=> $decoded_data->email], ['%s'] );
+		}
 	}
 
 	echo json_encode( $ret_val );

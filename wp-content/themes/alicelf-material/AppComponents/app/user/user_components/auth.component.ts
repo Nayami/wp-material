@@ -93,7 +93,7 @@ export class AMAuthComponent {
 						    this.router.navigate( [''] );
 						    this.flashes.attachNotifications( {
 							    message : 'Success !',
-							    cssClass: 'mdl-color--green-900 mdl-color-text--green-50',
+							    cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
 							    type    : 'dismissable',
 						    } );
 						    break;
