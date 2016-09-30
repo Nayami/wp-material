@@ -175,7 +175,10 @@ export class AMAuthComponent {
 			if ( this.strategy === 'confirm_before' ) {
 				// @TODO: Confirm Before
 			} else {
-				// Confirm after or withour confirmaiton at all
+
+				/**
+				 * REGISTRATION FOR confirm after and without confirm
+				 */
 				if ( formData.passw === formData.confirm ) {
 
 					let headers = new Headers( { "Content-Type": "application/x-www-form-urlencoded" } );

@@ -12,6 +12,59 @@ function aa_func_20162528072509()
 	return "text/html";
 }
 
+// ============= Am_user =============
+if ( ! function_exists( 'am_user' ) ) {
+	function am_user( $user_id )
+	{
+		$user = get_user_by( 'ID', $user_id );
+		if ( ! $user )
+			return false;
+
+		return [
+			'ID'              => $user->ID,
+			'display_name'    => $user->data->display_name,
+			'user_email'      => $user->data->user_email,
+			'user_login'      => $user->data->user_login,
+			'user_nicename'   => $user->data->user_nicename,
+			'user_registered' => $user->data->user_registered,
+			'user_url'        => $user->data->user_url,
+			'roles'           => $user->roles,
+			'administrator'   => $user->allcaps[ 'administrator' ],
+			'network_meta'    => [
+				'email_confirmed' => get_user_meta( $user->ID, 'am_email_confirmed', true )
+			]
+		];
+	}
+}
+
+if ( ! function_exists( 'send_me_confirmation_registration_link' ) ) {
+
+	/**
+	 * @param $email
+	 * @param string $type = reset/confirm
+	 *
+	 * @return bool|null|string
+	 */
+	function send_me_confirmation_registration_link( $email, $type = 'reset' )
+	{
+		if ( ! $email )
+			return false;
+		$mail_type  = $type === 'reset' ? 'Reset Password' : 'Confirmation Link';
+		$link       = get_am_network_endpoint() . "/screen/restorepass";
+		$token      = sha1( uniqid() . $email );
+		$email_link = $link . "?token=" . $token . "&email=" . $email;
+		$mail_body  = "Your activation link: <br>";
+		$mail_body .= "<a href='{$email_link}'>{$mail_type}</a>";
+		$from              = get_option( 'admin_email' );
+		$headers           = "From: {$from}\r\n";
+		$send_mail_process = wp_mail( $email, $mail_type, $mail_body, $headers );
+		if ( $send_mail_process )
+			return $token;
+
+		return null;
+	}
+}
+
 /**
  * ==================== SETTINGS ======================
  * 28.09.2016
@@ -165,19 +218,7 @@ function ajx20163917023918()
 
 	if ( is_user_logged_in() ) {
 		$user          = wp_get_current_user();
-		$return_values = [
-			'ID'              => $user->ID,
-			'display_name'    => $user->data->display_name,
-			'user_email'      => $user->data->user_email,
-			'user_login'      => $user->data->user_login,
-			'user_nicename'   => $user->data->user_nicename,
-			'user_registered' => $user->data->user_registered,
-			'user_url'        => $user->data->user_url,
-			'roles'           => $user->roles,
-			'administrator'   => $user->allcaps[ 'administrator' ],
-			'logged_in'       => true
-		];
-
+		$return_values = am_user( $user->ID );
 	}
 
 	echo json_encode( $return_values );
@@ -208,18 +249,7 @@ function ajx20162924062955()
 	if ( $user && wp_check_password( $decoded_data->passw, $user->data->user_pass, $user->ID ) ) {
 		wp_set_auth_cookie( $user->ID );
 
-		$filtered_user         = [
-			'ID'              => $user->ID,
-			'display_name'    => $user->data->display_name,
-			'user_email'      => $user->data->user_email,
-			'user_login'      => $user->data->user_login,
-			'user_nicename'   => $user->data->user_nicename,
-			'user_registered' => $user->data->user_registered,
-			'user_url'        => $user->data->user_url,
-			'roles'           => $user->roles,
-			'administrator'   => $user->allcaps[ 'administrator' ],
-			'logged_in'       => true
-		];
+		$filtered_user         = am_user( $user->ID );
 		$response[ 'user' ]    = $filtered_user;
 		$response[ 'message' ] = 'success';
 		echo json_encode( $response );
@@ -243,9 +273,6 @@ function ajx20165728055701()
 	$data         = str_replace( '\\', '', $_POST[ 'body_data' ] );
 	$decoded_data = json_decode( $data );
 	$email        = $decoded_data->email;
-	$link         = get_am_network_endpoint() . "/screen/restorepass";
-	$token        = sha1( uniqid() . $email );
-	$email_link   = $link . "?token=" . $token . "&email=" . $email;
 	$ret_val      = [
 		'email'  => $email,
 		'status' => 'fail',
@@ -257,15 +284,10 @@ function ajx20165728055701()
 		echo json_encode( $ret_val );
 		die;
 	}
-	$mail_type = $decoded_data->action === 'reset' ? 'Reset Password' : 'Confirmation Link';
-	$mail_body = "Your activation link: <br>";
-	$mail_body .= "<a href='{$email_link}'>{$mail_type}</a>";
-	$from    = get_option( 'admin_email' );
-	$headers = "From: {$from}\r\n";
 
-	$sent_message = wp_mail( $email, $mail_type, $mail_body, $headers );
+	$token = send_me_confirmation_registration_link( $email, 'reset' );
 
-	if ( $sent_message ) {
+	if ( $token ) {
 		global $wpdb;
 		$table = $wpdb->prefix . "user_reset_passwords";
 		$wpdb->insert( $table, [
@@ -293,9 +315,8 @@ function ajx20161128111129()
 	$table        = $wpdb->prefix . "user_reset_passwords";
 	$data         = str_replace( '\\', '', $_POST[ 'body_data' ] );
 	$decoded_data = json_decode( $data );
-	$reset_data   = $wpdb->get_row( "SELECT hash, email, action, time
-																		FROM {$table}
-																		WHERE hash='{$decoded_data->token}'" );
+	$reset_data   = $wpdb->get_row( "SELECT hash, email, action, time FROM {$table}
+																		WHERE hash='{$decoded_data->token}' AND email='{$decoded_data->email}'" );
 	echo json_encode( $reset_data );
 	die;
 }
@@ -327,18 +348,7 @@ function ajx20160928110922()
 		if ( $user ) {
 			wp_set_password( $newpassword, $user->ID );
 			wp_set_auth_cookie( $user->ID );
-			$ret_val[ 'user' ]   = [
-				'ID'              => $user->ID,
-				'display_name'    => $user->data->display_name,
-				'user_email'      => $user->data->user_email,
-				'user_login'      => $user->data->user_login,
-				'user_nicename'   => $user->data->user_nicename,
-				'user_registered' => $user->data->user_registered,
-				'user_url'        => $user->data->user_url,
-				'roles'           => $user->roles,
-				'administrator'   => $user->allcaps[ 'administrator' ],
-				'logged_in'       => true
-			];
+			$ret_val[ 'user' ]   = am_user( $user->ID );
 			$ret_val[ 'status' ] = 'success';
 			$wpdb->delete( $table, [ 'email' => $decoded_data->email ], [ '%s' ] );
 		}
@@ -368,56 +378,42 @@ function ajx20162929092956()
 		'check_mail' => null
 	];
 	if ( $registration_allowed === 'yes' ) {
-		$user = get_user_by( 'email', $decoded_data->login );
+		$check_user = get_user_by( 'email', $decoded_data->login );
 
-		if ( $user ) {
+		if ( $check_user ) {
 			$response_data[ 'status' ] = 'user_exists';
 			echo json_encode( $response_data );
 			die;
 		}
 
-		$link       = get_am_network_endpoint() . "/screen/restorepass";
-		$token      = sha1( uniqid() . $decoded_data->login );
-		$email_link = $link . "?token=" . $token . "&email=" . $decoded_data->login;
-		$mail_body  = "Your activation link: <br>";
-		$mail_body .= "<a href='{$email_link}'>Confirmation Link</a>";
-		$from    = get_option( 'admin_email' );
-		$headers = "From: {$from}\r\n";
-
 		if ( $strategy === 'confirm_before' ) {
 
-		} else { // confirm_after no_confirm
+		} else {
 			$userdata = [
 				'user_login' => $decoded_data->login,
 				'user_email' => $decoded_data->login,
 				'user_pass'  => $decoded_data->passw
 			];
 			wp_insert_user( $userdata );
-			$new_user = get_user_by( 'email', $decoded_data->login );
-			$response_data[ 'user' ] = [
-				'ID'              => $new_user->ID,
-				'display_name'    => $new_user->data->display_name,
-				'user_email'      => $new_user->data->user_email,
-				'user_login'      => $new_user->data->user_login,
-				'user_nicename'   => $new_user->data->user_nicename,
-				'user_registered' => $new_user->data->user_registered,
-				'user_url'        => $new_user->data->user_url,
-				'roles'           => $new_user->roles,
-				'administrator'   => $new_user->allcaps[ 'administrator' ],
-				'logged_in'       => true
-			];
+
+			$user = get_user_by( 'email', $decoded_data->login );
+			update_user_meta( $user->ID, 'am_email_confirmed', 'not_confirmed' );
+			$response_data[ 'user' ] = am_user( $user->ID );
+
 			if ( $strategy === 'confirm_after' ) {
-				$wpdb->insert( $table, [
-					'hash'   => $token,
-					'email'  => $decoded_data->login,
-					'action' => 'confirm',
-					'time'   => date( 'Y-m-d H:i:s' )
-				], [ '%s', '%s', '%s', '%s' ] );
-				wp_mail( $decoded_data->login, "Confirmation Link", $mail_body, $headers );
-				$response_data[ 'check_mail' ] = true;
+				$token = send_me_confirmation_registration_link( $decoded_data->login, 'confirm' );
+				if ( $token ) {
+					$wpdb->insert( $table, [
+						'hash'   => $token,
+						'email'  => $decoded_data->login,
+						'action' => 'confirm',
+						'time'   => date( 'Y-m-d H:i:s' )
+					], [ '%s', '%s', '%s', '%s' ] );
+					$response_data[ 'check_mail' ] = true;
+				}
 			}
-			$response_data[ 'status' ]     = 'success';
-			wp_set_auth_cookie($new_user->ID);
+			$response_data[ 'status' ] = 'success';
+			wp_set_auth_cookie( $user->ID );
 		}
 
 	}
