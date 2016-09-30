@@ -11,6 +11,7 @@ return array(
     '982c9002c12920c2ec9966b8680fa3e3' => $baseDir . '/AlicelfMaterial/ng_dirrectives.php',
     '9ddef3587d0ea992a5107bf3fcf312d5' => $baseDir . '/AlicelfMaterial/ajax.php',
     '483f980016bb7a9172a59c66184115cf' => $baseDir . '/AlicelfMaterial/user/init.php',
+    '8b2ad1836f1688f773463ec916e32ac1' => $baseDir . '/AlicelfMaterial/form_actions.php',
     'a8f85bcc4c14901533ab94bfd43f4093' => $baseDir . '/AlicelfMaterial/media_links.php',
     '593310181a80f0432011dfb3beaad8c9' => $baseDir . '/AlicelfMaterial/action_filters.php',
     '10d49c37afd9ed2c6266a5d32f594e91' => $baseDir . '/AlicelfMaterial/shortcodes.php',

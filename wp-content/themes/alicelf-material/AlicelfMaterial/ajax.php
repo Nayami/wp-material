@@ -66,6 +66,41 @@ if ( ! function_exists( 'send_me_confirmation_registration_link' ) ) {
 }
 
 /**
+ * ==================== Get system notices ======================
+ */
+add_action( 'wp_ajax_nopriv_ajx20160830020813', 'ajx20160830020813' );
+add_action( 'wp_ajax_ajx20160830020813', 'ajx20160830020813' );
+function ajx20160830020813()
+{
+	$response = [ 'notices' => null ];
+	if ( isset( $_SESSION[ 'am_alerts' ] ) ) {
+		$response[ 'notices' ] = $_SESSION[ 'am_alerts' ];
+	}
+	echo json_encode( $response );
+	die;
+}
+
+/**
+ * ==================== Delete System Notification ======================
+ * 30.09.2016
+ */
+
+add_action( 'wp_ajax_nopriv_ajx20162830022821', 'ajx20162830022821' );
+add_action( 'wp_ajax_ajx20162830022821', 'ajx20162830022821' );
+function ajx20162830022821()
+{
+	$response  = [ 'status' => null ];
+	$notice_id = $_GET[ 'body_data' ];
+	if ( isset( $_SESSION[ 'am_alerts' ][ $notice_id ] ) ) {
+		unset( $_SESSION[ 'am_alerts' ][ $notice_id ] );
+		$response[ 'status' ] = 'success';
+	}
+	$response[ 'data' ] = $notice_id;
+	echo json_encode( $response );
+	die;
+}
+
+/**
  * ==================== SETTINGS ======================
  * 28.09.2016
  */

@@ -1,14 +1,16 @@
-import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
+import { Component,
+	OnInit, trigger, state, style, transition, animate } from '@angular/core';
 import { Router } from "@angular/router";
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
 import { AppSettingsService } from "../../shared/services/app.settings.service";
+import {FlashNoticeService} from "../../shared/services/alert.dialog.modal/flash.notices";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 
 @Component( {
-	templateUrl: componentPath + 'profile.html',
+	templateUrl: componentPath + 'network_entrance.html',
 	animations : [
 		trigger( 'renderAuthTrigger', [
 			state( 'in', style( { transform: 'translateY(0)', opacity: 1 } ) ),
@@ -26,9 +28,11 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 
 export class NetworkComponent {
 
+
 	constructor( private router: Router,
 	             private appSettings: AppSettingsService,
 	             private auth: AuthGlobalService,
+	             private flashes: FlashNoticeService,
 	             private userService: UserGlobalService ) {
 		if(!appSettings.loaded)
 			appSettings.setSettings();
@@ -52,10 +56,13 @@ export class NetworkComponent {
 			           this.auth.loaded = true;
 			           this.auth.authorized = user.ID ? true : false;
 			           this.userService.currentUser = user;
+			           this.userService.checkAccessAndEmailConfirmation(user, this.auth);
 			           if ( !this.auth.authorized ) {
 				           this.router.navigate( ['screen/auth'] )
 			           }
 		           } );
 	}
+
+
 
 }

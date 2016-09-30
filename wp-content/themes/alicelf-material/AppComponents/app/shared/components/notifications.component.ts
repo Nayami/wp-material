@@ -7,7 +7,11 @@ import {FlashNoticeService} from '../services/alert.dialog.modal/flash.notices'
 		<ul>
 			<li *ngFor="let flash of flashes.notifications" [@flyInOut] class="{{flash.cssClass}}">
 				<a *ngIf="flash.type === 'dismissable'" class="mdl-button mdl-js-button mdl-button--icon destroy-button" (click)="unplugNotice(flash)"><i class="material-icons">close</i>
-				</a>{{flash.message}}
+				</a>
+				<a *ngIf="flash.type === 'system'" class="mdl-button mdl-js-button mdl-button--icon destroy-button" (click)="unplugSystemNotice(flash, flash.systemID)"><i class="material-icons">close</i>
+				</a>
+				{{flash.message}}
+				<span *ngIf="flash.html" [innerHTML]="flash.html"></span>
 			</li>
 		</ul>
 	</div>
@@ -48,6 +52,11 @@ export class FlashNotificationsComponent {
 
 	unplugNotice( item ) {
 		this.flashes.unplugNotification( item );
+	}
+
+	unplugSystemNotice(item, itemID){
+		this.flashes.unplugNotification( item );
+		this.flashes.unplugSystemNotification( itemID );
 	}
 
 

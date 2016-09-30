@@ -39,54 +39,34 @@
 							<h3>Register</h3>
 						</div>
 					</div>
-
-					<div [ngSwitch]="strategy">
-						<!--CONFIRM BEFORE-->
-						<div *ngSwitchCase="'confirm_before'" class="mdl-grid">
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
-								<input class="mdl-textfield__input" type="text" id="emailconfirmbefore" formControlName="login">
-								<label class="mdl-textfield__label" for="emailconfirmbefore">Enter your email</label>
-							</div>
-							<div class="space-x-4"></div>
-							<div class="am-alert mdl-color--blue-grey-300 mdl-color-text--blue-grey-50 mdl-cell mdl-cell--12-col">NOTE: Registration will proceed after email confirmation</div>
-							<div class="space-x-3"></div>
+					<!--CONFIRM BEFORE-->
+					<div *ngIf="strategy === 'confirm_before'" class="mdl-grid">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+							<input class="mdl-textfield__input" type="text" id="emailconfirmbefore" formControlName="login">
+							<label class="mdl-textfield__label" for="emailconfirmbefore">Enter your email</label>
 						</div>
+						<div class="space-x-4"></div>
+						<div class="am-alert mdl-color--blue-grey-300 mdl-color-text--blue-grey-50 mdl-cell mdl-cell--12-col">NOTE: Registration will proceed after email confirmation</div>
+						<div class="space-x-3"></div>
+					</div>
 
-						<!--CONFIRM AFTER-->
-						<div *ngSwitchCase="'confirm_after'" class="mdl-grid">
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
-								<input class="mdl-textfield__input" type="text" id="user-register-nc" formControlName="login">
-								<label class="mdl-textfield__label" for="user-register-nc">Login</label>
-							</div>
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-								<input class="mdl-textfield__input" type="password" id="user-register-pass-nc" formControlName="passw">
-								<label class="mdl-textfield__label" for="user-register-pass-nc">Password</label>
-							</div>
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-								<input class="mdl-textfield__input" type="password" id="user-register-confirm-nc" formControlName="confirm">
-								<label class="mdl-textfield__label" for="user-register-confirm-nc">Password Confirmation</label>
-							</div>
-						</div>
 
-						<!--WITHOUT CONFIRM-->
-						<div *ngSwitchCase="'no_confirm'" class="mdl-grid">
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
-								<input class="mdl-textfield__input" type="text" id="user-register" formControlName="login">
-								<label class="mdl-textfield__label" for="user-register">Login</label>
-							</div>
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-								<input class="mdl-textfield__input" type="password" id="user-register-pass" formControlName="passw">
-								<label class="mdl-textfield__label" for="user-register-pass">Password</label>
-							</div>
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-								<input class="mdl-textfield__input" type="password" id="user-register-confirm" formControlName="confirm">
-								<label class="mdl-textfield__label" for="user-register-confirm">Password Confirmation</label>
-							</div>
+					<div *ngIf="strategy === 'confirm_after' || strategy === 'no_confirm' " class="mdl-grid">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+							<input class="mdl-textfield__input" type="text" id="user-register" formControlName="login">
+							<label class="mdl-textfield__label" for="user-register">Login</label>
 						</div>
-						<div *ngSwitchDefault>
-							<h3>unknown</h3>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+							<input class="mdl-textfield__input" type="password" id="user-register-pass" formControlName="passw">
+							<label class="mdl-textfield__label" for="user-register-pass">Password</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+							<input class="mdl-textfield__input" type="password" id="user-register-confirm" formControlName="confirm">
+							<label class="mdl-textfield__label" for="user-register-confirm">Password Confirmation</label>
 						</div>
 					</div>
+
+
 
 					<div class="mdl-grid">
 						<div class="mdl-cell mdl-cell--12-col mdl-typography--text-right">

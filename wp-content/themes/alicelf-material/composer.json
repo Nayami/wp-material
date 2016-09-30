@@ -14,6 +14,7 @@
       "AlicelfMaterial/ajax.php",
       "AlicelfMaterial/user/init.php",
 
+      "AlicelfMaterial/form_actions.php",
       "AlicelfMaterial/media_links.php",
       "AlicelfMaterial/action_filters.php",
       "AlicelfMaterial/shortcodes.php",

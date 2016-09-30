@@ -47,8 +47,11 @@ export class RestorePasswordComponent implements OnDestroy {
 			                               this.checkInfo( data )
 			                                   .subscribe( response => {
 				                                   if ( response ) {
-					                                   console.log( response ); // @TODO: Confirm Before
 					                                   this.checkdata.data = response;
+
+					                                   // @TODO: check response.action === confirm
+					                                   // @TODO: then depend on strategy
+
 				                                   }
 				                                   this.checkdata.loaded = true;
 			                                   } )
@@ -79,7 +82,7 @@ export class RestorePasswordComponent implements OnDestroy {
 							    this.router.navigate( ['/'] );
 							    this.flashes.attachNotifications( {
 								    message : 'Success, you are logged in!',
-								    cssClass: 'mdl-color--success-800 mdl-color-text--success-50',
+								    cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
 								    type    : 'dismissable',
 							    } );
 						    }
