@@ -19,7 +19,7 @@ export class FlashNoticeService {
 					    let singleNotice = availableNotices.notices[ntc];
 					    this.attachNotifications( {
 						    message : singleNotice.message,
-						    cssClass: 'mdl-color--grey-800 mdl-color-text--grey-50',
+						    cssClass: 'mdl-color--blue-grey-300 mdl-color-text--blue-grey-900',
 						    type    : 'system',
 						    systemID: ntc
 					    } );

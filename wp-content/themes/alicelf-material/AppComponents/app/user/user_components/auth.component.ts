@@ -91,7 +91,7 @@ export class AMAuthComponent {
 			case "no_confirm" :
 				this.registerFormHandler = this.fbuilder.group( {
 					login  : ["", [AMAuthComponent.authEmailValidation]],
-					passw  : ["", Validators.required],
+					passw  : ["", [Validators.required, Validators.minLength( 5 )]],
 					confirm: ["", Validators.required]
 				} );
 				break;
@@ -103,7 +103,7 @@ export class AMAuthComponent {
 			case "confirm_after" :
 				this.registerFormHandler = this.fbuilder.group( {
 					login  : ["", AMAuthComponent.authEmailValidation],
-					passw  : ["", Validators.required],
+					passw  : ["", [Validators.required, Validators.minLength( 5 )]],
 					confirm: ["", Validators.required]
 				} );
 				break;
@@ -139,19 +139,19 @@ export class AMAuthComponent {
 						    this.router.navigate( [''] );
 						    this.flashes.attachNotifications( {
 							    message : 'Success !',
-							    cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
+							    cssClass: 'mdl-color--green-200 mdl-color-text--green-900',
 							    type    : 'dismissable',
 						    } );
 
 						    //let elemJ = document.getElementById('am-appwrap');
 						    //let opacity = 0;
 						    //let inter = setInterval(() => {
-							   // elemJ.style.backgroundColor = "rgba(255, 255, 255, " + opacity +")";
-							   // opacity += 0.05;
-							   // if (opacity > 1){
-								 //   clearInterval(inter);
-								 //   console.log("done");
-							   // }
+						    // elemJ.style.backgroundColor = "rgba(255, 255, 255, " + opacity +")";
+						    // opacity += 0.05;
+						    // if (opacity > 1){
+						    //   clearInterval(inter);
+						    //   console.log("done");
+						    // }
 						    //}, 50);
 
 
@@ -159,14 +159,14 @@ export class AMAuthComponent {
 					    case 'notfound' :
 						    this.flashes.attachNotifications( {
 							    message : 'User not found',
-							    cssClass: 'mdl-color--red-900 mdl-color-text--red-50',
+							    cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
 							    type    : 'dismissable',
 						    } );
 						    break;
 					    case 'notmatch' :
 						    this.flashes.attachNotifications( {
 							    message : 'Password not match',
-							    cssClass: 'mdl-color--amber-900 mdl-color-text--amber-50',
+							    cssClass: 'mdl-color--orange-100 mdl-color-text--orange-700',
 							    type    : 'dismissable',
 						    } );
 						    break;
@@ -188,7 +188,7 @@ export class AMAuthComponent {
 			const body = "action=ajx20162929092956&body_data=" + JSON.stringify( formData );
 
 			if ( this.strategy === 'confirm_before' ) {
-				// @TODO: Confirm Before
+
 				this.http.post( AMdefaults.ajaxurl, body, { headers: headers } )
 				    .map( ( response: Response ) => response.json() )
 				    .subscribe( data => {
@@ -197,14 +197,14 @@ export class AMAuthComponent {
 						    case "user_exists" :
 							    this.flashes.attachNotifications( {
 								    message : 'Sorry, this email already taken!',
-								    cssClass: 'mdl-color--amber-800 mdl-color-text--amber-50',
+								    cssClass: 'mdl-color--orange-100 mdl-color-text--orange-900',
 								    type    : 'dismissable',
 							    } );
 							    break;
 						    case "email_fail" :
 							    this.flashes.attachNotifications( {
 								    message : 'Something happend with email server, try again later',
-								    cssClass: 'mdl-color--amber-800 mdl-color-text--amber-50',
+								    cssClass: 'mdl-color--orange-100 mdl-color-text--orange-900',
 								    type    : 'dismissable',
 							    } );
 							    break;
@@ -213,7 +213,7 @@ export class AMAuthComponent {
 							    if ( data.check_mail ) {
 								    this.flashes.attachNotifications( {
 									    message : 'Check your email for confirmation link!',
-									    cssClass: 'mdl-color--blue-grey-500 mdl-color-text--blue-grey-50',
+									    cssClass: 'mdl-color--blue-grey-300  mdl-color-text--blue-grey-900',
 									    type    : 'dismissable',
 								    } );
 							    }
@@ -236,20 +236,20 @@ export class AMAuthComponent {
 							    case "user_exists" :
 								    this.flashes.attachNotifications( {
 									    message : 'Sorry, this email already taken!',
-									    cssClass: 'mdl-color--amber-800 mdl-color-text--amber-50',
+									    cssClass: 'mdl-color--blue-200 mdl-color-text--blue-900',
 									    type    : 'dismissable',
 								    } );
 								    break;
 							    case "success" :
 								    this.flashes.attachNotifications( {
 									    message : 'You successfully registered!',
-									    cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
+									    cssClass: 'mdl-color--green-200 mdl-color-text--green-900',
 									    type    : 'dismissable',
 								    } );
 								    if ( data.check_mail ) {
 									    this.flashes.attachNotifications( {
 										    message : 'Check your email',
-										    cssClass: 'mdl-color--blue-800 mdl-color-text--blue-50',
+										    cssClass: 'mdl-color--blue-grey-300 mdl-color-text--blue-grey-900',
 										    type    : 'dismissable',
 									    } );
 								    }
@@ -270,18 +270,61 @@ export class AMAuthComponent {
 				} else {
 					this.flashes.attachNotifications( {
 						message : 'Password and confirmation should match!',
-						cssClass: 'mdl-color--amber-800 mdl-color-text--amber-50',
+						cssClass: 'mdl-color--orange-100 mdl-color-text--orange-900',
 						type    : 'dismissable',
 					} );
 				}
 			}
 
 		} else {
-			this.flashes.attachNotifications( {
-				message : 'Fill correct all fields!',
-				cssClass: 'mdl-color--red-800 mdl-color-text--red-50',
-				type    : 'dismissable',
-			} );
+
+			/**
+			 * ==================== Handle Errors ======================
+			 * 01.10.2016
+			 */
+			let ctrls = this.registerFormHandler.controls;
+			for ( var control in ctrls ) {
+				let ctrl = ctrls[control];
+				if ( ctrl.errors ) {
+					let thisErr = Object.keys( ctrl.errors )[0];
+					let controlMap = {
+						login  : 'Login',
+						passw  : 'Password',
+						confirm: 'Password confirmation'
+					};
+					switch ( thisErr ) {
+						case "email" :
+							this.flashes.attachNotifications( {
+								message : 'Provide correct email for ' + controlMap[control],
+								cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
+								type    : 'dismissable',
+							} );
+							break;
+						case "required" :
+							this.flashes.attachNotifications( {
+								message : controlMap[control ]+ " Cannot be blank",
+								cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
+								type    : 'dismissable',
+							} );
+							break;
+						case "minlength" :
+							this.flashes.attachNotifications( {
+								message : controlMap[control ] + " Too Short",
+								cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
+								type    : 'dismissable',
+							} );
+							break;
+						default:
+							this.flashes.attachNotifications( {
+								message : 'Fill correct all fields!',
+								cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
+								type    : 'dismissable',
+							} );
+					}
+				}
+			}
+
+
 		}
 	}
 

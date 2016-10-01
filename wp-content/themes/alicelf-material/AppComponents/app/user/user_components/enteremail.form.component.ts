@@ -71,14 +71,14 @@ export class EnterEmailComponent implements OnDestroy {
 					                       case 'notfound' :
 						                       this.flashes.attachNotifications( {
 							                       message : 'User with this email doesn`t exist',
-							                       cssClass: 'mdl-color--red-900 mdl-color-text--red-50',
+							                       cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
 							                       type    : 'dismissable',
 						                       } );
 						                       break;
 					                       case 'success' :
 						                       this.flashes.attachNotifications( {
 							                       message : 'Check your email '+ data.email,
-							                       cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
+							                       cssClass: 'mdl-color--green-200 mdl-color-text--green-900',
 							                       type    : 'dismissable',
 						                       } );
 						                       break;
@@ -91,7 +91,7 @@ export class EnterEmailComponent implements OnDestroy {
 			this.closeModal();
 			this.flashes.attachNotifications( {
 				message : 'Enter valid email!',
-				cssClass: 'mdl-color--red-900 mdl-color-text--red-50',
+				cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
 				type    : 'dismissable',
 			} );
 		}

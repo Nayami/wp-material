@@ -40,6 +40,7 @@ export class UserGlobalService implements OnDestroy {
 
 
 	checkAccessAndEmailConfirmation( user: any, auth: any ) {
+		let htmlButton = '<a class="mdl-color-text--blue-grey-900" href="' + AMdefaults.networkEndpoint + '?am_confirm_email=confirm">Confirm Now!</a>';
 		return this.http.get( AMdefaults.ajaxurl + '?action=ajx20162128122131' )
 		           .map( ( response: Response ) => response.json() )
 		           .subscribe( data => {
@@ -49,9 +50,9 @@ export class UserGlobalService implements OnDestroy {
 				           if ( strategy !== 'no_confirm' ) {
 					           this.flashes.attachNotifications( {
 						           message : 'Your email not confirmed yet!',
-						           cssClass: 'mdl-color--blue-grey-700 mdl-color-text--blue-grey-100',
+						           cssClass: 'mdl-color--blue-grey-300 mdl-color-text--blue-grey-900',
 						           type    : 'dismissable',
-						           html    : '<a href="' + AMdefaults.networkEndpoint + '?am_confirm_email=confirm">Confirm Now!</a>'
+						           html    : htmlButton
 					           } );
 				           }
 			           }

@@ -35,8 +35,8 @@ export class RestorePasswordComponent implements OnDestroy {
 		loaded: false
 	};
 	private tokenSubscription: Subscription;
-	private newpassword : string = null;
-	progress : boolean = false;
+	private newpassword: string = null;
+	progress: boolean = false;
 
 	constructor( private http: Http,
 	             private router: Router,
@@ -44,38 +44,37 @@ export class RestorePasswordComponent implements OnDestroy {
 	             private auth: AuthGlobalService,
 	             private userService: UserGlobalService ) {
 		this.progress = true;
-		this.tokenSubscription = router.routerState.queryParams // token, email
-		                               .subscribe( ( data: any ) => {
-			                               this.checkInfo( data )
-			                                   .subscribe( response => {
-				                                   if ( response ) {
-					                                   console.log( response );
-					                                   this.checkdata.data = response.reset_confirm_data;
+		this.tokenSubscription = router
+			.routerState.queryParams // token, email
+			.subscribe( ( data: any ) => {
+				this.checkInfo( data )
+				    .subscribe( response => {
+					    if ( response ) {
+						    this.checkdata.data = response.reset_confirm_data;
+						    if ( response.next_step === 'authentificate' ) {
+							    this.userService.currentUser = response.user;
+							    this.auth.loaded = true;
+							    this.auth.authorized = true;
+							    this.flashes.attachNotifications( {
+								    message : 'Success, you are logged in!',
+								    cssClass: 'mdl-color--green-200 mdl-color-text--green-900',
+								    type    : 'dismissable',
+							    } );
+							    if ( response.message ) {
+								    this.flashes.attachNotifications( {
+									    message : response.message,
+									    cssClass: 'mdl-color--blue-200 mdl-color-text--blue-900',
+									    type    : 'dismissable',
+								    } );
+							    }
+							    this.router.navigate( ['/'] )
+						    }
 
-					                                   if(response.next_step === 'authentificate') {
-						                                   this.userService.currentUser = response.user;
-						                                   this.auth.loaded = true;
-						                                   this.auth.authorized = true;
-						                                   this.flashes.attachNotifications( {
-							                                   message : 'Success, you are logged in!',
-							                                   cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
-							                                   type    : 'dismissable',
-						                                   } );
-						                                   if(response.message){
-							                                   this.flashes.attachNotifications( {
-								                                   message : response.message,
-								                                   cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
-								                                   type    : 'dismissable',
-							                                   } );
-						                                   }
-						                                   this.router.navigate( ['/'] )
-					                                   }
-
-				                                   }
-				                                   this.checkdata.loaded = true;
-			                                   } );
-			                               this.progress = false;
-		                               } );
+					    }
+					    this.checkdata.loaded = true;
+				    } );
+				this.progress = false;
+			} );
 	}
 
 	checkInfo( data ): Observable<any> {
@@ -85,13 +84,13 @@ export class RestorePasswordComponent implements OnDestroy {
 		           .map( ( response: Response ) => response.json() );
 	}
 
-	setNewPass(){
+	setNewPass() {
 		if ( this.newpassword ) {
-			if(this.newpassword.length > 5) {
+			if ( this.newpassword.length > 5 ) {
 				this.checkdata.data['newpass'] = this.newpassword;
 				this.setNewPassRequest()
-				    .subscribe(data => {
-					    if(data.status === 'success') {
+				    .subscribe( data => {
+					    if ( data.status === 'success' ) {
 						    this.auth.loaded = true;
 						    this.auth.authorized = data.user.ID ? true : false;
 						    this.userService.currentUser = data.user;
@@ -101,35 +100,35 @@ export class RestorePasswordComponent implements OnDestroy {
 							    this.router.navigate( ['/'] );
 							    this.flashes.attachNotifications( {
 								    message : 'Success, you are logged in!',
-								    cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
+								    cssClass: 'mdl-color--green-200 mdl-color-text--green-900',
 								    type    : 'dismissable',
 							    } );
 						    }
 					    } else {
 						    this.flashes.attachNotifications( {
 							    message : 'Something wrong!',
-							    cssClass: 'mdl-color--red-900 mdl-color-text--red-50',
+							    cssClass: 'mdl-color--blue-grey-300 mdl-color-text--blue-grey-900',
 							    type    : 'dismissable',
 						    } );
 					    }
-				    })
+				    } )
 			} else {
 				this.flashes.attachNotifications( {
 					message : 'Password to short',
-					cssClass: 'mdl-color--amber-900 mdl-color-text--amber-50',
+					cssClass: 'mdl-color--blue-200 mdl-color-text--blue-900',
 					type    : 'dismissable',
 				} );
 			}
 		} else {
 			this.flashes.attachNotifications( {
 				message : 'Password cannot be blank',
-				cssClass: 'mdl-color--amber-900 mdl-color-text--amber-50',
+				cssClass: 'mdl-color--orange-100 mdl-color-text--orange-900',
 				type    : 'dismissable',
 			} );
 		}
 	}
 
-	setNewPassRequest(){
+	setNewPassRequest() {
 		let headers = new Headers( { "Content-Type": "application/x-www-form-urlencoded" } );
 		const body = "action=ajx20160928110922&body_data=" + JSON.stringify( this.checkdata.data );
 		return this.http.post( AMdefaults.ajaxurl, body, { headers: headers } )

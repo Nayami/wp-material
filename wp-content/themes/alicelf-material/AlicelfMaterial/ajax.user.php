@@ -9,22 +9,28 @@ add_action( 'wp_ajax_nopriv_ajx20163917023918', 'ajx20163917023918' );
 add_action( 'wp_ajax_ajx20163917023918', 'ajx20163917023918' );
 function ajx20163917023918()
 {
-	$return_values = [
+	$data         = str_replace( '\\', '', $_REQUEST[ 'body_data' ] );
+	$decoded_data = json_decode( $data );
+	$ret_user     = [
 		'ID'        => null,
 		'logged_in' => false
 	];
-
-	if ( is_user_logged_in() ) {
-		$user          = wp_get_current_user();
-		$return_values = am_user( $user->ID );
+	if ( $decoded_data->user_id ) {
+		$ret_user = am_user( $decoded_data->user_id );
+	} else {
+		if ( is_user_logged_in() ) {
+			$user     = wp_get_current_user();
+			$ret_user = am_user( $user->ID );
+		}
 	}
 
-	echo json_encode( $return_values );
+	echo json_encode( $ret_user );
 	die;
 }
 
 /**
  * ==================== AUTH ======================
+ * Login Action
  * 24.09.2016
  */
 add_action( 'wp_ajax_nopriv_ajx20162924062955', 'ajx20162924062955' );
@@ -244,68 +250,72 @@ function ajx20161128111129()
 		$response [ 'reset_confirm_data' ] = $reset_data;
 		$check_user                        = get_user_by( 'email', $decoded_data->email );
 
-		if ( $_am[ 'network-confirmation-flow' ] === 'confirm_before' ) {
+		// Start confirmation
+		if ( $reset_data->action === 'confirm' ) {
+			if ( $_am[ 'network-confirmation-flow' ] === 'confirm_before' ) {
 
-			// Here just confirmation. Redundant probably @TODO: check
-			if ( $check_user ) {
-				$response[ 'user' ] = am_user( $check_user->ID );
+				if ( $check_user ) {
+					$response[ 'user' ] = am_user( $check_user->ID );
 
-				$wpdb->delete( $table, [ 'email' => $decoded_data->email ], [ '%s' ] );
-				update_user_meta( $check_user->ID, 'am_email_confirmed', 'confirmed' );
-				wp_set_auth_cookie( $check_user->ID );
-				$response[ 'next_step' ] = 'authentificate';
-			} else {
-				/**
-				 * This means user is not exist, but he is confirmed his email
-				 * We have to create this user with random password
-				 */
-				$password         = wp_generate_password( 20, false );
-				$mail_text = "We generated random password for you. The password can be changed in your dashboard";
-				$prepare_new_user = [
-					'user_login' => $decoded_data->email,
-					'user_email' => $decoded_data->email,
-					'user_pass'  => $password
-				];
-				wp_insert_user( $prepare_new_user );
+					$wpdb->delete( $table, [ 'email' => $decoded_data->email ], [ '%s' ] );
+					update_user_meta( $check_user->ID, 'am_email_confirmed', 'confirmed' );
+					wp_set_auth_cookie( $check_user->ID );
+					$response[ 'next_step' ] = 'authentificate';
 
-				$created_new_user = get_user_by( 'email', $decoded_data->email );
-				update_user_meta( $created_new_user->ID, 'am_email_confirmed', 'confirmed' );
-				$response[ 'user' ] = am_user( $created_new_user->ID );
-				wp_set_auth_cookie( $created_new_user->ID );
-				$wpdb->delete( $table, [ 'email' => $decoded_data->email ], [ '%s' ] );
+				} else {
+					/**
+					 * This means user is not exist, but he is confirmed his email
+					 * We have to create this user with random password
+					 */
+					$password         = wp_generate_password( 20, false );
+					$mail_text        = "We generated random password for you. The password can be changed in your dashboard";
+					$prepare_new_user = [
+						'user_login' => $decoded_data->email,
+						'user_email' => $decoded_data->email,
+						'user_pass'  => $password
+					];
+					wp_insert_user( $prepare_new_user );
 
-				$headers           = "From: ".get_option( 'admin_email' )."\r\n";
-				wp_mail( $decoded_data->email, 'Welcome!', $mail_text.' Your Password: ' . $password, $headers );
+					$created_new_user = get_user_by( 'email', $decoded_data->email );
+					update_user_meta( $created_new_user->ID, 'am_email_confirmed', 'confirmed' );
+					$response[ 'user' ] = am_user( $created_new_user->ID );
+					wp_set_auth_cookie( $created_new_user->ID );
+					$wpdb->delete( $table, [ 'email' => $decoded_data->email ], [ '%s' ] );
 
-				$response[ 'next_step' ] = 'authentificate';
-				$response[ 'message' ] = $mail_text;
+					$headers = "From: " . get_option( 'admin_email' ) . "\r\n";
+					wp_mail( $decoded_data->email, 'Welcome!', $mail_text . ' Your Password: ' . $password, $headers );
+
+					$response[ 'next_step' ] = 'authentificate';
+					$response[ 'message' ]   = $mail_text;
+				}
+			}
+			if ( $_am[ 'network-confirmation-flow' ] === 'confirm_after' ) {
+				if ( $check_user ) {
+					$response[ 'user' ]      = am_user( $check_user->ID );
+					$response[ 'next_step' ] = 'authentificate';
+					$wpdb->delete( $table, [ 'email' => $decoded_data->email ], [ '%s' ] );
+					update_user_meta( $check_user->ID, 'am_email_confirmed', 'confirmed' );
+					wp_set_auth_cookie( $check_user->ID );
+				}
 			}
 		}
-		if ( $_am[ 'network-confirmation-flow' ] === 'confirm_after' ) {
-			if ( $check_user ) {
-				$response[ 'user' ]      = am_user( $check_user->ID );
-				$response[ 'next_step' ] = 'authentificate';
-				$wpdb->delete( $table, [ 'email' => $decoded_data->email ], [ '%s' ] );
-				update_user_meta( $check_user->ID, 'am_email_confirmed', 'confirmed' );
-				wp_set_auth_cookie( $check_user->ID );
-			}
-		}
+		// End Confirmation
+
 	}
 
 	echo json_encode( $response );
 	die;
 }
 
-
 /**
  * ==================== Logout ======================
  * 01.10.2016
  */
-add_action('wp_ajax_nopriv_ajx20160101040141', 'ajx20160101040141');
-add_action('wp_ajax_ajx20160101040141', 'ajx20160101040141');
+add_action( 'wp_ajax_nopriv_ajx20160101040141', 'ajx20160101040141' );
+add_action( 'wp_ajax_ajx20160101040141', 'ajx20160101040141' );
 function ajx20160101040141()
 {
 	wp_clear_auth_cookie();
-	echo json_encode("logout_confirmed");
+	echo json_encode( "logout_confirmed" );
 	die;
 }
