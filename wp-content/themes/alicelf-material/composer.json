@@ -12,6 +12,7 @@
       "AlicelfMaterial/redux/config.php",
       "AlicelfMaterial/ng_dirrectives.php",
       "AlicelfMaterial/ajax.php",
+      "AlicelfMaterial/ajax.user.php",
       "AlicelfMaterial/user/init.php",
 
       "AlicelfMaterial/form_actions.php",

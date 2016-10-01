@@ -10,6 +10,7 @@ return array(
     'e1188992f6c461e5d5793bf9ad65fd4a' => $baseDir . '/AlicelfMaterial/redux/config.php',
     '982c9002c12920c2ec9966b8680fa3e3' => $baseDir . '/AlicelfMaterial/ng_dirrectives.php',
     '9ddef3587d0ea992a5107bf3fcf312d5' => $baseDir . '/AlicelfMaterial/ajax.php',
+    'a327e9e384d48f89bf84dece90446a56' => $baseDir . '/AlicelfMaterial/ajax.user.php',
     '483f980016bb7a9172a59c66184115cf' => $baseDir . '/AlicelfMaterial/user/init.php',
     '8b2ad1836f1688f773463ec916e32ac1' => $baseDir . '/AlicelfMaterial/form_actions.php',
     'a8f85bcc4c14901533ab94bfd43f4093' => $baseDir . '/AlicelfMaterial/media_links.php',

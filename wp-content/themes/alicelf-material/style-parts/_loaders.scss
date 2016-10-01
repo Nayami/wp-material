@@ -388,7 +388,16 @@ body {
 }
 
 
+.preloaderline {
+	display: block;
+	width : 100%;
+	@include clearfix();
 
+	.mdl-progress {
+		width : 100%;
+		margin-top : -10px;
+	}
+}
 .mdl-progress.mdl-progress__indeterminate>.bar1 {
 	background-color : $brandColor !important;
 }

@@ -11,6 +11,7 @@ class ComposerStaticInitb6f04ed7e1f797b95ad60e857e3cc76d
         'e1188992f6c461e5d5793bf9ad65fd4a' => __DIR__ . '/../..' . '/AlicelfMaterial/redux/config.php',
         '982c9002c12920c2ec9966b8680fa3e3' => __DIR__ . '/../..' . '/AlicelfMaterial/ng_dirrectives.php',
         '9ddef3587d0ea992a5107bf3fcf312d5' => __DIR__ . '/../..' . '/AlicelfMaterial/ajax.php',
+        'a327e9e384d48f89bf84dece90446a56' => __DIR__ . '/../..' . '/AlicelfMaterial/ajax.user.php',
         '483f980016bb7a9172a59c66184115cf' => __DIR__ . '/../..' . '/AlicelfMaterial/user/init.php',
         '8b2ad1836f1688f773463ec916e32ac1' => __DIR__ . '/../..' . '/AlicelfMaterial/form_actions.php',
         'a8f85bcc4c14901533ab94bfd43f4093' => __DIR__ . '/../..' . '/AlicelfMaterial/media_links.php',

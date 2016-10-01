@@ -36,28 +36,47 @@ export class RestorePasswordComponent implements OnDestroy {
 	};
 	private tokenSubscription: Subscription;
 	private newpassword : string = null;
+	progress : boolean = false;
 
 	constructor( private http: Http,
 	             private router: Router,
 	             private flashes: FlashNoticeService,
 	             private auth: AuthGlobalService,
 	             private userService: UserGlobalService ) {
+		this.progress = true;
 		this.tokenSubscription = router.routerState.queryParams // token, email
 		                               .subscribe( ( data: any ) => {
 			                               this.checkInfo( data )
 			                                   .subscribe( response => {
 				                                   if ( response ) {
-					                                   this.checkdata.data = response;
+					                                   console.log( response );
+					                                   this.checkdata.data = response.reset_confirm_data;
 
-					                                   // @TODO: check response.action === confirm
-					                                   // @TODO: then depend on strategy
+					                                   if(response.next_step === 'authentificate') {
+						                                   this.userService.currentUser = response.user;
+						                                   this.auth.loaded = true;
+						                                   this.auth.authorized = true;
+						                                   this.flashes.attachNotifications( {
+							                                   message : 'Success, you are logged in!',
+							                                   cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
+							                                   type    : 'dismissable',
+						                                   } );
+						                                   if(response.message){
+							                                   this.flashes.attachNotifications( {
+								                                   message : response.message,
+								                                   cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
+								                                   type    : 'dismissable',
+							                                   } );
+						                                   }
+						                                   this.router.navigate( ['/'] )
+					                                   }
 
 				                                   }
 				                                   this.checkdata.loaded = true;
-			                                   } )
+			                                   } );
+			                               this.progress = false;
 		                               } );
 	}
-
 
 	checkInfo( data ): Observable<any> {
 		let headers = new Headers( { "Content-Type": "application/x-www-form-urlencoded" } );

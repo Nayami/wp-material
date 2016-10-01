@@ -171,28 +171,60 @@ export class AMAuthComponent {
 	doRegister() {
 		if ( this.registerFormHandler.status === "VALID" ) {
 			let formData = this.registerFormHandler.value;
+			let headers = new Headers( { "Content-Type": "application/x-www-form-urlencoded" } );
+			const body = "action=ajx20162929092956&body_data=" + JSON.stringify( formData );
 
 			if ( this.strategy === 'confirm_before' ) {
 				// @TODO: Confirm Before
-			} else {
+				this.http.post( AMdefaults.ajaxurl, body, { headers: headers } )
+				    .map( ( response: Response ) => response.json() )
+				    .subscribe( data => {
 
+					    switch ( data.status ) {
+						    case "user_exists" :
+							    this.flashes.attachNotifications( {
+								    message : 'Sorry, this email already taken!',
+								    cssClass: 'mdl-color--amber-800 mdl-color-text--amber-50',
+								    type    : 'dismissable',
+							    } );
+							    break;
+						    case "email_fail" :
+							    this.flashes.attachNotifications( {
+								    message : 'Something happend with email server, try again later',
+								    cssClass: 'mdl-color--amber-800 mdl-color-text--amber-50',
+								    type    : 'dismissable',
+							    } );
+							    break;
+						    case "success" :
+
+							    if ( data.check_mail ) {
+								    this.flashes.attachNotifications( {
+									    message : 'Check your email for confirmation link!',
+									    cssClass: 'mdl-color--blue-grey-500 mdl-color-text--blue-grey-50',
+									    type    : 'dismissable',
+								    } );
+							    }
+							    break;
+						    default :
+							    console.log( "unknown" );
+					    }
+					    (<FormControl>this.registerFormHandler.controls['login']).setValue( "", {} );
+				    } )
+			} else {
 				/**
 				 * REGISTRATION FOR confirm after and without confirm
 				 */
 				if ( formData.passw === formData.confirm ) {
-
-					let headers = new Headers( { "Content-Type": "application/x-www-form-urlencoded" } );
-					const body = "action=ajx20162929092956&body_data=" + JSON.stringify( formData );
 					this.http.post( AMdefaults.ajaxurl, body, { headers: headers } )
 					    .map( ( response: Response ) => response.json() )
 					    .subscribe( data => {
 
-						    switch (data.status) {
+						    switch ( data.status ) {
 							    case "user_exists" :
 								    this.flashes.attachNotifications( {
-								    	message : 'Sorry, this email already taken!',
-								    	cssClass: 'mdl-color--amber-800 mdl-color-text--amber-50',
-								    	type    : 'dismissable',
+									    message : 'Sorry, this email already taken!',
+									    cssClass: 'mdl-color--amber-800 mdl-color-text--amber-50',
+									    type    : 'dismissable',
 								    } );
 								    break;
 							    case "success" :
@@ -201,7 +233,7 @@ export class AMAuthComponent {
 									    cssClass: 'mdl-color--green-800 mdl-color-text--green-50',
 									    type    : 'dismissable',
 								    } );
-								    if(data.check_mail) {
+								    if ( data.check_mail ) {
 									    this.flashes.attachNotifications( {
 										    message : 'Check your email',
 										    cssClass: 'mdl-color--blue-800 mdl-color-text--blue-50',
@@ -216,9 +248,9 @@ export class AMAuthComponent {
 							    default :
 								    console.log( "unknown" );
 						    }
-						    (<FormControl>this.registerFormHandler.controls['login']).setValue("", {});
-						    (<FormControl>this.registerFormHandler.controls['passw']).setValue("", {});
-						    (<FormControl>this.registerFormHandler.controls['confirm']).setValue("", {});
+						    (<FormControl>this.registerFormHandler.controls['login']).setValue( "", {} );
+						    (<FormControl>this.registerFormHandler.controls['passw']).setValue( "", {} );
+						    (<FormControl>this.registerFormHandler.controls['confirm']).setValue( "", {} );
 					    } );
 
 

@@ -48,5 +48,4 @@ export class FlashNoticeService {
 		    .map( ( response: Response ) => response.json() )
 		    .subscribe( data => this.endProcess = data)
 	}
-
 }
