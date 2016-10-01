@@ -51,7 +51,7 @@ export class UserGlobalService implements OnDestroy {
 						           message : 'Your email not confirmed yet!',
 						           cssClass: 'mdl-color--blue-grey-700 mdl-color-text--blue-grey-100',
 						           type    : 'dismissable',
-						           html    : '<a href="'+AMdefaults.networkEndpoint+'?am_confirm_email=confirm">Confirm Now!</a>'
+						           html    : '<a href="' + AMdefaults.networkEndpoint + '?am_confirm_email=confirm">Confirm Now!</a>'
 					           } );
 				           }
 			           }
@@ -61,6 +61,16 @@ export class UserGlobalService implements OnDestroy {
 
 	ngOnDestroy(): void {
 		this.userSubscription.unsubscribe();
+	}
+
+
+	/**
+	 * ==================== Logout ======================
+	 * 01.10.2016
+	 */
+	doLogout(): Observable<any> {
+		return this.http.get( AMdefaults.ajaxurl + '?action=ajx20160101040141' )
+		           .map( ( response: Response ) => response.json() );
 	}
 
 }

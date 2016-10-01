@@ -246,6 +246,7 @@ function ajx20161128111129()
 
 		if ( $_am[ 'network-confirmation-flow' ] === 'confirm_before' ) {
 
+			// Here just confirmation. Redundant probably @TODO: check
 			if ( $check_user ) {
 				$response[ 'user' ] = am_user( $check_user->ID );
 
@@ -254,6 +255,10 @@ function ajx20161128111129()
 				wp_set_auth_cookie( $check_user->ID );
 				$response[ 'next_step' ] = 'authentificate';
 			} else {
+				/**
+				 * This means user is not exist, but he is confirmed his email
+				 * We have to create this user with random password
+				 */
 				$password         = wp_generate_password( 20, false );
 				$mail_text = "We generated random password for you. The password can be changed in your dashboard";
 				$prepare_new_user = [
@@ -261,8 +266,8 @@ function ajx20161128111129()
 					'user_email' => $decoded_data->email,
 					'user_pass'  => $password
 				];
-
 				wp_insert_user( $prepare_new_user );
+
 				$created_new_user = get_user_by( 'email', $decoded_data->email );
 				update_user_meta( $created_new_user->ID, 'am_email_confirmed', 'confirmed' );
 				$response[ 'user' ] = am_user( $created_new_user->ID );
@@ -288,5 +293,19 @@ function ajx20161128111129()
 	}
 
 	echo json_encode( $response );
+	die;
+}
+
+
+/**
+ * ==================== Logout ======================
+ * 01.10.2016
+ */
+add_action('wp_ajax_nopriv_ajx20160101040141', 'ajx20160101040141');
+add_action('wp_ajax_ajx20160101040141', 'ajx20160101040141');
+function ajx20160101040141()
+{
+	wp_clear_auth_cookie();
+	echo json_encode("logout_confirmed");
 	die;
 }

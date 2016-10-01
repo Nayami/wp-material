@@ -1,11 +1,25 @@
 <div class="am-wrap">
-	<div *ngIf="auth.authorized" [@renderAuthTrigger]>
 
+	<div *ngIf="auth.authorized" [@renderAuthTrigger]>
 		<h1 class="text-center">Profile Component</h1>
 
 		<div class="content-grid">
 			{{userService.currentUser | json}}
+
+			<!--@TODO: View some user profile-->
+
+			<!--@TODO: switch between users-->
+			<div *ngIf="userService.currentUser">
+			<button (click)="invokeLogout()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Logout</button>
+			</div>
 		</div>
+	</div>
+
+	<div *ngIf="currentViewedUser" [@renderAuthTrigger]>
+		<h1 class="text-center">{{currentViewedUser}} profile</h1>
+
 
 	</div>
+
+
 </div>

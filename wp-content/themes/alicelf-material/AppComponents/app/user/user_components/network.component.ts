@@ -1,6 +1,6 @@
 import { Component,
 	OnInit, trigger, state, style, transition, animate } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router,ActivatedRoute } from "@angular/router";
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
 import { AppSettingsService } from "../../shared/services/app.settings.service";
@@ -28,13 +28,15 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 
 export class NetworkComponent {
 
+	private currentViewedUser: any;
 
 	constructor( private router: Router,
+	             private activatedRoute: ActivatedRoute,
 	             private appSettings: AppSettingsService,
 	             private auth: AuthGlobalService,
 	             private flashes: FlashNoticeService,
 	             private userService: UserGlobalService ) {
-		if(!appSettings.loaded)
+		if ( !appSettings.loaded )
 			appSettings.setSettings();
 
 		if ( !auth.loaded ) {
@@ -56,13 +58,32 @@ export class NetworkComponent {
 			           this.auth.loaded = true;
 			           this.auth.authorized = user.ID ? true : false;
 			           this.userService.currentUser = user;
-			           this.userService.checkAccessAndEmailConfirmation(user, this.auth);
-			           if ( !this.auth.authorized ) {
-				           this.router.navigate( ['screen/auth'] )
+			           this.userService.checkAccessAndEmailConfirmation( user, this.auth );
+
+			           // View another user profile
+			           let maybeUserSlug = this.activatedRoute.snapshot.params['userslug'];
+			           if ( maybeUserSlug ) {
+				           this.currentViewedUser = maybeUserSlug;
+
+			           } else {
+				           if ( !this.auth.authorized ) {
+					           this.router.navigate( ['screen/auth'] )
+				           }
 			           }
+
 		           } );
 	}
 
 
+	invokeLogout() {
+		this.userService.doLogout()
+		    .subscribe( data => {
+			    if ( data === "logout_confirmed" ) {
+				    this.userService.currentUser = null;
+				    this.auth.authorized = false;
+				    this.router.navigate( ['screen/auth'] )
+			    }
+		    } )
+	}
 
 }
