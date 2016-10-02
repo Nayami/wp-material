@@ -2,10 +2,14 @@
 	<div *ngIf="!auth.authorized && appSettings.loaded" [@renderAuthTrigger]>
 		<h1 class="text-center">Auth Component</h1>
 
+		<!--Spinner-->
 		<div class="relative-container mdl-grid">
 			<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
 		</div>
+
 		<div id="auth-forms" class="content-grid mdl-grid">
+
+			<!--Login Form-->
 			<form [formGroup]="loginFormHandler" (ngSubmit)="doLogin()" class="mdl-cell mdl-cell--6-col">
 				<div class="mdl-grid">
 					<div class="mdl-cell mdl-cell--12-col">
@@ -31,9 +35,9 @@
 				</div>
 			</form>
 
+			<!--Registration Forms -->
 			<div *ngIf="appSettings.loaded && strategy" class="mdl-cell mdl-cell--6-col">
 				<form [formGroup]="registerFormHandler" (ngSubmit)="doRegister()">
-
 					<div class="mdl-grid">
 						<div class="mdl-cell mdl-cell--12-col">
 							<h3>Register</h3>

@@ -1,24 +1,46 @@
 <div class="am-wrap">
 
-	<div *ngIf="auth.authorized" [@renderAuthTrigger]>
-		<h1 class="text-center">Profile Component</h1>
+
+	<!--Layout Preloader-->
+	<div *ngIf="!layoutData.layoutDataLoaded" class="load-rising-holder">
+		<div class="load">
+			<div class="dot"></div>
+			<div class="outline"><span></span></div>
+		</div>
+	</div>
+
+	<!--<a [routerLink]="['/']">My profiel</a>-->
+	<!--<a [routerLink]="['/sdfsd']">Some Profile</a>-->
+
+	<!--Users/Users Activity Layout-->
+	<div *ngIf="!currentViewedUser && layoutData.layoutDataLoaded" [@renderAuthTrigger]>
+		<h1 class="text-center">Users/Users Activity Layout</h1>
+		<!--Corner spinner-->
+		<div class="relative-container mdl-grid">
+			<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
+		</div>
 
 		<div class="content-grid">
+			Some info goes there
+		</div>
+
+	</div>
+
+	<!--My Account Stuff-->
+	<div *ngIf="auth.authorized" [@renderAuthTrigger]>
+		<h1 class="text-center">{{userService.currentUser.display_name}}</h1>
+		<div class="content-grid">
 			{{userService.currentUser | json}}
-
-			<!--@TODO: View some user profile-->
-
-			<!--@TODO: switch between users-->
-			<div *ngIf="userService.currentUser">
-			<button (click)="invokeLogout()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Logout</button>
+			<div *ngIf="userService.currentUser" class="corner-logout-button">
+				<button (click)="invokeLogout()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Logout</button>
 			</div>
 		</div>
 	</div>
 
+	<!--Account From router link-->
 	<div *ngIf="currentViewedUser" [@renderAuthTrigger]>
 		<h1 class="text-center">{{currentViewedUser}} profile</h1>
-
-
+		<!--@TODO: compare current user and current viewer-->
 	</div>
 
 

@@ -5,6 +5,7 @@ import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
 import { AppSettingsService } from "../../shared/services/app.settings.service";
 import {FlashNoticeService} from "../../shared/services/alert.dialog.modal/flash.notices";
+import {LayoutDataService} from "../../shared/services/layout.data.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -29,8 +30,10 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 export class NetworkComponent {
 
 	private currentViewedUser: any;
+	spinner : boolean = false;
 
 	constructor( private router: Router,
+	             private layoutData : LayoutDataService,
 	             private activatedRoute: ActivatedRoute,
 	             private appSettings: AppSettingsService,
 	             private auth: AuthGlobalService,
@@ -47,6 +50,11 @@ export class NetworkComponent {
 					if ( event.url === '/' && !auth.authorized ) {
 						router.navigate( ['screen/auth'] )
 					}
+				}
+				// View another user profile
+				let maybeUserSlug = this.activatedRoute.snapshot.params['userslug'];
+				if ( maybeUserSlug ) {
+					this.currentViewedUser = maybeUserSlug;
 				}
 			} );
 		}
@@ -70,12 +78,13 @@ export class NetworkComponent {
 					           this.router.navigate( ['screen/auth'] )
 				           }
 			           }
-
+			           this.layoutData.layoutDataLoaded = true;
 		           } );
 	}
 
 
 	invokeLogout() {
+		this.spinner = true;
 		this.userService.doLogout()
 		    .subscribe( data => {
 			    if ( data === "logout_confirmed" ) {
@@ -83,6 +92,12 @@ export class NetworkComponent {
 				    this.auth.authorized = false;
 				    this.router.navigate( ['screen/auth'] )
 			    }
+			    this.flashes.attachNotifications( {
+				    message : 'You are logged out.',
+				    cssClass: 'mdl-color--blue-200 mdl-color-text--blue-900',
+				    type    : 'dismissable',
+			    } );
+			    this.spinner = false;
 		    } )
 	}
 

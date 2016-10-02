@@ -12,6 +12,7 @@ import { FlashNoticeService } from "../../shared/services/alert.dialog.modal/fla
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
 import { AppSettingsService } from "../../shared/services/app.settings.service";
+import {LayoutDataService} from "../../shared/services/layout.data.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -46,6 +47,7 @@ export class AMAuthComponent {
 	             private appSettings: AppSettingsService,
 	             private userService: UserGlobalService,
 	             private auth: AuthGlobalService,
+	             private layoutData : LayoutDataService,
 	             private flashes: FlashNoticeService,
 	             private fbuilder: FormBuilder ) {
 		if ( !auth.loaded ) {
@@ -119,7 +121,9 @@ export class AMAuthComponent {
 			           this.auth.authorized = user.ID ? true : false;
 			           this.userService.currentUser = user;
 			           if ( this.auth.authorized )
-				           this.router.navigate( [''] )
+				           this.router.navigate( [''] );
+
+			           this.layoutData.layoutDataLoaded = true;
 		           } );
 	}
 
@@ -292,6 +296,7 @@ export class AMAuthComponent {
 						passw  : 'Password',
 						confirm: 'Password confirmation'
 					};
+
 					switch ( thisErr ) {
 						case "email" :
 							this.flashes.attachNotifications( {
