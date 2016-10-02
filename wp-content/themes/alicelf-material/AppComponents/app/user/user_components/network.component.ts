@@ -48,7 +48,7 @@ export class NetworkComponent {
 			this.router.events.subscribe( event => {
 				if ( event.constructor.name === 'NavigationEnd' ) {
 					if ( event.url === '/' && !auth.authorized ) {
-						router.navigate( ['screen/auth'] )
+						router.navigate( ['/screen/auth'] )
 					}
 				}
 				// View another user profile
@@ -75,7 +75,7 @@ export class NetworkComponent {
 
 			           } else {
 				           if ( !this.auth.authorized ) {
-					           this.router.navigate( ['screen/auth'] )
+					           this.router.navigate( ['/screen/auth'] )
 				           }
 			           }
 			           this.layoutData.layoutDataLoaded = true;
@@ -90,7 +90,7 @@ export class NetworkComponent {
 			    if ( data === "logout_confirmed" ) {
 				    this.userService.currentUser = null;
 				    this.auth.authorized = false;
-				    this.router.navigate( ['screen/auth'] )
+				    this.router.navigate( ['/screen/auth'] )
 			    }
 			    this.flashes.attachNotifications( {
 				    message : 'You are logged out.',

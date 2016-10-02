@@ -1,5 +1,6 @@
 <?php
 use AlicelfMaterial\Helpers\AmDb;
+
 /**
  * ==================== Deploy additional tables ======================
  */
@@ -31,7 +32,6 @@ function custom_revisions_number( $num, $post )
 
 	return $num;
 }
-
 
 /**
  * ==================== Change Title Defaults ======================
@@ -87,4 +87,53 @@ function aa_func_20165314065329()
 	global $_am;
 	if ( ! empty( $_am[ 'opt-snippet-js' ] ) )
 		echo "<script>{$_am['opt-snippet-js']}</script>";
+}
+
+
+
+add_action( 'admin_init', 'aa_func_20164902064936' );
+function aa_func_20164902064936()
+{
+	add_meta_box(
+		'am_network_endpoints',
+		"Network Endpoints",
+		'func_20160802070842',
+		'nav-menus',
+		'side',
+		'high'
+	);
+}
+// ============= Nav_menu_link =============
+if ( ! function_exists( 'func_20160802070842' ) ) {
+	function func_20160802070842()
+	{
+		$box_id = "neworks-endpoints-id";
+		?>
+		<div id="<?php echo $box_id ?>" class="posttypediv">
+			<div id="tabs-panel-wishlist-login" class="tabs-panel tabs-panel-active">
+				<ul id ="wishlist-login-checklist" class="categorychecklist form-no-clear">
+					<li>
+						<label class="menu-item-title">
+							<input type="checkbox" class="menu-item-checkbox" name="menu-item[-1][menu-item-object-id]" value="-1">
+							Nework
+						</label>
+						<input type="hidden" class="menu-item-type" name="menu-item[-1][menu-item-type]" value="custom">
+						<input type="hidden" class="menu-item-title" name="menu-item[-1][menu-item-title]" value="Network">
+						<input type="hidden" class="menu-item-url" name="menu-item[-1][menu-item-url]" value="<?php echo get_am_network_endpoint() ?>">
+						<input type="hidden" class="menu-item-classes" name="menu-item[-1][menu-item-classes]" value="network-classes">
+					</li>
+				</ul>
+			</div>
+			<p class="button-controls">
+        			<span class="list-controls">
+        				<a href="<?php echo get_site_url() ?>/wp-admin/nav-menus.php?page-tab=all&amp;selectall=1#<?php echo $box_id ?>" class="select-all">Select All</a>
+        			</span>
+        			<span class="add-to-menu">
+        				<input type="submit" class="button-secondary submit-add-to-menu right" value="Add to Menu" name="add-post-type-menu-item" id="submit-<?php echo $box_id ?>">
+        				<span class="spinner"></span>
+        			</span>
+			</p>
+		</div>
+		<?php
+	}
 }

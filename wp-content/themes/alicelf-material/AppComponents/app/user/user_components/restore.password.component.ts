@@ -8,6 +8,7 @@ import { Subscription, Observable } from 'rxjs/Rx';
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
 import {FlashNoticeService} from "../../shared/services/alert.dialog.modal/flash.notices";
+import {LayoutDataService} from "../../shared/services/layout.data.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -40,6 +41,7 @@ export class RestorePasswordComponent implements OnDestroy {
 
 	constructor( private http: Http,
 	             private router: Router,
+	             private layoutData : LayoutDataService,
 	             private flashes: FlashNoticeService,
 	             private auth: AuthGlobalService,
 	             private userService: UserGlobalService ) {
@@ -67,7 +69,8 @@ export class RestorePasswordComponent implements OnDestroy {
 									    type    : 'dismissable',
 								    } );
 							    }
-							    this.router.navigate( ['/'] )
+							    this.router.navigate( ['/'] );
+							    this.layoutData.layoutDataLoaded = true;
 						    }
 
 					    }
@@ -95,7 +98,7 @@ export class RestorePasswordComponent implements OnDestroy {
 						    this.auth.authorized = data.user.ID ? true : false;
 						    this.userService.currentUser = data.user;
 						    if ( !this.auth.authorized ) {
-							    this.router.navigate( ['screen/auth'] )
+							    this.router.navigate( ['/screen/auth'] )
 						    } else {
 							    this.router.navigate( ['/'] );
 							    this.flashes.attachNotifications( {
@@ -111,6 +114,7 @@ export class RestorePasswordComponent implements OnDestroy {
 							    type    : 'dismissable',
 						    } );
 					    }
+					    this.layoutData.layoutDataLoaded = true;
 				    } )
 			} else {
 				this.flashes.attachNotifications( {

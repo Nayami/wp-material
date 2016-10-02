@@ -54,7 +54,7 @@ export class AMAuthComponent {
 			this.loadAuthInfo();
 		} else {
 			if ( this.auth.authorized )
-				this.router.navigate( [''] )
+				this.router.navigate( ['/'] )
 		}
 
 		this.loginFormHandler = this.fbuilder.group( {
@@ -121,7 +121,7 @@ export class AMAuthComponent {
 			           this.auth.authorized = user.ID ? true : false;
 			           this.userService.currentUser = user;
 			           if ( this.auth.authorized )
-				           this.router.navigate( [''] );
+				           this.router.navigate( ['/'] );
 
 			           this.layoutData.layoutDataLoaded = true;
 		           } );
@@ -140,7 +140,7 @@ export class AMAuthComponent {
 						    this.userService.currentUser = data.user;
 						    this.auth.loaded = true;
 						    this.auth.authorized = true;
-						    this.router.navigate( [''] );
+						    this.router.navigate( ['/'] );
 						    this.flashes.attachNotifications( {
 							    message : 'Success !',
 							    cssClass: 'mdl-color--green-200 mdl-color-text--green-900',
@@ -260,7 +260,7 @@ export class AMAuthComponent {
 								    this.userService.currentUser = data.user;
 								    this.auth.loaded = true;
 								    this.auth.authorized = true;
-								    this.router.navigate( [''] );
+								    this.router.navigate( ['/'] );
 								    break;
 							    default :
 								    console.log( "unknown" );
