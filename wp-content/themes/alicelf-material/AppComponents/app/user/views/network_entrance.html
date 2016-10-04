@@ -1,6 +1,5 @@
 <div class="am-wrap">
 
-
 	<!--Layout Preloader-->
 	<div *ngIf="!layoutData.layoutDataLoaded" class="load-rising-holder">
 		<div class="load">
@@ -9,19 +8,15 @@
 		</div>
 	</div>
 
-	<!--<a [routerLink]="['/']">My profiel</a>-->
-	<!--<a [routerLink]="['/sdfsd']">Some Profile</a>-->
-
 	<!--Users/Users Activity Layout-->
 	<div *ngIf="!currentViewedUser && layoutData.layoutDataLoaded" [@renderAuthTrigger]>
-		<h1 class="text-center">Users/Users Activity Layout</h1>
 		<!--Corner spinner-->
 		<div class="relative-container mdl-grid">
 			<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
 		</div>
 
 		<div class="content-grid">
-			Some info goes there
+			Network entrance screen
 		</div>
 
 	</div>
@@ -29,10 +24,22 @@
 	<!--My Account Stuff-->
 	<div *ngIf="auth.authorized" [@renderAuthTrigger]>
 		<h1 class="text-center">{{userService.currentUser.display_name}}</h1>
+		<div class="relative-container mdl-grid">
+			<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
+		</div>
 		<div class="content-grid">
-			{{userService.currentUser | json}}
-			<div *ngIf="userService.currentUser" class="corner-logout-button">
-				<button (click)="invokeLogout()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Logout</button>
+			<div class="mdl-grid">
+				<figure class="mdl-cell mdl-cell--2-col">
+					<img [src]="userService.currentUser.network_meta.user_media.avatar_url" alt="">
+				</figure>
+				<div class="mdl-cell mdl-cell--10-col relative-container">
+					{{userService.currentUser | json}}
+
+					<div *ngIf="userService.currentUser" class="corner-logout-button">
+						<i (click)="invokeLogout()" class="material-icons">exit_to_app</i>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</div>

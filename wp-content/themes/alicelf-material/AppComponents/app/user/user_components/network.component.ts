@@ -3,9 +3,9 @@ import { Component,
 import { Router,ActivatedRoute } from "@angular/router";
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
-import { AppSettingsService } from "../../shared/services/app.settings.service";
-import {FlashNoticeService} from "../../shared/services/alert.dialog.modal/flash.notices";
-import {LayoutDataService} from "../../shared/services/layout.data.service";
+import { FlashNoticeService } from "../../shared/services/alert.dialog.modal/flash.notices";
+import { LayoutDataService } from "../../shared/services/layout.data.service";
+import {AppSettingsService} from "../../shared/services/app.settings.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -31,6 +31,7 @@ export class NetworkComponent {
 
 	private currentViewedUser: any;
 	spinner : boolean = false;
+	authAndBehaviour:any;
 
 	constructor( private router: Router,
 	             private layoutData : LayoutDataService,
@@ -39,14 +40,15 @@ export class NetworkComponent {
 	             private auth: AuthGlobalService,
 	             private flashes: FlashNoticeService,
 	             private userService: UserGlobalService ) {
-		if ( !appSettings.loaded )
-			appSettings.setSettings();
+
+		this.authAndBehaviour = appSettings.settings.themeSettings.auth_info;
 
 		if ( !auth.loaded ) {
 			this.loadAuthInfo();
 		} else {
 			this.router.events.subscribe( event => {
 				if ( event.constructor.name === 'NavigationEnd' ) {
+					// @TODO: check network purpose
 					if ( event.url === '/' && !auth.authorized ) {
 						router.navigate( ['/screen/auth'] )
 					}
@@ -72,11 +74,23 @@ export class NetworkComponent {
 			           let maybeUserSlug = this.activatedRoute.snapshot.params['userslug'];
 			           if ( maybeUserSlug ) {
 				           this.currentViewedUser = maybeUserSlug;
-
 			           } else {
-				           if ( !this.auth.authorized ) {
-					           this.router.navigate( ['/screen/auth'] )
+
+				           switch ( this.authAndBehaviour.network_purpose ) {
+					           case "user_profile" :
+						           if ( !this.auth.authorized )
+							           this.router.navigate( ['/screen/auth'] );
+						           break;
+					           case "users_listing" :
+						           console.log( "users_listing" );
+						           break;
+					           case "users_activity" :
+						           console.log( "users_activity" );
+						           break;
+					           default:
+						           this.router.navigate( ['/screen/auth'] );
 				           }
+
 			           }
 			           this.layoutData.layoutDataLoaded = true;
 		           } );

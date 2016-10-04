@@ -545,8 +545,8 @@ $section = [
 		[
 			'id'       => 'users-page-slug',
 			'type'     => 'text',
-			'title'    => __( 'Users page slug', 'alicelf-adaptive' ),
-			'subtitle' => __( 'Users page slug', 'alicelf-adaptive' ),
+			'title'    => __( 'Network page slug', 'alicelf-adaptive' ),
+			'subtitle' => __( 'Network page slug', 'alicelf-adaptive' ),
 			'desc'     => __( 'Don\'t forget to resave your permalinks and update menu items', 'alicelf-adaptive' ),
 			'default'  => 'user',
 			'validate' => 'not_empty',
@@ -555,19 +555,34 @@ $section = [
 		[
 			'id'       => 'users-page-title',
 			'type'     => 'text',
-			'title'    => __( 'Users page title', 'alicelf-adaptive' ),
-			'subtitle' => __( 'Users page title', 'alicelf-adaptive' ),
+			'title'    => __( 'Network page title', 'alicelf-adaptive' ),
+			'subtitle' => __( 'Network page title', 'alicelf-adaptive' ),
 			'desc'     => __( 'Set title for your network', 'alicelf-adaptive' ),
 			'default'  => 'My Network',
 			'validate' => 'not_empty',
 			'msg'      => 'The title cannot be blank'
 		],
+
+		[
+			'id'       => 'disable-regular-wplogin',
+			'type'     => 'button_set',
+			'title'    => __( 'Front/Back Authentification', 'alicelf-adaptive' ),
+			'subtitle' => __( 'Enable only frontend auth?', 'alicelf-adaptive' ),
+			'desc'     => __( 'This means wp-admin and wp-login will be hidden to any non admin users', 'alicelf-adaptive' ),
+			'multi'    => false,
+			'options'  => [
+				'yes' => 'Yes',
+				'no'  => 'No',
+			],
+			'default'  => 'no',
+		],
+
 		[
 			'id'       => 'network-registration',
 			'type'     => 'button_set',
 			'title'    => __( 'Enable Registration', 'alicelf-adaptive' ),
 			'subtitle' => __( 'Your website does registration?', 'alicelf-adaptive' ),
-			'desc'     => __( '', 'alicelf-adaptive' ),
+			'desc'     => __( 'Display or not frontend form?', 'alicelf-adaptive' ),
 			'multi'    => false,
 			'options'  => [
 				'yes' => 'Yes',
@@ -588,6 +603,21 @@ $section = [
 				'no_confirm'     => 'Without confirmation'
 			],
 			'default'  => 'no_confirm',
+		],
+
+		[
+			'id'       => 'network-purpose',
+			'type'     => 'button_set',
+			'title'    => __( 'Network behaviour', 'alicelf-adaptive' ),
+			'subtitle' => __( 'What is for your network', 'alicelf-adaptive' ),
+			'desc'     => __( '@TODO: NOTE: for "Current User profile" will be redirect to login if not logged in', 'alicelf-adaptive.' ),
+			'multi'    => false,
+			'options'  => [
+				'user_profile'   => 'Current User profile',
+				'users_listing'  => 'Users listing',
+				'users_activity' => 'Users Activity/Stream'
+			],
+			'default'  => 'user_profile',
 		]
 	]
 ];

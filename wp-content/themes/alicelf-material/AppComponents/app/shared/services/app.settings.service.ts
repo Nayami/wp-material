@@ -1,36 +1,12 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
-import { Observable, Subscription } from  'rxjs/Rx';
-import { Subject }    from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
 
 declare var AMdefaults: any;
 
 @Injectable()
-export class AppSettingsService implements OnDestroy {
+export class AppSettingsService {
 
-	public settings: any;
-	public loaded: boolean = false;
-	private settingsSubscription: Subscription;
+	public settings: any = AMdefaults;
 
-	constructor( private http: Http ) {
-	}
-
-	getSettings(): Observable<any> {
-		let queryUrl = AMdefaults.ajaxurl + "?action=ajx20162128122131";
-		return this.http.get( queryUrl )
-		           .map( ( response: Response ) => response.json() );
-	}
-
-	setSettings() {
-		this.settingsSubscription = this.getSettings()
-		                                .subscribe( data => {
-			                                this.settings = data;
-			                                this.loaded = true;
-		                                } )
-	}
-
-	ngOnDestroy(): void {
-		this.settingsSubscription.unsubscribe();
-	}
+	constructor() {}
 
 }

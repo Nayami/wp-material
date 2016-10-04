@@ -22,6 +22,14 @@ add_action( 'wp_head', 'aa_func_20163526113508', 10 );
 function aa_func_20163526113508()
 {
 	$site_url = get_site_url();
+	global $_am;
+	$values = [
+		'auth_info' => [
+			'network_purpose'       => $_am[ 'network-purpose' ],
+			'registration_info'     => $_am[ 'network-registration' ],
+			'registration_strategy' => $_am[ 'network-confirmation-flow' ]
+		]
+	];
 	?>
 	<script>
 		var AMdefaults = {
@@ -30,7 +38,8 @@ function aa_func_20163526113508()
 			themepath      : "<?php echo get_template_directory() ?>",
 			ajaxurl        : "<?php echo admin_url( 'admin-ajax.php' ) ?>",
 			currentUser    : "<?php echo get_current_user_id(); ?>",
-			networkEndpoint: "<?php echo get_am_network_endpoint() ?>"
+			networkEndpoint: "<?php echo get_am_network_endpoint() ?>",
+			themeSettings  : <?php echo json_encode( $values ) ?>
 		};
 	</script>
 	<base href="<?php echo apply_filters( 'AMbaseHref', $site_url ) ?>">
@@ -70,7 +79,7 @@ function aa_func_20162526072510()
 	<?php
 }
 
-add_action('AM_content', 'aa_func_20164926084929');
+add_action( 'AM_content', 'aa_func_20164926084929' );
 function aa_func_20164926084929()
 {
 	echo "<FlashNotificationsComponent></FlashNotificationsComponent>";

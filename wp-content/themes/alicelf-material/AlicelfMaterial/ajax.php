@@ -31,7 +31,10 @@ if ( ! function_exists( 'am_user' ) ) {
 			'roles'           => $user->roles,
 			'administrator'   => $user->allcaps[ 'administrator' ],
 			'network_meta'    => [
-				'email_confirmed' => get_user_meta( $user->ID, 'am_email_confirmed', true )
+				'email_confirmed' => get_user_meta( $user->ID, 'am_email_confirmed', true ),
+				'user_media'      => [
+					'avatar_url' => apply_filters( 'am_user_avatar_url', get_avatar_url( $user->ID ), $user->ID )
+				]
 			]
 		];
 	}
@@ -111,6 +114,7 @@ function ajx20162128122131()
 	global $_am;
 	$values = [
 		'auth_info' => [
+			'network_purpose'       => $_am[ 'network-purpose' ],
 			'registration_info'     => $_am[ 'network-registration' ],
 			'registration_strategy' => $_am[ 'network-confirmation-flow' ]
 		]

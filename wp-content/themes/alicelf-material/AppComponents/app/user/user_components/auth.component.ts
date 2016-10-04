@@ -12,7 +12,7 @@ import { FlashNoticeService } from "../../shared/services/alert.dialog.modal/fla
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
 import { AppSettingsService } from "../../shared/services/app.settings.service";
-import {LayoutDataService} from "../../shared/services/layout.data.service";
+import { LayoutDataService } from "../../shared/services/layout.data.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -47,7 +47,7 @@ export class AMAuthComponent {
 	             private appSettings: AppSettingsService,
 	             private userService: UserGlobalService,
 	             private auth: AuthGlobalService,
-	             private layoutData : LayoutDataService,
+	             private layoutData: LayoutDataService,
 	             private flashes: FlashNoticeService,
 	             private fbuilder: FormBuilder ) {
 		if ( !auth.loaded ) {
@@ -62,17 +62,10 @@ export class AMAuthComponent {
 			passw: ["", Validators.required]
 		} );
 
-		appSettings.getSettings()
-		           .subscribe( data => {
-			           appSettings.settings = data;
-			           appSettings.loaded = true;
-
-			           if ( appSettings.settings.auth_info.registration_info === 'yes' ) {
-				           this.strategy = appSettings.settings.auth_info.registration_strategy;
-				           this.setRegistrationForm();
-			           }
-
-		           } );
+		if ( appSettings.settings.themeSettings.auth_info.registration_info === 'yes' ) {
+			this.strategy = appSettings.settings.themeSettings.auth_info.registration_strategy;
+			this.setRegistrationForm();
+		}
 
 	}
 
@@ -307,14 +300,14 @@ export class AMAuthComponent {
 							break;
 						case "required" :
 							this.flashes.attachNotifications( {
-								message : controlMap[control ]+ " Cannot be blank",
+								message : controlMap[control] + " Cannot be blank",
 								cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
 								type    : 'dismissable',
 							} );
 							break;
 						case "minlength" :
 							this.flashes.attachNotifications( {
-								message : controlMap[control ] + " Too Short",
+								message : controlMap[control] + " Too Short",
 								cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
 								type    : 'dismissable',
 							} );

@@ -5,7 +5,6 @@ import 'rxjs/Rx';
 
 import { UserInterface } from '../mocks/user.interface';
 import {AuthGlobalService} from "./auth.service";
-import {AppSettingsService} from "./app.settings.service";
 import {FlashNoticeService} from "./alert.dialog.modal/flash.notices";
 declare var AMdefaults: any;
 
@@ -19,8 +18,7 @@ export class UserGlobalService implements OnDestroy {
 
 	constructor( private http: Http,
 	             private auth: AuthGlobalService,
-	             private flashes: FlashNoticeService,
-	             private appSettings: AppSettingsService ) {
+	             private flashes: FlashNoticeService ) {
 	}
 
 	getCurrentUser(): Observable<any> {

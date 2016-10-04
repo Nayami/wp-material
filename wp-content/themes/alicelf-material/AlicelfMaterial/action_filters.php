@@ -17,6 +17,29 @@ function aa_func_20161027071039()
 	AmDb::createTable( 'user_reset_passwords', $fields, true );
 }
 
+/**
+ * ==================== Disable admin area for non admins ======================
+ * 03.10.2016
+ */
+add_action( 'wp_loaded', 'aa_func_20165803055837' );
+function aa_func_20165803055837()
+{
+	global $_am;
+	if ( $_am[ 'disable-regular-wplogin' ] === 'yes' ) {
+		$is_ajax = defined( 'DOING_AJAX' ) && DOING_AJAX;
+		$gl      = $GLOBALS[ 'pagenow' ];
+		$list    = [
+			'wp-login.php'
+		];
+		if ( ( is_admin() || in_array( $gl, $list ) ) && ! $is_ajax ) {
+			if ( ! is_super_admin( get_current_user_id() ) ) {
+				wp_redirect( get_am_network_endpoint() );
+				die;
+			}
+		}
+	}
+}
+
 add_theme_support( 'post-thumbnails' );
 add_filter( 'widget_text', 'do_shortcode' );
 //add_theme_support( 'woocommerce' );
@@ -89,8 +112,6 @@ function aa_func_20165314065329()
 		echo "<script>{$_am['opt-snippet-js']}</script>";
 }
 
-
-
 add_action( 'admin_init', 'aa_func_20164902064936' );
 function aa_func_20164902064936()
 {
@@ -103,24 +124,27 @@ function aa_func_20164902064936()
 		'high'
 	);
 }
+
 // ============= Nav_menu_link =============
 if ( ! function_exists( 'func_20160802070842' ) ) {
 	function func_20160802070842()
 	{
-		$box_id = "neworks-endpoints-id";
+		$box_id       = "neworks-endpoints-id";
+		$net_endpoint = get_am_network_endpoint();
 		?>
 		<div id="<?php echo $box_id ?>" class="posttypediv">
 			<div id="tabs-panel-wishlist-login" class="tabs-panel tabs-panel-active">
-				<ul id ="wishlist-login-checklist" class="categorychecklist form-no-clear">
+				<ul id="wishlist-login-checklist" class="categorychecklist form-no-clear">
 					<li>
 						<label class="menu-item-title">
-							<input type="checkbox" class="menu-item-checkbox" name="menu-item[-1][menu-item-object-id]" value="-1">
+							<input type="checkbox" name="menu-item[-1][menu-item-object-id]" value="-1">
 							Nework
 						</label>
-						<input type="hidden" class="menu-item-type" name="menu-item[-1][menu-item-type]" value="custom">
-						<input type="hidden" class="menu-item-title" name="menu-item[-1][menu-item-title]" value="Network">
-						<input type="hidden" class="menu-item-url" name="menu-item[-1][menu-item-url]" value="<?php echo get_am_network_endpoint() ?>">
-						<input type="hidden" class="menu-item-classes" name="menu-item[-1][menu-item-classes]" value="network-classes">
+						<input type="hidden" name="menu-item[-1][menu-item-type]" value="custom">
+						<input type="hidden" name="menu-item[-1][menu-item-object]" value="network_link">
+						<input type="hidden" name="menu-item[-1][menu-item-title]" value="Network">
+						<input type="hidden" name="menu-item[-1][menu-item-url]" value="<?php echo $net_endpoint ?>">
+						<input type="hidden" name="menu-item[-1][menu-item-classes]" value="network-classes">
 					</li>
 				</ul>
 			</div>

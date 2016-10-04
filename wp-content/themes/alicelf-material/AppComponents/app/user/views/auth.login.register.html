@@ -1,5 +1,5 @@
 <div class="am-wrap">
-	<div *ngIf="!auth.authorized && appSettings.loaded" [@renderAuthTrigger]>
+	<div *ngIf="!auth.authorized" [@renderAuthTrigger]>
 		<h1 class="text-center">Auth Component</h1>
 
 		<!--Spinner-->
@@ -36,7 +36,7 @@
 			</form>
 
 			<!--Registration Forms -->
-			<div *ngIf="appSettings.loaded && strategy" class="mdl-cell mdl-cell--6-col">
+			<div class="mdl-cell mdl-cell--6-col">
 				<form [formGroup]="registerFormHandler" (ngSubmit)="doRegister()">
 					<div class="mdl-grid">
 						<div class="mdl-cell mdl-cell--12-col">

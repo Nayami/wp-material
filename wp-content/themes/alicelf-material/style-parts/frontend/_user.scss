@@ -42,3 +42,13 @@ body {
 	right : 0;
 	top : -25px;
 }
+
+.corner-logout-button {
+	position : absolute;
+	top : -20px;
+	right : -20px;
+	cursor : pointer;
+	&:hover{
+		color : $brandColor;
+	}
+}
