@@ -30,11 +30,11 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 export class NetworkComponent {
 
 	private currentViewedUser: any;
-	spinner : boolean = false;
-	authAndBehaviour:any;
+	spinner: boolean = false;
+	authAndBehaviour: any;
 
 	constructor( private router: Router,
-	             private layoutData : LayoutDataService,
+	             private layoutData: LayoutDataService,
 	             private activatedRoute: ActivatedRoute,
 	             private appSettings: AppSettingsService,
 	             private auth: AuthGlobalService,
@@ -47,12 +47,13 @@ export class NetworkComponent {
 			this.loadAuthInfo();
 		} else {
 			this.router.events.subscribe( event => {
+
 				if ( event.constructor.name === 'NavigationEnd' ) {
-					// @TODO: check network purpose
-					if ( event.url === '/' && !auth.authorized ) {
-						router.navigate( ['/screen/auth'] )
+					if ( event.url === '/' ) {
+						this.entranceBehaviour( this.authAndBehaviour.network_purpose );
 					}
 				}
+
 				// View another user profile
 				let maybeUserSlug = this.activatedRoute.snapshot.params['userslug'];
 				if ( maybeUserSlug ) {
@@ -73,46 +74,30 @@ export class NetworkComponent {
 			           // View another user profile
 			           let maybeUserSlug = this.activatedRoute.snapshot.params['userslug'];
 			           if ( maybeUserSlug ) {
-				           this.currentViewedUser = maybeUserSlug;
+				           this.currentViewedUser = maybeUserSlug; // Other user profile
 			           } else {
-
-				           switch ( this.authAndBehaviour.network_purpose ) {
-					           case "user_profile" :
-						           if ( !this.auth.authorized )
-							           this.router.navigate( ['/screen/auth'] );
-						           break;
-					           case "users_listing" :
-						           console.log( "users_listing" );
-						           break;
-					           case "users_activity" :
-						           console.log( "users_activity" );
-						           break;
-					           default:
-						           this.router.navigate( ['/screen/auth'] );
-				           }
-
+				           this.entranceBehaviour( this.authAndBehaviour.network_purpose );
 			           }
 			           this.layoutData.layoutDataLoaded = true;
 		           } );
 	}
 
 
-	invokeLogout() {
-		this.spinner = true;
-		this.userService.doLogout()
-		    .subscribe( data => {
-			    if ( data === "logout_confirmed" ) {
-				    this.userService.currentUser = null;
-				    this.auth.authorized = false;
-				    this.router.navigate( ['/screen/auth'] )
-			    }
-			    this.flashes.attachNotifications( {
-				    message : 'You are logged out.',
-				    cssClass: 'mdl-color--blue-200 mdl-color-text--blue-900',
-				    type    : 'dismissable',
-			    } );
-			    this.spinner = false;
-		    } )
+	entranceBehaviour( networkPurpose ) {
+		switch ( networkPurpose ) {
+			case "user_profile" :
+				if ( !this.auth.authorized )
+					this.router.navigate( ['/screen/auth'] );
+				break;
+			case "users_listing" :
+				console.log( "users_listing" );
+				break;
+			case "users_activity" :
+				console.log( "users_activity" );
+				break;
+			default:
+				this.router.navigate( ['/screen/auth'] );
+		}
 	}
 
 }

@@ -1,5 +1,4 @@
 <div class="am-wrap">
-
 	<!--Layout Preloader-->
 	<div *ngIf="!layoutData.layoutDataLoaded" class="load-rising-holder">
 		<div class="load">
@@ -8,46 +7,17 @@
 		</div>
 	</div>
 
-	<!--Users/Users Activity Layout-->
-	<div *ngIf="!currentViewedUser && layoutData.layoutDataLoaded" [@renderAuthTrigger]>
-		<!--Corner spinner-->
-		<div class="relative-container mdl-grid">
-			<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
-		</div>
+	<!--Load profile by slug or current user-->
+	<div *ngIf="authAndBehaviour.network_purpose === 'user_profile'" [@renderAuthTrigger]>
+		<am-single-profile [renderedUser]="currentViewedUser"></am-single-profile>
+	</div>
 
-		<div class="content-grid">
-			Network entrance screen
-		</div>
+	<div *ngIf="authAndBehaviour.network_purpose === 'users_listing'" [@renderAuthTrigger]>
 
 	</div>
 
-	<!--My Account Stuff-->
-	<div *ngIf="auth.authorized" [@renderAuthTrigger]>
-		<h1 class="text-center">{{userService.currentUser.display_name}}</h1>
-		<div class="relative-container mdl-grid">
-			<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
-		</div>
-		<div class="content-grid">
-			<div class="mdl-grid">
-				<figure class="mdl-cell mdl-cell--2-col">
-					<img [src]="userService.currentUser.network_meta.user_media.avatar_url" alt="">
-				</figure>
-				<div class="mdl-cell mdl-cell--10-col relative-container">
-					{{userService.currentUser | json}}
+	<div *ngIf="authAndBehaviour.network_purpose === 'users_activity'" [@renderAuthTrigger]>
 
-					<div *ngIf="userService.currentUser" class="corner-logout-button">
-						<i (click)="invokeLogout()" class="material-icons">exit_to_app</i>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--Account From router link-->
-	<div *ngIf="currentViewedUser" [@renderAuthTrigger]>
-		<h1 class="text-center">{{currentViewedUser}} profile</h1>
-		<!--@TODO: compare current user and current viewer-->
 	</div>
 
 

@@ -202,6 +202,7 @@ function ajx20162929092956()
 			$user = get_user_by( 'email', $decoded_data->login );
 			update_user_meta( $user->ID, 'am_email_confirmed', 'not_confirmed' );
 			$response_data[ 'user' ] = am_user( $user->ID );
+			update_user_meta( $user->ID, 'am_slug', sha1( $user->data->user_email . uniqid() ) );
 
 			if ( $strategy === 'confirm_after' ) {
 				$token = send_me_confirmation_registration_link( $decoded_data->login, 'confirm' );
@@ -278,6 +279,8 @@ function ajx20161128111129()
 
 					$created_new_user = get_user_by( 'email', $decoded_data->email );
 					update_user_meta( $created_new_user->ID, 'am_email_confirmed', 'confirmed' );
+					update_user_meta( $created_new_user->ID, 'am_slug', sha1( $created_new_user->data->user_email . uniqid() ) );
+
 					$response[ 'user' ] = am_user( $created_new_user->ID );
 					wp_set_auth_cookie( $created_new_user->ID );
 					$wpdb->delete( $table, [ 'email' => $decoded_data->email ], [ '%s' ] );
@@ -315,7 +318,8 @@ add_action( 'wp_ajax_nopriv_ajx20160101040141', 'ajx20160101040141' );
 add_action( 'wp_ajax_ajx20160101040141', 'ajx20160101040141' );
 function ajx20160101040141()
 {
-	wp_clear_auth_cookie();
+//	wp_clear_auth_cookie();
+	wp_logout();
 	echo json_encode( "logout_confirmed" );
 	die;
 }

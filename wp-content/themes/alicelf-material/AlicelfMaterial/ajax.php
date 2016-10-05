@@ -29,6 +29,7 @@ if ( ! function_exists( 'am_user' ) ) {
 			'user_registered' => $user->data->user_registered,
 			'user_url'        => $user->data->user_url,
 			'roles'           => $user->roles,
+			'slug'            => get_user_meta($user->ID, 'am_slug', true),
 			'administrator'   => $user->allcaps[ 'administrator' ],
 			'network_meta'    => [
 				'email_confirmed' => get_user_meta( $user->ID, 'am_email_confirmed', true ),

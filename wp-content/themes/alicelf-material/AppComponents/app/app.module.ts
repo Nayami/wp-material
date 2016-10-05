@@ -25,6 +25,7 @@ import { FormComponent }  from './comments/comments_childs/Form.component';
 import { ListingCommentsComponent }  from './comments/comments_childs/ListingComments.component';
 import { ConfirmComponent } from "./comments/comments_childs/confirm.component";
 import { EdittCommentComponent } from "./comments/comments_childs/editcomment.component";
+import {SingleProfileComponent} from "./user/user_components/subcomponents/profile.component";
 
 
 /**
@@ -48,7 +49,8 @@ const componentMaybeExists = [
 		NetworkComponent,
 		AMAuthComponent,
 		EnterEmailComponent,
-		RestorePasswordComponent
+		RestorePasswordComponent,
+		SingleProfileComponent
 	]
 	},
 	// ADD THERE COMPONENTS
