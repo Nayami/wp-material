@@ -44,8 +44,11 @@
 	@extend .relative-container;
 }
 
-.AMscope {
-
+.am-link {
+	cursor : pointer;
+	&:hover{
+		text-decoration : underline;
+	}
 }
 
 .img-responsive {

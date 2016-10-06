@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import {LayoutDataService} from "../../shared/services/layout.data.service";
 
 @Component( {
 	template: `
 		<div class="am-wrap">
 			<br>
 			<h1 class="text-center">.404 not found.</h1>
-			<div class="load-rising-holder">
+			<div *ngIf="!layoutData.layoutDataLoaded" class="load-rising-holder">
 				<div class="load">
 				   <div class="dot"></div>
 				   <div class="outline"><span></span></div>
@@ -17,9 +18,11 @@ import { Component, OnInit } from '@angular/core';
 } )
 
 export class NotFoundComponent implements OnInit {
-	constructor() {
+
+	constructor( private layoutData: LayoutDataService ) {
 	}
 
-	ngOnInit() {
+	ngOnInit():void {
+		this.layoutData.layoutDataLoaded = true;
 	}
 }

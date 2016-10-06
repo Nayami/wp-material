@@ -26,7 +26,7 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 				animate( '300ms ease' )
 			] ),
 			transition( '* => void', [
-				animate( '300ms ease-out', style( { transform: 'translateY(-20%)', opacity: 0 } ) )
+				animate( '300ms ease-out', style( { transform: 'translateY(20%)', opacity: 0 } ) )
 			] )
 		] )
 	]
@@ -36,6 +36,8 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 	spinner: boolean = false;
 	owner: boolean = false;
 	routerParam: Subscription;
+
+	currentUserSlug:string;
 
 	scopeUser: any = {
 		ID: null
@@ -55,14 +57,30 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 			if ( event.constructor['name'] === 'NavigationEnd' ) {
 				let mbslug = this.activatedRoute.params['value'],
 				    slug   = "userslug" in mbslug ? mbslug.userslug : null;
+
 				this.userService.getUser( slug )
 				    .subscribe( result => {
+					    if ( !result.ID )
+						    this.router.navigate( ['/notfound'] );
+
 					    this.scopeUser = result;
-					    console.log( this.scopeUser );
+					    this.currentUserSlug = slug;
+					    if ( result.is_current_user )
+						    this.owner = true;
 				    } )
 			}
 
 		} );
+	}
+
+	switchUser( user ) {
+		let u = user.length > 0 ? user : null;
+		if ( this.currentUserSlug !== u ) {
+			this.scopeUser = { ID: null };
+			setTimeout( ()=> {
+				this.router.navigate( [user] );
+			}, 50 );
+		}
 	}
 
 

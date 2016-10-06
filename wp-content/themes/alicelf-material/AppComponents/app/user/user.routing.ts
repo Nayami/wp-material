@@ -9,12 +9,14 @@ import { RestorePasswordComponent } from "./user_components/restore.password.com
 
 const appRoutes: Routes = [
 	{ path: '', component: NetworkComponent },
+	{ path: 'notfound', component: NotFoundComponent },
+
 	{ path: ':userslug', component: NetworkComponent },
 	{ path: 'screen/auth', component: AMAuthComponent },
 	{ path: 'screen/restorepass', component: RestorePasswordComponent },
 	{ path: 'screen/restorepass/:tokenparams', component: RestorePasswordComponent },
 
-	{ path: 'nothingfound', component: NotFoundComponent },
+
 	{ path: '**', component: NotFoundComponent }
 ];
 
