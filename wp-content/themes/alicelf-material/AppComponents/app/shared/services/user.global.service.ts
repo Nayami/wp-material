@@ -11,7 +11,6 @@ declare var AMdefaults: any;
 @Injectable()
 export class UserGlobalService implements OnDestroy {
 
-	public theUser: UserInterface;
 	public currentUser: UserInterface;
 	public allUsers: UserInterface[] = [];
 	private userSubscription: Subscription;
@@ -21,21 +20,17 @@ export class UserGlobalService implements OnDestroy {
 	             private flashes: FlashNoticeService ) {
 	}
 
-	getCurrentUser(): Observable<any> {
+
+	/**
+	 * ==================== If not slug will be current user ======================
+	 * 06.10.2016
+	 */
+	getUser(slug = null): Observable<any> {
 		let queryUrl = AMdefaults.ajaxurl + "?action=ajx20163917023918";
+		if(slug) queryUrl += "&by_slug="+slug;
 		return this.http.get( queryUrl )
 		           .map( ( response: Response ) => response.json() );
 	}
-
-	setCurrentUser() {
-		this.userSubscription = this.getCurrentUser()
-		                            .subscribe( data => {
-			                            this.currentUser = data;
-			                            this.auth.loaded = true;
-			                            this.auth.authorized = data.ID ? true : false;
-		                            } );
-	}
-
 
 	checkAccessAndEmailConfirmation( user: any, auth: any ) {
 		let htmlButton = '<a class="mdl-color-text--blue-grey-900" href="' + AMdefaults.networkEndpoint + '?am_confirm_email=confirm">Confirm Now!</a>';

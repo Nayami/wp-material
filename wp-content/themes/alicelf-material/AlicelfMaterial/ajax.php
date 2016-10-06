@@ -31,6 +31,8 @@ if ( ! function_exists( 'am_user' ) ) {
 			'roles'           => $user->roles,
 			'slug'            => get_user_meta($user->ID, 'am_slug', true),
 			'administrator'   => $user->allcaps[ 'administrator' ],
+			'is_current_user' => get_current_user_id() === (int)$user_id ? true : false,
+
 			'network_meta'    => [
 				'email_confirmed' => get_user_meta( $user->ID, 'am_email_confirmed', true ),
 				'user_media'      => [

@@ -1,0 +1,25 @@
+<div *ngIf="scopeUser.ID" [@renderProfile]>
+	<h1 class="text-center">@username</h1>
+
+	<a [routerLink]="['/']">User</a>
+	<a [routerLink]="['/b03c1180ab688532bc3e2a808ed71fe650c083b0']">alicelfdevgmailcom</a>
+	<a [routerLink]="['/user1']">User1</a>
+
+	<div class="relative-container mdl-grid">
+		<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
+	</div>
+	<div class="content-grid">
+		<div class="mdl-grid">
+			<figure class="mdl-cell mdl-cell--2-col">
+				<img [src]="scopeUser.network_meta.user_media.avatar_url" alt="">
+			</figure>
+			<div class="mdl-cell mdl-cell--10-col relative-container">
+				{{scopeUser | json}}
+				<div *ngIf="scopeUser" class="corner-logout-button">
+					<i (click)="invokeLogout()" class="material-icons">exit_to_app</i>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

@@ -108,7 +108,7 @@ export class AMAuthComponent {
 	}
 
 	loadAuthInfo() {
-		return this.userService.getCurrentUser()
+		return this.userService.getUser()
 		           .subscribe( user => {
 			           this.auth.loaded = true;
 			           this.auth.authorized = user.ID ? true : false;

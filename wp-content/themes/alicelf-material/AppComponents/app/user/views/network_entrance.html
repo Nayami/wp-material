@@ -8,8 +8,8 @@
 	</div>
 
 	<!--Load profile by slug or current user-->
-	<div *ngIf="authAndBehaviour.network_purpose === 'user_profile'" [@renderAuthTrigger]>
-		<am-single-profile [renderedUser]="currentViewedUser"></am-single-profile>
+	<div *ngIf="authAndBehaviour.network_purpose === 'user_profile'">
+		<am-single-profile></am-single-profile>
 	</div>
 
 	<div *ngIf="authAndBehaviour.network_purpose === 'users_listing'" [@renderAuthTrigger]>

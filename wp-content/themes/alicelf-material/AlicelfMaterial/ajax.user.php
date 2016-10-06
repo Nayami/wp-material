@@ -9,14 +9,18 @@ add_action( 'wp_ajax_nopriv_ajx20163917023918', 'ajx20163917023918' );
 add_action( 'wp_ajax_ajx20163917023918', 'ajx20163917023918' );
 function ajx20163917023918()
 {
-	$data         = str_replace( '\\', '', $_REQUEST[ 'body_data' ] );
-	$decoded_data = json_decode( $data );
 	$ret_user     = [
 		'ID'        => null,
 		'logged_in' => false
 	];
-	if ( $decoded_data->user_id ) {
-		$ret_user = am_user( $decoded_data->user_id );
+
+	if ( isset($_GET['by_slug']) ) {
+		global $wpdb;
+		$query_result = $wpdb->get_row("SELECT user_id FROM {$wpdb->usermeta}
+														WHERE meta_key='am_slug' AND meta_value='{$_GET['by_slug']}'");
+		if( $query_result ) {
+			$ret_user = am_user($query_result->user_id);
+		}
 	} else {
 		if ( is_user_logged_in() ) {
 			$user     = wp_get_current_user();

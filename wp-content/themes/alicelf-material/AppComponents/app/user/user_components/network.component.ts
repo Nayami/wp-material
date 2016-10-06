@@ -3,7 +3,6 @@ import { Component,
 import { Router,ActivatedRoute } from "@angular/router";
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import { AuthGlobalService } from "../../shared/services/auth.service";
-import { FlashNoticeService } from "../../shared/services/alert.dialog.modal/flash.notices";
 import { LayoutDataService } from "../../shared/services/layout.data.service";
 import {AppSettingsService} from "../../shared/services/app.settings.service";
 
@@ -29,7 +28,6 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 
 export class NetworkComponent {
 
-	private currentViewedUser: any;
 	spinner: boolean = false;
 	authAndBehaviour: any;
 
@@ -38,7 +36,6 @@ export class NetworkComponent {
 	             private activatedRoute: ActivatedRoute,
 	             private appSettings: AppSettingsService,
 	             private auth: AuthGlobalService,
-	             private flashes: FlashNoticeService,
 	             private userService: UserGlobalService ) {
 
 		this.authAndBehaviour = appSettings.settings.themeSettings.auth_info;
@@ -48,23 +45,17 @@ export class NetworkComponent {
 		} else {
 			this.router.events.subscribe( event => {
 
-				if ( event.constructor.name === 'NavigationEnd' ) {
+				if ( event.constructor['name'] === 'NavigationEnd' ) {
 					if ( event.url === '/' ) {
 						this.entranceBehaviour( this.authAndBehaviour.network_purpose );
 					}
-				}
-
-				// View another user profile
-				let maybeUserSlug = this.activatedRoute.snapshot.params['userslug'];
-				if ( maybeUserSlug ) {
-					this.currentViewedUser = maybeUserSlug;
 				}
 			} );
 		}
 	}
 
 	loadAuthInfo() {
-		return this.userService.getCurrentUser()
+		return this.userService.getUser()
 		           .subscribe( user => {
 			           this.auth.loaded = true;
 			           this.auth.authorized = user.ID ? true : false;
@@ -73,11 +64,9 @@ export class NetworkComponent {
 
 			           // View another user profile
 			           let maybeUserSlug = this.activatedRoute.snapshot.params['userslug'];
-			           if ( maybeUserSlug ) {
-				           this.currentViewedUser = maybeUserSlug; // Other user profile
-			           } else {
+			           if ( !maybeUserSlug )
 				           this.entranceBehaviour( this.authAndBehaviour.network_purpose );
-			           }
+
 			           this.layoutData.layoutDataLoaded = true;
 		           } );
 	}

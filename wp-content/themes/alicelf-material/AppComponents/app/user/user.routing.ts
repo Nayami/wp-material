@@ -14,6 +14,7 @@ const appRoutes: Routes = [
 	{ path: 'screen/restorepass', component: RestorePasswordComponent },
 	{ path: 'screen/restorepass/:tokenparams', component: RestorePasswordComponent },
 
+	{ path: 'nothingfound', component: NotFoundComponent },
 	{ path: '**', component: NotFoundComponent }
 ];
 

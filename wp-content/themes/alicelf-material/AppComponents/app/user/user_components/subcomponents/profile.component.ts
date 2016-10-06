@@ -1,59 +1,70 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy
+	,trigger, state, style, transition, animate} from '@angular/core';
 import { Router,ActivatedRoute } from "@angular/router";
+import { Observable, Subscription } from 'rxjs/Rx';
+import 'rxjs/Rx';
+
 
 import {AuthGlobalService} from "../../../shared/services/auth.service";
 import {FlashNoticeService} from "../../../shared/services/alert.dialog.modal/flash.notices";
 import {UserGlobalService} from "../../../shared/services/user.global.service";
+import {LayoutDataService} from "../../../shared/services/layout.data.service";
+
+declare var AMdefaults: any;
+var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
+
 
 @Component( {
-	selector: 'am-single-profile',
-	template: `
+	selector   : 'am-single-profile',
+	templateUrl: componentPath + 'profile.component.html',
+	animations : [
+		trigger( 'renderProfile', [
+			state( 'in', style( { transform: 'translateY(0)', opacity: 1 } ) ),
 
-	<div *ngIf="auth.loaded">
-		<h1 class="text-center">@username</h1>
-
-		<a [routerLink]="['/']">User</a>
-		<a [routerLink]="['/user1']">User1</a>
-		<a [routerLink]="['/b03c1180ab688532bc3e2a808ed71fe650c083b0']">alicelfdevgmailcom</a>
-		<a [routerLink]="['/user3']">User3</a>
-
-		<div class="relative-container mdl-grid">
-			<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
-		</div>
-		<div class="content-grid">
-			<div class="mdl-grid">
-				<figure class="mdl-cell mdl-cell--2-col">
-					<img [src]="userService.currentUser.network_meta.user_media.avatar_url" alt="">
-				</figure>
-				<div class="mdl-cell mdl-cell--10-col relative-container">
-					{{userService.currentUser | json}}
-
-					<div *ngIf="userService.currentUser" class="corner-logout-button">
-						<i (click)="invokeLogout()" class="material-icons">exit_to_app</i>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	`
+			transition( 'void => *', [
+				style( { transform: 'translateY(20%)', opacity: 0 } ),
+				animate( '300ms ease' )
+			] ),
+			transition( '* => void', [
+				animate( '300ms ease-out', style( { transform: 'translateY(-20%)', opacity: 0 } ) )
+			] )
+		] )
+	]
 } )
-export class SingleProfileComponent implements OnInit {
+export class SingleProfileComponent implements OnInit, OnDestroy {
 
-	@Input() renderedUser;
+	spinner: boolean = false;
+	owner: boolean = false;
+	routerParam: Subscription;
 
-	spinner : boolean = false;
-	owner : boolean = false;
+	scopeUser: any = {
+		ID: null
+	};
 
-	constructor(private router: Router,
-	            private auth: AuthGlobalService,
-	            private flashes: FlashNoticeService,
-	            private userService: UserGlobalService ) {
+	constructor( private router: Router,
+	             private auth: AuthGlobalService,
+	             private activatedRoute: ActivatedRoute,
+	             private flashes: FlashNoticeService,
+	             private layoutData: LayoutDataService,
+	             private userService: UserGlobalService ) {
+
 	}
 
 	ngOnInit(): void {
+		this.routerParam = this.router.events.subscribe( event => {
+			if ( event.constructor['name'] === 'NavigationEnd' ) {
+				let mbslug = this.activatedRoute.params['value'],
+				    slug   = "userslug" in mbslug ? mbslug.userslug : null;
+				this.userService.getUser( slug )
+				    .subscribe( result => {
+					    this.scopeUser = result;
+					    console.log( this.scopeUser );
+				    } )
+			}
 
+		} );
 	}
+
 
 	invokeLogout() {
 		this.spinner = true;
@@ -75,16 +86,8 @@ export class SingleProfileComponent implements OnInit {
 		    } )
 	}
 
-	ngOnChanges(changes:SimpleChanges) {
-
-		if(changes['renderedUser'].currentValue ) {
-			let slug = changes['renderedUser'].currentValue;
-			this.owner = false;
-			// @TODO: get user by slug and compare slugs with cureent logged in user (in ajax)
-			// should be another object
-		} else {
-			this.owner = true;
-		}
+	ngOnDestroy(): void {
+		this.routerParam.unsubscribe();
 	}
 
 }
