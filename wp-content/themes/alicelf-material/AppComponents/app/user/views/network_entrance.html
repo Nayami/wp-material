@@ -1,11 +1,4 @@
 <div class="am-wrap">
-	<!--Layout Preloader-->
-	<div *ngIf="!layoutData.layoutDataLoaded" class="load-rising-holder">
-		<div class="load">
-			<div class="dot"></div>
-			<div class="outline"><span></span></div>
-		</div>
-	</div>
 
 	<!--Load profile by slug or current user-->
 	<div *ngIf="authAndBehaviour.network_purpose === 'user_profile'">

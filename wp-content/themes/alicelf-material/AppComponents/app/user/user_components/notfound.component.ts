@@ -6,13 +6,11 @@ import {LayoutDataService} from "../../shared/services/layout.data.service";
 		<div class="am-wrap">
 			<br>
 			<h1 class="text-center">.404 not found.</h1>
-			<div *ngIf="!layoutData.layoutDataLoaded" class="load-rising-holder">
-				<div class="load">
-				   <div class="dot"></div>
-				   <div class="outline"><span></span></div>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--12-col">
+					Nothing found
 				</div>
 			</div>
-			<hr>
 		</div>
 	`
 } )
@@ -22,7 +20,8 @@ export class NotFoundComponent implements OnInit {
 	constructor( private layoutData: LayoutDataService ) {
 	}
 
-	ngOnInit():void {
+	ngOnInit(): void {
 		this.layoutData.invokeLoad();
 	}
+
 }

@@ -16,8 +16,10 @@ export class CommentsComponent implements OnInit {
 
 	shelllaunchConfirm : any;
 
-	constructor( elm: ElementRef, private postService: PostService ) {
+	constructor( elm: ElementRef,
+	             private postService: PostService) {
 		this.postService.setPostId( parseInt( elm.nativeElement.getAttribute( 'datapostid' ) ) );
+
 	}
 
 	ngOnInit() {}

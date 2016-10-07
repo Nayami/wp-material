@@ -37,7 +37,6 @@ export class NetworkComponent {
 	             private appSettings: AppSettingsService,
 	             private auth: AuthGlobalService,
 	             private userService: UserGlobalService ) {
-
 		this.authAndBehaviour = appSettings.settings.themeSettings.auth_info;
 
 		if ( !auth.loaded ) {
@@ -73,6 +72,7 @@ export class NetworkComponent {
 
 
 	entranceBehaviour( networkPurpose ) {
+
 		switch ( networkPurpose ) {
 			case "user_profile" :
 				if ( !this.auth.authorized )

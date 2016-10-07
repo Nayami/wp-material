@@ -6,11 +6,12 @@ export class LayoutDataService {
 	layoutDataLoaded: boolean = false;
 
 	constructor() {
+		this.startLoading();
 	}
 
 	invokeLoad() {
 		let elemJ = document.getElementsByClassName( 'load-rising-holder' );
-		if ( elemJ ) {
+		if ( elemJ[0] ) {
 			let opacity = 1;
 			let inter = setInterval( () => {
 				elemJ[0]['style'].opacity = opacity;
@@ -24,6 +25,10 @@ export class LayoutDataService {
 		} else {
 			this.layoutDataLoaded = true;
 		}
+	}
+
+	startLoading(){
+		this.layoutDataLoaded = false;
 	}
 
 }

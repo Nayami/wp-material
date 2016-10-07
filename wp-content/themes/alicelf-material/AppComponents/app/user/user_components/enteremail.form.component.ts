@@ -52,7 +52,7 @@ export class EnterEmailComponent implements OnDestroy {
 		let referLaunch = changes['launchINfo'].currentValue;
 		if ( referLaunch === true ) {
 			this.formInfo.block = true;
-			this.bodyelem.classList.add( 'aa-modal-overlay' );
+			this.bodyelem['classList'].add( 'aa-modal-overlay' );
 			setTimeout( () => {
 				this.formInfo.showclass = true;
 			}, 30 );
@@ -120,7 +120,7 @@ export class EnterEmailComponent implements OnDestroy {
 
 		setTimeout( ()=> {
 			this.formInfo.block = false;
-			this.bodyelem.classList.remove( 'aa-modal-overlay' );
+			this.bodyelem['classList'].remove( 'aa-modal-overlay' );
 			this.progress = false;
 		}, 500 );
 	}
