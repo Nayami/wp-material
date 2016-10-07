@@ -67,7 +67,7 @@ export class NetworkComponent {
 			           if ( !maybeUserSlug )
 				           this.entranceBehaviour( this.authAndBehaviour.network_purpose );
 
-			           this.layoutData.layoutDataLoaded = true;
+			           this.layoutData.invokeLoad();
 		           } );
 	}
 

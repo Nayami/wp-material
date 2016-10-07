@@ -116,7 +116,7 @@ export class AMAuthComponent {
 			           if ( this.auth.authorized )
 				           this.router.navigate( ['/'] );
 
-			           this.layoutData.layoutDataLoaded = true;
+			           this.layoutData.invokeLoad();
 		           } );
 	}
 
@@ -139,18 +139,6 @@ export class AMAuthComponent {
 							    cssClass: 'mdl-color--green-200 mdl-color-text--green-900',
 							    type    : 'dismissable',
 						    } );
-
-						    //let elemJ = document.getElementById('am-appwrap');
-						    //let opacity = 0;
-						    //let inter = setInterval(() => {
-						    // elemJ.style.backgroundColor = "rgba(255, 255, 255, " + opacity +")";
-						    // opacity += 0.05;
-						    // if (opacity > 1){
-						    //   clearInterval(inter);
-						    //   console.log("done");
-						    // }
-						    //}, 50);
-
 
 						    break;
 					    case 'notfound' :

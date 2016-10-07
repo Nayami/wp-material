@@ -81,6 +81,7 @@ body.aa-modal-overlay {
 	left     : 0;
 	@include transition();
 	.aa-modal-container {
+		border: 1px solid transparent;
 		position         : absolute;
 		max-height       : 90%;
 		top              : 160px;
@@ -93,7 +94,6 @@ body.aa-modal-overlay {
 		padding          : 15px;
 		border-radius    : 3px;
 		background-color : #fff;
-		border           : 1px solid #ccc;
 		@include transition();
 
 		/**
@@ -243,6 +243,7 @@ body.aa-modal-overlay {
  * 28.09.2016
  */
 // selector | width | perspective | origin
+@include modalMix('#global-confirm-dialog', 500, 700, top);
 @include modalMix('#forgot-pass-modal', 500, 700, top);
 @include modalMix('#destroy-comment-confirmation', 500, 700, top);
 #forgot-pass-modal {
@@ -250,4 +251,7 @@ body.aa-modal-overlay {
 		margin-top : -5px;
 		min-height : 4px;
 	}
+}
+#global-confirm-dialog {
+
 }

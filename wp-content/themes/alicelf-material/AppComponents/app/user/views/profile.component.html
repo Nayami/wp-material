@@ -1,10 +1,5 @@
-<div *ngIf="scopeUser.ID" [@renderProfile]>
-	<h1 class="text-center">@username</h1>
-
-	<a class="am-link" (click)="switchUser('')">User</a>
-	<a class="am-link" (click)="switchUser('b03c1180ab688532bc3e2a808ed71fe650c083b0')">alicelfdevgmailcom</a>
-	<a class="am-link" (click)="switchUser('user1')">User1</a>
-
+<div class="single-profile" *ngIf="scopeUser.ID" [@renderProfile]>
+	<h3 class="text-center">@username</h3>
 	<div class="relative-container mdl-grid">
 		<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
 	</div>
@@ -15,8 +10,9 @@
 			</figure>
 			<div class="mdl-cell mdl-cell--10-col relative-container">
 				{{scopeUser | json}}
-				<div *ngIf="scopeUser" class="corner-logout-button">
-					<i (click)="invokeLogout()" class="material-icons">exit_to_app</i>
+
+				<div *ngIf="owner" class="corner-logout-button">
+					<i (click)="askLogoutConfirm()" class="material-icons">exit_to_app</i>
 				</div>
 
 			</div>

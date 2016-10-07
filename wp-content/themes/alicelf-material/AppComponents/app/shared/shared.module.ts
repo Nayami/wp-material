@@ -5,6 +5,7 @@ import { FlashNoticeService } from "./services/alert.dialog.modal/flash.notices"
 import {AuthGlobalService} from "./services/auth.service";
 import {AppSettingsService} from "./services/app.settings.service";
 import {LayoutDataService} from "./services/layout.data.service";
+import {GlobConfirmService} from "./services/alert.dialog.modal/confirm.service";
 
 @NgModule( {} )
 
@@ -17,6 +18,7 @@ export class SharedModule {
 				AuthGlobalService,
 				UserGlobalService,
 				FlashNoticeService,
+				GlobConfirmService,
 
 				LayoutDataService
 			]
@@ -29,5 +31,6 @@ export {
 	AuthGlobalService,
 	UserGlobalService,
 	FlashNoticeService,
-	LayoutDataService
+	LayoutDataService,
+	GlobConfirmService
 }

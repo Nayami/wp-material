@@ -70,7 +70,7 @@ export class RestorePasswordComponent implements OnDestroy {
 								    } );
 							    }
 							    this.router.navigate( ['/'] );
-							    this.layoutData.layoutDataLoaded = true;
+							    this.layoutData.invokeLoad();
 						    }
 
 					    }
@@ -114,7 +114,7 @@ export class RestorePasswordComponent implements OnDestroy {
 							    type    : 'dismissable',
 						    } );
 					    }
-					    this.layoutData.layoutDataLoaded = true;
+					    this.layoutData.invokeLoad();
 				    } )
 			} else {
 				this.flashes.attachNotifications( {

@@ -23,6 +23,6 @@ export class NotFoundComponent implements OnInit {
 	}
 
 	ngOnInit():void {
-		this.layoutData.layoutDataLoaded = true;
+		this.layoutData.invokeLoad();
 	}
 }

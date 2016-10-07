@@ -9,6 +9,7 @@ import {AuthGlobalService} from "../../../shared/services/auth.service";
 import {FlashNoticeService} from "../../../shared/services/alert.dialog.modal/flash.notices";
 import {UserGlobalService} from "../../../shared/services/user.global.service";
 import {LayoutDataService} from "../../../shared/services/layout.data.service";
+import {GlobConfirmService} from "../../../shared/services/alert.dialog.modal/confirm.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -36,8 +37,9 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 	spinner: boolean = false;
 	owner: boolean = false;
 	routerParam: Subscription;
+	logoutConfirmation: Subscription;
 
-	currentUserSlug:string;
+	currentUserSlug: string;
 
 	scopeUser: any = {
 		ID: null
@@ -48,6 +50,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 	             private activatedRoute: ActivatedRoute,
 	             private flashes: FlashNoticeService,
 	             private layoutData: LayoutDataService,
+	             private confirmService: GlobConfirmService,
 	             private userService: UserGlobalService ) {
 
 	}
@@ -60,7 +63,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 
 				this.userService.getUser( slug )
 				    .subscribe( result => {
-					    if ( !result.ID )
+					    if ( !result.ID && this.auth.authorized )
 						    this.router.navigate( ['/notfound'] );
 
 					    this.scopeUser = result;
@@ -71,7 +74,32 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 			}
 
 		} );
+
+		// Logout event watch
+		this.logoutConfirmation =
+			this.confirmService.confirmationChange
+			    .subscribe( data => {
+				    if ( data.id === this.confirmService.currentID ) {
+					    if ( data.dialogAnswer ) {
+						    this.logoutAction();
+					    }
+					    this.confirmService.unplugConfirmation();
+				    }
+			    } )
+
 	}
+
+	askLogoutConfirm() {
+		let stamp = new Date().getTime();
+		this.confirmService.currentID = stamp;
+		this.confirmService.launchConfirm( {
+			id           : stamp,
+			dialogClass  : 'mdl-color--red-200 mdl-color-text--red-900',
+			dialogMessage: 'Are you sure want to logout?',
+			dialogAnswer : null,
+		} )
+	}
+
 
 	switchUser( user ) {
 		let u = user.length > 0 ? user : null;
@@ -83,8 +111,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 		}
 	}
 
-
-	invokeLogout() {
+	logoutAction() {
 		this.spinner = true;
 		this.userService.doLogout()
 		    .subscribe( data => {
@@ -106,6 +133,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy(): void {
 		this.routerParam.unsubscribe();
+		this.logoutConfirmation.unsubscribe();
 	}
 
 }

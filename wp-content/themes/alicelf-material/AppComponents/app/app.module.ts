@@ -26,6 +26,7 @@ import { ListingCommentsComponent }  from './comments/comments_childs/ListingCom
 import { ConfirmComponent } from "./comments/comments_childs/confirm.component";
 import { EdittCommentComponent } from "./comments/comments_childs/editcomment.component";
 import {SingleProfileComponent} from "./user/user_components/subcomponents/profile.component";
+import {GlobConfirmComponent} from "./shared/components/confirm.component";
 
 
 /**
@@ -35,6 +36,7 @@ import {SingleProfileComponent} from "./user/user_components/subcomponents/profi
 const componentMaybeExists = [
 	{ selector: 'footer-component', component: FooterComponent, childs: [] },
 	{ selector: 'FlashNotificationsComponent', component: FlashNotificationsComponent, childs: [] },
+	{ selector: 'GlobConfirmComponent', component: GlobConfirmComponent, childs: [] },
 	{
 		selector: 'AMreviewShell', component: CommentsComponent, childs: [
 		FormComponent,
