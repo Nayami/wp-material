@@ -12,7 +12,7 @@ var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
 var comment_service_1 = require('../services/comment.service');
 var post_service_1 = require("../services/post.service");
-var user_service_1 = require("../services/user.service");
+var user_global_service_1 = require("../../shared/services/user.global.service");
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 var FormComponent = (function () {
     function FormComponent(fb, user, postService, commentService) {
@@ -35,7 +35,7 @@ var FormComponent = (function () {
             "website": [""],
             "body": ["", forms_1.Validators.required]
         });
-        user.getCurrentUser()
+        user.getUser()
             .subscribe(function (response) {
             var fDefaults = {
                 "name": response.logged_in ? response.user_nicename : "",
@@ -67,7 +67,7 @@ var FormComponent = (function () {
             selector: 'AMformComponent',
             templateUrl: componentPath + 'views/form.html',
         }), 
-        __metadata('design:paramtypes', [forms_1.FormBuilder, user_service_1.UserService, post_service_1.PostService, comment_service_1.CommentService])
+        __metadata('design:paramtypes', [forms_1.FormBuilder, user_global_service_1.UserGlobalService, post_service_1.PostService, comment_service_1.CommentService])
     ], FormComponent);
     return FormComponent;
 }());

@@ -18,7 +18,7 @@ import { GlobConfirmService } from "../services/alert.dialog.modal/confirm.servi
 
 				<footer *ngIf="confirmService.confirmDialog.showButtons" class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
 					<a dataDestroy (click)="decline($event)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Decline</a>
-					<a (click)="confirmFunc()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Confirm</a>
+					<a (click)="confirmFunc()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--orange-900 mdl-color-text--orange-50">Confirm</a>
 				</footer>
 			</div>
 		</div>

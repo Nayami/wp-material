@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { CommentInterface } from '../mocks/CommentInterface';
 import { CommentService } from '../services/comment.service';
 import { PostService } from "../services/post.service";
-import { UserService } from "../services/user.service";
+import {UserGlobalService} from "../../shared/services/user.global.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
@@ -30,7 +30,7 @@ export class FormComponent implements OnInit {
 
 	constructor(
 		private fb: FormBuilder,
-		private user : UserService,
+		private user : UserGlobalService,
 		private postService: PostService,
 		private commentService : CommentService ) {
 
@@ -41,7 +41,7 @@ export class FormComponent implements OnInit {
 			"body"   : [ "", Validators.required ]
 		} );
 
-		user.getCurrentUser()
+		user.getUser()
 			.subscribe(response => {
 				let fDefaults = {
 					"name"   : response.logged_in ? response.user_nicename : "",

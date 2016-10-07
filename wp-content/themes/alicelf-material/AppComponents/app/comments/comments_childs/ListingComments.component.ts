@@ -1,5 +1,5 @@
-import { Component, Output, Input,
-	OnInit, EventEmitter,
+import { Component,
+	OnInit, EventEmitter, OnDestroy,
 	trigger, state, style, transition, animate
 } from '@angular/core';
 
@@ -9,6 +9,8 @@ import { HTTP_PROVIDERS } from '@angular/http';
 import { CommentService } from '../services/comment.service';
 import { CommentInterface } from "../mocks/CommentInterface";
 import { PostService } from "../services/post.service";
+import {GlobConfirmService} from "../../shared/services/alert.dialog.modal/confirm.service";
+import { Subscription } from 'rxjs/Rx';
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
@@ -31,9 +33,8 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 	]
 } )
 
-export class ListingCommentsComponent {
+export class ListingCommentsComponent implements OnDestroy, OnInit {
 
-	@Output() launchConfirm = new EventEmitter();
 	userId: number = AMdefaults.currentUser;
 
 	editForm: FormGroup;
@@ -42,10 +43,31 @@ export class ListingCommentsComponent {
 	currentlyEditText: string;
 	currentEditComment: any;
 
+	delSubscription: Subscription;
+	maybedestroy: any = {
+		id   : null,
+		index: null
+	};
+
 	constructor( private formBuild: FormBuilder,
 	             private postService: PostService,
+	             private confirmService: GlobConfirmService,
 	             private CommentsObj: CommentService ) {
 		this.editForm = formBuild.group( {} );
+	}
+
+	ngOnInit() {
+		// Watch delete comment approove
+		this.delSubscription =
+			this.confirmService.confirmationChange
+			    .subscribe( data => {
+				    if ( data.id === this.confirmService.currentID ) {
+					    if ( data.dialogAnswer ) {
+						    this.CommentsObj.delAction(this.maybedestroy);
+					    }
+					    this.confirmService.unplugConfirmation();
+				    }
+			    } )
 	}
 
 	// @TODO: Create Reply action
@@ -89,14 +111,23 @@ export class ListingCommentsComponent {
 		this.currentlyEditText = null;
 	}
 
-	// DELETE COMMENT
+	// Ask Confirmaiton
 	deleteAction( comment, index ) {
-		this.launchConfirm.emit( {
-			commentID: comment.ID,
-			index    : index,
-			launch   : true,
-			confirmed: false
-		} );
+		this.maybedestroy.id = comment.ID;
+		this.maybedestroy.index = index;
+		let stamp = new Date().getTime();
+		this.confirmService.currentID = stamp;
+		this.confirmService.launchConfirm( {
+			id           : stamp,
+			dialogClass  : 'warning-alert',
+			dialogMessage: 'Are you sure you wand delete this comment?',
+			dialogAnswer : null,
+			showButtons  : true
+		} )
+	}
+
+	ngOnDestroy(): void {
+		this.delSubscription.unsubscribe();
 	}
 
 }

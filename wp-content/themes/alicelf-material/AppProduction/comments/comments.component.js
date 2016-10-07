@@ -9,24 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var comment_service_1 = require('./services/comment.service');
 var post_service_1 = require("./services/post.service");
+require('rxjs/Rx');
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 var CommentsComponent = (function () {
-    function CommentsComponent(elm, postService) {
+    function CommentsComponent(elm, postService, commentsService) {
         this.postService = postService;
+        this.commentsService = commentsService;
         this.title = 'Leave a Reply';
-        this.postService.setPostId(parseInt(elm.nativeElement.getAttribute('datapostid')));
+        this.postService.postId = parseInt(elm.nativeElement.getAttribute('datapostid'));
+        this.getCommentsSubscription =
+            commentsService.getComments(this.postService.postId)
+                .subscribe(function (response) {
+                if (response.length > 0) {
+                    commentsService.commentsAll = response;
+                }
+            });
     }
-    CommentsComponent.prototype.ngOnInit = function () { };
-    CommentsComponent.prototype.handlelaunchConfirm = function (arr) {
-        this.shelllaunchConfirm = arr;
+    CommentsComponent.prototype.ngOnDestroy = function () {
+        this.getCommentsSubscription.unsubscribe();
     };
     CommentsComponent = __decorate([
         core_1.Component({
             selector: 'AMreviewShell',
             templateUrl: componentPath + 'views/shell.html'
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef, post_service_1.PostService])
+        __metadata('design:paramtypes', [core_1.ElementRef, post_service_1.PostService, comment_service_1.CommentService])
     ], CommentsComponent);
     return CommentsComponent;
 }());

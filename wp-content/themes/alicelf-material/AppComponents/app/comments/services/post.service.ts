@@ -13,14 +13,6 @@ export class PostService {
 	constructor( private http: Http ) {
 	}
 
-	setPostId( id: number ): void {
-		this.postId = id;
-	}
-
-	getPostId(): number {
-		return this.postId;
-	}
-
 	getPost(): Observable<any> {
 		let params = new URLSearchParams();
 		return this.http.get( AMdefaults.baseurl + "/wp-json/posts/" + this.postId )

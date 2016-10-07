@@ -3,5 +3,6 @@ export interface DialogInterface {
 	dialogClass  : string,
 	dialogMessage: string,
 	dialogAnswer : any,
-	showButtons  : boolean
+	showButtons  : boolean,
+	data?        : any
 }

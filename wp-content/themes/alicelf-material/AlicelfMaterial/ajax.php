@@ -29,11 +29,11 @@ if ( ! function_exists( 'am_user' ) ) {
 			'user_registered' => $user->data->user_registered,
 			'user_url'        => $user->data->user_url,
 			'roles'           => $user->roles,
-			'slug'            => get_user_meta($user->ID, 'am_slug', true),
+			'slug'            => get_user_meta( $user->ID, 'am_slug', true ),
 			'administrator'   => $user->allcaps[ 'administrator' ],
-			'is_current_user' => get_current_user_id() === (int)$user_id ? true : false,
+			'is_current_user' => get_current_user_id() === (int) $user_id ? true : false,
 
-			'network_meta'    => [
+			'network_meta' => [
 				'email_confirmed' => get_user_meta( $user->ID, 'am_email_confirmed', true ),
 				'user_media'      => [
 					'avatar_url' => apply_filters( 'am_user_avatar_url', get_avatar_url( $user->ID ), $user->ID )
@@ -199,19 +199,24 @@ add_action( 'wp_ajax_nopriv_ajx20165916125929', 'ajx20165916125929' );
 add_action( 'wp_ajax_ajx20165916125929', 'ajx20165916125929' );
 function ajx20165916125929()
 {
-	$data             = $_REQUEST;
-	$data[ 'status' ] = null;
-	$commentID        = $data[ 'commentID' ];
 	$current_user     = get_current_user_id();
+	$data             = str_replace( '\\', '', $_POST[ 'body_data' ] );
+	$decoded_data     = json_decode( $data );
+	$data[ 'status' ] = null;
+	$commentID        = $decoded_data->id;
 
 	$comment = get_comment( $commentID );
+	$response = [
+		'status' => null,
+		'index' => $decoded_data->index
+	];
 
 	if ( ( (int) $comment->user_id === $current_user ) && is_user_logged_in() ) {
 		wp_delete_comment( $commentID );
-		$data[ 'status' ] = 'success';
+		$response[ 'status' ] = 'success';
 	}
 
-	echo json_encode( $data );
+	echo json_encode( $response );
 	die;
 }
 

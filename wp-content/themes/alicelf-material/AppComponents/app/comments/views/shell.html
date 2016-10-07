@@ -3,10 +3,9 @@
 		<h4>{{title}}</h4>
 	</div>
 </div>
-<confirm-component [launchModal]="shelllaunchConfirm"></confirm-component>
 
 <AMformComponent></AMformComponent>
 
 <ul id="comments" itemscope itemtype="http://schema.org/UserComments">
-	<listingComments (launchConfirm)="handlelaunchConfirm($event)">Wait comments...</listingComments>
+	<listingComments>Wait comments...</listingComments>
 </ul>

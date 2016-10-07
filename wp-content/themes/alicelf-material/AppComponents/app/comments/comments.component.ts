@@ -1,7 +1,9 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnDestroy, ElementRef } from '@angular/core';
 
 import { CommentService } from './services/comment.service';
 import { PostService } from "./services/post.service";
+import { Observable, Subscription } from 'rxjs/Rx';
+import 'rxjs/Rx';
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
@@ -11,21 +13,27 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 	templateUrl: componentPath + 'views/shell.html'
 } )
 
-export class CommentsComponent implements OnInit {
-	title = 'Leave a Reply';
+export class CommentsComponent implements OnDestroy {
 
-	shelllaunchConfirm : any;
+	title = 'Leave a Reply';
+	getCommentsSubscription: Subscription;
 
 	constructor( elm: ElementRef,
-	             private postService: PostService) {
-		this.postService.setPostId( parseInt( elm.nativeElement.getAttribute( 'datapostid' ) ) );
+	             private postService: PostService,
+	             private commentsService: CommentService ) {
+		this.postService.postId = parseInt( elm.nativeElement.getAttribute( 'datapostid' ) );
+		this.getCommentsSubscription =
+			commentsService.getComments( this.postService.postId )
+			               .subscribe( response => {
+				               if ( response.length > 0 ) {
+					               commentsService.commentsAll = response;
+				               }
+			               } );
 
 	}
 
-	ngOnInit() {}
-
-
-	handlelaunchConfirm(arr) {
-		this.shelllaunchConfirm = arr;
+	ngOnDestroy(): void {
+		this.getCommentsSubscription.unsubscribe()
 	}
+
 }

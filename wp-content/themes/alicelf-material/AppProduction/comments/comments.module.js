@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var user_service_1 = require("./services/user.service");
 var post_service_1 = require("./services/post.service");
 var comment_service_1 = require("./services/comment.service");
 var CommentsModule = (function () {
@@ -18,7 +17,6 @@ var CommentsModule = (function () {
     CommentsModule = __decorate([
         core_1.NgModule({
             providers: [
-                user_service_1.UserService,
                 post_service_1.PostService,
                 comment_service_1.CommentService
             ],
