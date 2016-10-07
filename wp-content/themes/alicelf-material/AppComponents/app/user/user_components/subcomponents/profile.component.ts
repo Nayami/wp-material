@@ -89,14 +89,16 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 
 	}
 
+	// Launch Confirm
 	askLogoutConfirm() {
 		let stamp = new Date().getTime();
 		this.confirmService.currentID = stamp;
 		this.confirmService.launchConfirm( {
 			id           : stamp,
-			dialogClass  : 'mdl-color--red-200 mdl-color-text--red-900',
+			dialogClass  : 'danger-alert',
 			dialogMessage: 'Are you sure want to logout?',
 			dialogAnswer : null,
+			showButtons  : true
 		} )
 	}
 

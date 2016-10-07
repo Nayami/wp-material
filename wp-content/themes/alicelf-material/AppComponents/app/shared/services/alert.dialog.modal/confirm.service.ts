@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
+import {DialogInterface} from "../../mocks/dialog.interface";
 
 
 @Injectable()
@@ -10,18 +11,11 @@ export class GlobConfirmService {
 	display: boolean = false;
 	showClass: boolean = false;
 
-	alertDialog: any = {
-		dialogClass  : null,
-		dialogMessage: null
-	};
+	confirmDialog: DialogInterface;
 
-	confirmDialog: any = {
-		id           : null,
-		dialogClass  : null,
-		dialogMessage: null,
-		dialogAnswer : null
-	};
-
+	/**
+	 * ==================== Open dialog ======================
+	 */
 	launchConfirm( data ) {
 		this.confirmDialog = data;
 		this.display = true;
@@ -31,18 +25,18 @@ export class GlobConfirmService {
 		}, 50 );
 	}
 
+	/**
+	 * ==================== Receive data from confirm.component ======================
+	 */
 	invokeAnswer( data ) {
 		this.confirmationChange.next( data );
 	}
 
+	/**
+	 * ==================== Destroy dialog =====================
+	 */
 	unplugConfirmation() {
 		this.showClass = false;
-		this.confirmDialog = {
-			id           : null,
-			dialogClass  : null,
-			dialogMessage: null,
-			dialogAnswer : null
-		};
 		setTimeout( ()=> {
 			this.display = false;
 			this.bodyelem['classList'].remove( 'aa-modal-overlay' );
@@ -50,6 +44,5 @@ export class GlobConfirmService {
 	}
 
 
-	constructor() {
-	}
+	constructor() {}
 }

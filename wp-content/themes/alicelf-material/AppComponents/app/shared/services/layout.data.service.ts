@@ -18,7 +18,6 @@ export class LayoutDataService {
 				opacity -= 0.05;
 				if ( opacity <= 0 ) {
 					clearInterval( inter );
-					console.log( "layout loaded" );
 					this.layoutDataLoaded = true;
 				}
 			}, 50 );

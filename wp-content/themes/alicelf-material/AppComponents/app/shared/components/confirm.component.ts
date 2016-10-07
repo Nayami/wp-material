@@ -11,13 +11,14 @@ import { GlobConfirmService } from "../services/alert.dialog.modal/confirm.servi
 
 		<div class="aa-modal-container {{confirmService.confirmDialog.dialogClass}}" data-animation="scale">
 			<div class="mdl-grid">
+				<span class="icon-wrapper"><i class="material-icons">warning</i></span>
 				<div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
 					<p>{{confirmService.confirmDialog.dialogMessage}}</p>
 				</div>
 
-				<footer class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
-					<button dataDestroy (click)="decline($event)" type="button" class="mdl-button mdl-js-button mdl-button--raised">Decline</button>
-					<button (click)="confirmFunc()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-color--blue-grey-300  mdl-color-text--blue-grey-900">Confirm</button>
+				<footer *ngIf="confirmService.confirmDialog.showButtons" class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+					<a dataDestroy (click)="decline($event)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Decline</a>
+					<a (click)="confirmFunc()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Confirm</a>
 				</footer>
 			</div>
 		</div>
@@ -27,7 +28,8 @@ import { GlobConfirmService } from "../services/alert.dialog.modal/confirm.servi
 } )
 export class GlobConfirmComponent {
 
-	constructor( private confirmService: GlobConfirmService ) {}
+	constructor( private confirmService: GlobConfirmService ) {
+	}
 
 	confirmFunc() {
 		let answer = this.confirmService.confirmDialog;
@@ -36,8 +38,11 @@ export class GlobConfirmComponent {
 	}
 
 	decline( event ) {
-		let target = event.target || event.srcElement || event.currentTarget;
-		if ( target.attributes.dataDestroy !== undefined ) {
+		let target        = event.target || event.srcElement || event.currentTarget,
+		    parentMatches = target.parentNode.nodeName === "A"
+			    && target.parentNode.attributes.dataDestroy !== undefined;
+
+		if ( target.attributes.dataDestroy !== undefined || parentMatches ) {
 			let answer = this.confirmService.confirmDialog;
 			answer.dialogAnswer = false;
 			this.confirmService.invokeAnswer( answer );
