@@ -8,8 +8,8 @@ import 'rxjs/Rx';
 import {AuthGlobalService} from "../../../shared/services/auth.service";
 import {FlashNoticeService} from "../../../shared/services/alert.dialog.modal/flash.notices";
 import {UserGlobalService} from "../../../shared/services/user.global.service";
-import {LayoutDataService} from "../../../shared/services/layout.data.service";
 import {GlobConfirmService} from "../../../shared/services/alert.dialog.modal/confirm.service";
+import {AppSettingsService} from "../../../shared/services/app.settings.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -49,7 +49,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 	             private auth: AuthGlobalService,
 	             private activatedRoute: ActivatedRoute,
 	             private flashes: FlashNoticeService,
-	             private layoutData: LayoutDataService,
+	             private appSettings: AppSettingsService,
 	             private confirmService: GlobConfirmService,
 	             private userService: UserGlobalService ) {
 

@@ -1,5 +1,5 @@
 <div class="single-profile" *ngIf="scopeUser.ID" [@renderProfile]>
-	<h3 class="text-center">@username</h3>
+	<h3 class="text-center">@{{scopeUser.slug}}</h3>
 	<div class="relative-container mdl-grid">
 		<div class="mdl-spinner mdl-js-spinner login-spinner-handler" [ngClass]="{'is-active': spinner}"></div>
 	</div>
@@ -9,7 +9,12 @@
 				<img [src]="scopeUser.network_meta.user_media.avatar_url" alt="">
 			</figure>
 			<div class="mdl-cell mdl-cell--10-col relative-container">
-				{{scopeUser | json}}
+				<div *ngIf="owner && scopeUser.administrator" class="admin-actions relative-container">
+					<a target="_blank" href="{{appSettings.settings.baseurl}}/wp-admin" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+						Admin Dashboard
+					</a>
+				</div>
+				<pre>{{scopeUser | json}}</pre>
 
 				<div *ngIf="owner" class="corner-logout-button">
 					<i (click)="askLogoutConfirm()" class="material-icons">exit_to_app</i>

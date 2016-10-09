@@ -75,6 +75,7 @@ export class RestorePasswordComponent implements OnDestroy {
 
 					    }
 					    this.checkdata.loaded = true;
+					    this.layoutData.invokeLoad();
 				    } );
 				this.progress = false;
 			} );

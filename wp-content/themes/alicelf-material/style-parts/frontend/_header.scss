@@ -1,3 +1,22 @@
+@include loadFont("style-parts/fonts/alicelf-font/");
+#text-logo {
+	color : #fff;
+	@include transition();
+	&:hover{
+		color : $redFox;
+	}
+	i {
+		font-size    : 40px;
+		line-height  : 30px;
+		float        : left;
+		margin-right : 10px;
+	}
+	span {
+		float : left;
+		margin-top : 10px;
+	}
+}
+
 body {
 	&.am-sticky-header {
 		.mdl-layout__drawer-button {
@@ -48,22 +67,31 @@ body {
 .mdl-layout__drawer-button {
 	/*Desktop*/
 	@media (min-width : 1025px) {
-		display: none;
+		display : none;
 	}
 }
+
 .mdl-layout__header-row {
 	height : auto;
 }
+
 /**
  * ==================== Menu Trigger ======================
  * 20.08.2016
  */
 .mdl-layout__drawer {
 	padding-top : 40px;
-	position : fixed;
+	position    : fixed;
 	.mdl-layout-title {
 		padding-left  : 15px;
 		padding-right : 15px;
+	}
+	#text-logo {
+
+		span {
+			margin-top: 10px;
+			line-height: 20px;
+		}
 	}
 }
 

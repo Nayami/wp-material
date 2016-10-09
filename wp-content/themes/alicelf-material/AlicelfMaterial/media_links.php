@@ -50,7 +50,7 @@ function aa_func_20163220053219()
 	wp_enqueue_style('font-awesome', $cdnjs.'font-awesome/4.6.3/css/font-awesome.min.css');
 	wp_enqueue_style( 'mdl-icons', "https://fonts.googleapis.com/icon?family=Material+Icons" );
 
-	wp_enqueue_style( 'alicelf-icons', $template_path."/style-parts/backend/init.css" );
+	wp_enqueue_style( 'aa-backend-style', $template_path."/style-parts/backend/init.css" );
 
 	wp_enqueue_script('admin-jq-script', $template_path."/style-parts/backend/script/admin-script.js", ['jquery'], false, true );
 }

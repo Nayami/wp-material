@@ -25,7 +25,7 @@ declare var AMdefaults: any;
 						<input [(ngModel)]="emailvalue" class="mdl-textfield__input" type="text" id="resetpass-input">
 						<label class="mdl-textfield__label" for="resetpass-input">Enter Your Email</label>
 					</div>
-					<button (click)="submitProcess(emailvalue)" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--orange-900 mdl-color-text--red-50">Send me restore password info</button>
+					<button (click)="submitProcess(emailvalue)" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--cyan-800 mdl-color-text--cyan-50">Send me restore password info</button>
 				</div>
 			</div>
 		</div>

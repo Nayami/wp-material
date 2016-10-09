@@ -1,10 +1,16 @@
+//$blur: "aa-blur.jpg";
+//$blur: "aa-blur1.jpg";
+//$blur: "aa-blur2.jpg";
+//$blur: "aa-blur3.jpg";
+$blur: "aa-blur4.jpg";
+
 body {
 	&.am-user-page {
 		&:before {
 			content         : "";
 			display         : block;
 			position        : fixed;
-			background      : url("img/aa-blur3.jpg") center center no-repeat;
+			background      : url("img/#{$blur}") center center no-repeat;
 			background-size : cover;
 			width           : 100%;
 			height          : 100%;
@@ -13,7 +19,7 @@ body {
 			min-height : 650px;
 		}
 		h1, h2, h3, h4, h5, h6 {
-			color : orange;
+			color : darken($brandColor, 20%);
 		}
 
 	}
@@ -21,7 +27,7 @@ body {
 
 #auth-forms {
 	h1, h2, h3, h4, h5, h6 {
-		color  : $brandColor;
+		color : darken($brandColor, 20%);
 		margin : 0;
 	}
 

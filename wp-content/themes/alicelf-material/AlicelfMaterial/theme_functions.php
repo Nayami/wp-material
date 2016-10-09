@@ -18,12 +18,14 @@ if ( ! function_exists( 'material_logo' ) ) {
 		global $_am;
 		$output = null;
 		$title  = get_bloginfo( 'name' ) . " | " . get_bloginfo( 'description' );
-		if ( ! empty( $_am[ 'opt-logo' ] ) ) {
+		if ( ! empty( $_am[ 'opt-logo' ]['url'] ) ) {
 			$output .= "<a class='am-logo' href='" . get_site_url() . "'>";
 			$output .= "<img src='{$_am['opt-logo']['url']}' title='{$title}' alt='site-logo'>";
 			$output .= "</a>";
 		} else {
-			$output .= get_bloginfo( 'name' );
+			$output .= "<a id='text-logo' href='".get_site_url()."'>";
+			$output .= "<i class='alice-alicelf-material-logo'></i><span>".get_bloginfo( 'name' )."</span>";
+			$output .= "</a>";
 		}
 
 		return $output;
