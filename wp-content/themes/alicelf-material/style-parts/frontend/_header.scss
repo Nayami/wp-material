@@ -1,6 +1,6 @@
 @include loadFont("style-parts/fonts/alicelf-font/");
 #text-logo {
-	color : #fff;
+	color : $brandColor;
 	@include transition();
 	&:hover{
 		color : $redFox;
@@ -103,22 +103,29 @@ body {
 }
 
 .mdl-layout__header {
-	background-color : $gray;
+	background-color : $pastel;
 }
 
 .menu-primary-navigation-container {
 	li {
 		list-style : none;
 		&.current-menu-item {
-			background-color : $brandColor;
+			background-color : transparentize($brandColor, .2);
+			a {
+				color : #fff;
+			}
 		}
 		&:hover {
-			background-color : transparentize($brandColor, .4);
+			background-color : transparentize($brandColor, .3);
+			a {
+				color : #fff;
+			}
 		}
 
 	}
-	a {
-		color           : #fff;
+	a,
+	.mdl-navigation__link {
+		color           : $textColor;
 		text-decoration : none;
 	}
 }
