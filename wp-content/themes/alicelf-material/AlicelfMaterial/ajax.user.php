@@ -41,9 +41,8 @@ add_action( 'wp_ajax_nopriv_ajx20162924062955', 'ajx20162924062955' );
 add_action( 'wp_ajax_ajx20162924062955', 'ajx20162924062955' );
 function ajx20162924062955()
 {
-	$data         = str_replace( '\\', '', $_POST[ 'body_data' ] );
-	$decoded_data = json_decode( $data );
-	$login        = $decoded_data->fname;
+	$data         = $_POST;
+	$login        = $data['fname'];
 	$response     = [
 		'message' => null
 	];
@@ -54,7 +53,7 @@ function ajx20162924062955()
 		echo json_encode( $response );
 		die;
 	}
-	if ( $user && wp_check_password( $decoded_data->passw, $user->data->user_pass, $user->ID ) ) {
+	if ( $user && wp_check_password( $data['passw'], $user->data->user_pass, $user->ID ) ) {
 		wp_set_auth_cookie( $user->ID );
 
 		$filtered_user         = am_user( $user->ID );
@@ -160,15 +159,14 @@ function ajx20162929092956()
 	$strategy             = $_am[ 'network-confirmation-flow' ]; // confirm_before confirm_after no_confirm
 	$registration_allowed = $_am[ 'network-registration' ];
 	$table                = $wpdb->prefix . "user_reset_passwords";
-	$data                 = str_replace( '\\', '', $_POST[ 'body_data' ] );
-	$decoded_data         = json_decode( $data );
+	$data                 = $_POST;
 	$response_data        = [
 		'status'     => 'failed',
 		'user'       => null,
 		'check_mail' => null
 	];
 	if ( $registration_allowed === 'yes' ) {
-		$check_user = get_user_by( 'email', $decoded_data->login );
+		$check_user = get_user_by( 'email', $data['login'] );
 
 		if ( $check_user ) {
 			$response_data[ 'status' ] = 'user_exists';
@@ -181,11 +179,11 @@ function ajx20162929092956()
 		 * After this confirmation, next step is hash exists ajx20161128111129
 		 */
 		if ( $strategy === 'confirm_before' ) {
-			$token = send_me_confirmation_registration_link( $decoded_data->login, 'confirm' );
+			$token = send_me_confirmation_registration_link( $data['login'], 'confirm' );
 			if ( $token ) {
 				$wpdb->insert( $table, [
 					'hash'   => $token,
-					'email'  => $decoded_data->login,
+					'email'  => $data['login'],
 					'action' => 'confirm',
 					'time'   => date( 'Y-m-d H:i:s' )
 				], [ '%s', '%s', '%s', '%s' ] );
@@ -197,23 +195,23 @@ function ajx20162929092956()
 
 		} else {
 			$userdata = [
-				'user_login' => $decoded_data->login,
-				'user_email' => $decoded_data->login,
-				'user_pass'  => $decoded_data->passw
+				'user_login' => $data['login'],
+				'user_email' => $data['login'],
+				'user_pass'  => $data['passw']
 			];
 			wp_insert_user( $userdata );
 
-			$user = get_user_by( 'email', $decoded_data->login );
+			$user = get_user_by( 'email', $data['login'] );
 			update_user_meta( $user->ID, 'am_email_confirmed', 'not_confirmed' );
 			$response_data[ 'user' ] = am_user( $user->ID );
 			update_user_meta( $user->ID, 'am_slug', sha1( $user->data->user_email . uniqid() ) );
 
 			if ( $strategy === 'confirm_after' ) {
-				$token = send_me_confirmation_registration_link( $decoded_data->login, 'confirm' );
+				$token = send_me_confirmation_registration_link( $data['login'], 'confirm' );
 				if ( $token ) {
 					$wpdb->insert( $table, [
 						'hash'   => $token,
-						'email'  => $decoded_data->login,
+						'email'  => $data['login'],
 						'action' => 'confirm',
 						'time'   => date( 'Y-m-d H:i:s' )
 					], [ '%s', '%s', '%s', '%s' ] );
