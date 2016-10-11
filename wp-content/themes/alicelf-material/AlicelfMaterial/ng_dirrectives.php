@@ -79,11 +79,16 @@ function aa_func_20162526072510()
 	<?php
 }
 
+add_action('AM_afterbody_start', 'aa_func_20160012120047',99);
+function aa_func_20160012120047()
+{
+	echo "<GlobConfirmComponent></GlobConfirmComponent>";
+	if(is_amuserpage())
+		echo "<GlobLoaderComponent></GlobLoaderComponent>";
+}
+
 add_action( 'AM_content', 'aa_func_20164926084929' );
 function aa_func_20164926084929()
 {
 	echo "<FlashNotificationsComponent></FlashNotificationsComponent>";
-	echo "<GlobConfirmComponent></GlobConfirmComponent>";
-	if(is_amuserpage())
-		echo "<GlobLoaderComponent></GlobLoaderComponent>";
 }

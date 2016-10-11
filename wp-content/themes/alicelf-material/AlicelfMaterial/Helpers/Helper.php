@@ -166,4 +166,12 @@ class Helper {
 
 	}
 
+	/**
+	 * ==================== Current Request Is ajax ? ======================
+	 */
+	public static function is_ajax()
+	{
+		return is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX;
+	}
+
 }

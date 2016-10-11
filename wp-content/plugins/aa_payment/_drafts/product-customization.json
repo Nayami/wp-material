@@ -1,0 +1,231 @@
+[
+    {
+        "key": "group_57f8d3c98fe1f",
+        "title": "Product Customizator",
+        "fields": [
+            {
+                "key": "field_57f8d67b859fc",
+                "label": "Product Customization fields",
+                "name": "product_customization_fields",
+                "type": "flexible_content",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "button_label": "Add Row",
+                "min": "",
+                "max": "",
+                "layouts": [
+                    {
+                        "key": "57f8d6ce91b2d",
+                        "name": "main",
+                        "label": "Main",
+                        "display": "block",
+                        "sub_fields": [
+                            {
+                                "key": "field_57f8d79685a02",
+                                "label": "Material Options",
+                                "name": "material_options",
+                                "type": "repeater",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "collapsed": "",
+                                "min": "",
+                                "max": "",
+                                "layout": "table",
+                                "button_label": "Add Row",
+                                "sub_fields": [
+                                    {
+                                        "key": "field_57f8d7b385a03",
+                                        "label": "Availability",
+                                        "name": "availability",
+                                        "type": "true_false",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": 0,
+                                        "wrapper": {
+                                            "width": 1,
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "message": "",
+                                        "default_value": 1
+                                    },
+                                    {
+                                        "key": "field_57f8d7bf85a04",
+                                        "label": "Default",
+                                        "name": "default_chosen",
+                                        "type": "true_false",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_57f8d7b385a03",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": 1,
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "message": "",
+                                        "default_value": 0
+                                    },
+                                    {
+                                        "key": "field_57f8d7ca85a05",
+                                        "label": "Material Name",
+                                        "name": "material_name",
+                                        "type": "text",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_57f8d7b385a03",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": 12,
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "default_value": "",
+                                        "placeholder": "",
+                                        "prepend": "",
+                                        "append": "",
+                                        "maxlength": "",
+                                        "readonly": 0,
+                                        "disabled": 0
+                                    },
+                                    {
+                                        "key": "field_57f8d7d285a06",
+                                        "label": "Material Price",
+                                        "name": "material_price",
+                                        "type": "text",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_57f8d7b385a03",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": 8,
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "default_value": "",
+                                        "placeholder": "",
+                                        "prepend": "",
+                                        "append": "",
+                                        "maxlength": "",
+                                        "readonly": 0,
+                                        "disabled": 0
+                                    },
+                                    {
+                                        "key": "field_57f8d7dd85a07",
+                                        "label": "Material Picture",
+                                        "name": "material_picture",
+                                        "type": "image",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_57f8d7b385a03",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "return_format": "array",
+                                        "preview_size": "thumbnail",
+                                        "library": "all",
+                                        "min_width": 50,
+                                        "min_height": 50,
+                                        "min_size": "",
+                                        "max_width": 150,
+                                        "max_height": 150,
+                                        "max_size": "",
+                                        "mime_types": ""
+                                    },
+                                    {
+                                        "key": "field_57fd1e638b9e8",
+                                        "label": "Frontend Meta",
+                                        "name": "frontend_meta",
+                                        "type": "wysiwyg",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": [
+                                            [
+                                                {
+                                                    "field": "field_57f8d7b385a03",
+                                                    "operator": "==",
+                                                    "value": "1"
+                                                }
+                                            ]
+                                        ],
+                                        "wrapper": {
+                                            "width": 50,
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "default_value": "",
+                                        "tabs": "text",
+                                        "toolbar": "full",
+                                        "media_upload": 1
+                                    }
+                                ]
+                            }
+                        ],
+                        "min": "",
+                        "max": ""
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "product-items"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": ""
+    }
+]
