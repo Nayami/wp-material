@@ -72,6 +72,7 @@ jQuery(document).ready(function ($){
 		selectHtml += "</select>";
 		sidebarHandler.append(selectHtml);
 	};
+
 	if(sidebarHandler.length > 0) {
 		selectSidebarProcess();
 		var waitForDynamicSelectSidebar = setInterval(function(){
