@@ -16,7 +16,7 @@
 					if ( $show_sidebar && $sidebar_position === 'left' )
 						aa_sidebar_fn($sidebar_name);
 					?>
-					<div class="the-page-content <?php echo $show_sidebar ? "mdl-cell mdl-cell--8-col" : ""; ?>">
+					<div class="the-page-content mdl-cell mdl-cell--<?php echo $show_sidebar ? "8-col" : "12-col"; ?>">
 						<?php the_content(); the_tags( "", " / " ); ?>
 					</div>
 					<?php
