@@ -12,6 +12,7 @@ return array(
     '9ddef3587d0ea992a5107bf3fcf312d5' => $baseDir . '/AlicelfMaterial/ajax.php',
     'a327e9e384d48f89bf84dece90446a56' => $baseDir . '/AlicelfMaterial/ajax.user.php',
     '483f980016bb7a9172a59c66184115cf' => $baseDir . '/AlicelfMaterial/user/init.php',
+    'f3b19fdb945bea8a7f9f7e43c0dd64e9' => $baseDir . '/AlicelfMaterial/sidebars.php',
     '8b2ad1836f1688f773463ec916e32ac1' => $baseDir . '/AlicelfMaterial/form_actions.php',
     'a8f85bcc4c14901533ab94bfd43f4093' => $baseDir . '/AlicelfMaterial/media_links.php',
     '593310181a80f0432011dfb3beaad8c9' => $baseDir . '/AlicelfMaterial/action_filters.php',

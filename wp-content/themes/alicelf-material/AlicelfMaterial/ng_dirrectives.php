@@ -46,6 +46,20 @@ function aa_func_20163526113508()
 	<?php
 }
 
+add_action('admin_head', 'aa_func_20163316093324');
+function aa_func_20163316093324()
+{
+	$allSidebars = json_encode($GLOBALS['wp_registered_sidebars']);
+	?>
+	<script>
+		var AdminDefaults = {
+			editpostId : "<?php echo $_GET['post'] ?>",
+			allSidebars : <?php echo $allSidebars ?>
+		};
+	</script>
+	<?php
+}
+
 add_action( 'wp_footer', 'aa_func_20162526072510', 20 );
 function aa_func_20162526072510()
 {

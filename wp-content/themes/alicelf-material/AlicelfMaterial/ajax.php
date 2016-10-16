@@ -1,4 +1,6 @@
 <?php
+
+
 // ============= AMapiurl =============
 if ( ! function_exists( 'AMapiurl' ) ) {
 	function AMapiurl()

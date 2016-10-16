@@ -5,6 +5,7 @@ import { CommentInterface } from '../mocks/CommentInterface';
 import { CommentService } from '../services/comment.service';
 import { PostService } from "../services/post.service";
 import {UserGlobalService} from "../../shared/services/user.global.service";
+import {AuthGlobalService} from "../../shared/services/auth.service";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
@@ -32,6 +33,7 @@ export class FormComponent implements OnInit {
 		private fb: FormBuilder,
 		private user : UserGlobalService,
 		private postService: PostService,
+		private auth : AuthGlobalService,
 		private commentService : CommentService ) {
 
 		this.commentForm = fb.group( {
@@ -43,10 +45,12 @@ export class FormComponent implements OnInit {
 
 		user.getUser()
 			.subscribe(response => {
+				this.auth.loaded = true;
+				this.auth.authorized = response.ID ? true : false;
 				let fDefaults = {
-					"name"   : response.logged_in ? response.user_nicename : "",
-					"email"  : response.logged_in ? response.user_email : "",
-					"website": response.logged_in ? response.user_url : "",
+					"name"   : response.ID ? response.user_nicename : "",
+					"email"  : response.ID ? response.user_email : "",
+					"website": response.ID ? response.user_url : "",
 				};
 				 //this.commentForm.controls['name']
 				(<FormControl>this.commentForm.controls['name']).setValue(fDefaults.name, {});
@@ -69,6 +73,8 @@ export class FormComponent implements OnInit {
 				    this.commentService.addComment( response );
 				    (<FormControl>this.commentForm.controls['body']).setValue(null, {});
 			    } );
+		} else {
+			// @TODO: handle errors
 		}
 	}
 

@@ -13,13 +13,15 @@ var forms_1 = require('@angular/forms');
 var comment_service_1 = require('../services/comment.service');
 var post_service_1 = require("../services/post.service");
 var user_global_service_1 = require("../../shared/services/user.global.service");
+var auth_service_1 = require("../../shared/services/auth.service");
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 var FormComponent = (function () {
-    function FormComponent(fb, user, postService, commentService) {
+    function FormComponent(fb, user, postService, auth, commentService) {
         var _this = this;
         this.fb = fb;
         this.user = user;
         this.postService = postService;
+        this.auth = auth;
         this.commentService = commentService;
         this.userId = AMdefaults.currentUser;
         this.currentCommenter = {
@@ -37,10 +39,12 @@ var FormComponent = (function () {
         });
         user.getUser()
             .subscribe(function (response) {
+            _this.auth.loaded = true;
+            _this.auth.authorized = response.ID ? true : false;
             var fDefaults = {
-                "name": response.logged_in ? response.user_nicename : "",
-                "email": response.logged_in ? response.user_email : "",
-                "website": response.logged_in ? response.user_url : "",
+                "name": response.ID ? response.user_nicename : "",
+                "email": response.ID ? response.user_email : "",
+                "website": response.ID ? response.user_url : "",
             };
             //this.commentForm.controls['name']
             _this.commentForm.controls['name'].setValue(fDefaults.name, {});
@@ -61,13 +65,15 @@ var FormComponent = (function () {
                 _this.commentForm.controls['body'].setValue(null, {});
             });
         }
+        else {
+        }
     };
     FormComponent = __decorate([
         core_1.Component({
             selector: 'AMformComponent',
             templateUrl: componentPath + 'views/form.html',
         }), 
-        __metadata('design:paramtypes', [forms_1.FormBuilder, user_global_service_1.UserGlobalService, post_service_1.PostService, comment_service_1.CommentService])
+        __metadata('design:paramtypes', [forms_1.FormBuilder, user_global_service_1.UserGlobalService, post_service_1.PostService, auth_service_1.AuthGlobalService, comment_service_1.CommentService])
     ], FormComponent);
     return FormComponent;
 }());

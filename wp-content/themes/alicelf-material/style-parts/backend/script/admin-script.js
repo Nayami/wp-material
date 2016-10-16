@@ -54,4 +54,37 @@ jQuery(document).ready(function ($){
 			return false;
 		}
 	});
+
+
+	var sidebarHandler = $('#am-available-sidebars');
+	var selectSidebarProcess = function(){
+		var sidebars = AdminDefaults.allSidebars,
+				input = sidebarHandler.find('.acf-input input'),
+			selectHtml = "<select id='dynamic-sidebar-select'>";
+		input.css({
+			display: 'none'
+		});
+		for (var key in sidebars) {
+			var sidebar = sidebars[key],
+				selected = key === input.val() ? 'selected':"";
+			selectHtml += "<option value='"+key+"' "+selected+">"+sidebar.name+"</option>";
+		}
+		selectHtml += "</select>";
+		sidebarHandler.append(selectHtml);
+	};
+	if(sidebarHandler.length > 0) {
+		selectSidebarProcess();
+		var waitForDynamicSelectSidebar = setInterval(function(){
+			var selectAppear = $('#dynamic-sidebar-select');
+			if(selectAppear.length > 0) {
+				var input = sidebarHandler.find('.acf-input input');
+				selectAppear.on('change',function(){
+					input.val(selectAppear.val());
+				});
+				clearInterval(waitForDynamicSelectSidebar);
+			}
+		}, 150);
+	}
+
+
 });

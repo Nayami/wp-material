@@ -98,6 +98,37 @@ function aa_func_20163901013945()
 	global $_am;
 	if ( ! empty( $_am[ 'opt-snippet-css' ] ) )
 		echo "<style>{$_am['opt-snippet-css']}</style>";
+
+	/**
+	 * ==================== Page Custom Style ======================
+	 * 16.10.2016
+	 */
+	$post_id = get_the_ID();
+	if ( get_post_type( $post_id ) === 'page' ) {
+		$pagestyle = get_post_meta( $post_id, 'page_custom_style', true );
+		if ( ! empty( $pagestyle ) ) {
+			echo "<style>";
+			echo $pagestyle;
+			echo "</style>";
+		}
+	}
+}
+/**
+ * ==================== Page Custom Script ======================
+ * 16.10.2016
+ */
+add_action('wp_footer', 'aa_func_20164416084407', 99);
+function aa_func_20164416084407()
+{
+	$post_id = get_the_ID();
+	if ( get_post_type( $post_id ) === 'page' ) {
+		$pagestyle = get_post_meta( $post_id, 'page_custom_script', true );
+		if ( ! empty( $pagestyle ) ) {
+			echo "<script>";
+			echo $pagestyle;
+			echo "</script>";
+		}
+	}
 }
 
 /**

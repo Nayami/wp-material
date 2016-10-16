@@ -1,6 +1,6 @@
 <form class="AMscope" [formGroup]="commentForm" (ngSubmit)="addReview()">
 
-	<div class="mdl-grid" [hidden]="userId > 0">
+	<div class="mdl-grid" [hidden]="auth.authorized">
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col">
 			<input formControlName="name" class="mdl-textfield__input" type="text" id="AM-comment-name" pattern="^[a-zA-Z-.-]*$">
 			<label class="mdl-textfield__label" for="AM-comment-name">Your Name</label>

@@ -1,6 +1,6 @@
 <?php
 /**
- * The loop that displays a page.
+ * Template Name: Full Page
  */
 get_header();
 ?>
