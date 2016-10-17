@@ -1,25 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
-import {DialogInterface} from "../../mocks/dialog.interface";
-
 
 @Injectable()
-export class GlobConfirmService {
+export class ModalService {
 
-	confirmationChange: Subject<any> = new Subject<any>();
+	modalChange: Subject<any> = new Subject<any>();
 	private bodyelem = document.getElementsByTagName( 'body' )[0];
 	currentID: any;
-	display: boolean = false;
+	render: boolean = false;
 	showClass: boolean = false;
 
-	confirmDialog: DialogInterface;
+	dialogObject : any;
 
 	/**
 	 * ==================== Open dialog ======================
 	 */
-	launchConfirm( data ) {
-		this.confirmDialog = data;
-		this.display = true;
+	launchModal( data ) {
+		this.dialogObject = data;
+		this.render = true;
 		this.bodyelem['classList'].add( 'aa-modal-overlay' );
 		setTimeout( ()=> {
 			this.showClass = true
@@ -27,23 +25,22 @@ export class GlobConfirmService {
 	}
 
 	/**
-	 * ==================== Receive data from confirm.component ======================
+	 * ==================== Receive data from modal.component ======================
 	 */
 	invokeAnswer( data ) {
-		this.confirmationChange.next( data );
+		this.modalChange.next( data );
 	}
 
 	/**
 	 * ==================== Destroy dialog =====================
 	 */
-	unplugConfirmation() {
+	unplugModal() {
 		this.showClass = false;
 		setTimeout( ()=> {
-			this.display = false;
+			this.render = false;
 			this.bodyelem['classList'].remove( 'aa-modal-overlay' );
 		}, 500 );
 	}
-
 
 	constructor() {}
 }

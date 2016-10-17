@@ -7,6 +7,7 @@ import {AppSettingsService} from "./services/app.settings.service";
 import {LayoutDataService} from "./services/layout.data.service";
 import {AMFormService} from "./services/AMFormService";
 import {GlobConfirmService} from "./services/alert.dialog.modal/confirm.service";
+import {ModalService} from "./services/alert.dialog.modal/modal.service";
 
 @NgModule( {} )
 
@@ -21,6 +22,7 @@ export class SharedModule {
 				FlashNoticeService,
 				GlobConfirmService,
 				AMFormService,
+				ModalService,
 
 				LayoutDataService
 			]
@@ -35,5 +37,6 @@ export {
 	FlashNoticeService,
 	AMFormService,
 	LayoutDataService,
+	ModalService,
 	GlobConfirmService
 }

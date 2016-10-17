@@ -1,0 +1,21 @@
+<div id="global-modal-dialog" *ngIf="modal.render" class="modal-backdrop"
+		 [ngClass]="{show: modal.showClass, blockClass: modal.render}"
+		 itemscope="aa-modal" (click)="decline($event)" dataDestroy>
+
+	<div class="aa-modal-container {{modal.dialogObject.dialogClass}}" data-animation="flip-x">
+		<div class="mdl-grid">
+			<div class="mdl-cell mdl-cell--12-col">
+
+				<!--@TODO: There will be modal subcomponents depending on dialog content-->
+				<!--@TODO: maybe switch-->
+				{{modal.dialogObject.dialogContent | json}}
+
+			</div>
+
+			<footer *ngIf="modal.dialogObject.showButtons" class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+				<a dataDestroy (click)="decline($event)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Decline</a>
+				<a (click)="confirmFunc()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect am-success-btn">Confirm</a>
+			</footer>
+		</div>
+	</div>
+</div>

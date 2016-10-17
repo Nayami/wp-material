@@ -1,21 +1,23 @@
 import { Component } from '@angular/core';
-import { GlobConfirmService } from "../services/alert.dialog.modal/confirm.service";
+import {ModalService} from "../services/alert.dialog.modal/modal.service";
+
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/shared/components/views';
 
 @Component( {
-	selector: 'GlobConfirmComponent',
-	templateUrl: componentPath + '/alert.confirm.html'
+	selector   : 'ModalDialogComponent',
+	templateUrl: componentPath + "/modal.component.html"
 } )
-export class GlobConfirmComponent {
 
-	constructor( private confirmService: GlobConfirmService ) {
+export class ModalDialogComponent {
+
+	constructor(private modal : ModalService) {
 	}
 
 	confirmFunc() {
-		let answer = this.confirmService.confirmDialog;
+		let answer = this.modal.dialogObject;
 		answer.dialogAnswer = true;
-		this.confirmService.invokeAnswer( answer );
+		this.modal.invokeAnswer( answer );
 	}
 
 	decline( event ) {
@@ -24,10 +26,13 @@ export class GlobConfirmComponent {
 			    && target.parentNode.attributes.dataDestroy !== undefined;
 
 		if ( target.attributes.dataDestroy !== undefined || parentMatches ) {
-			let answer = this.confirmService.confirmDialog;
+			let answer = this.modal.dialogObject;
 			answer.dialogAnswer = false;
-			this.confirmService.invokeAnswer( answer );
+			this.modal.invokeAnswer( answer );
 		}
 	}
+	/**
+	 * ==================== Extend answers there ======================
+	 */
 
 }

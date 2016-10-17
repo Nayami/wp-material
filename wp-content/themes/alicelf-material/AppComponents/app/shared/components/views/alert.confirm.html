@@ -1,0 +1,18 @@
+<div id="global-confirm-dialog" *ngIf="confirmService.display" class="modal-backdrop"
+		 [ngClass]="{show: confirmService.showClass, blockClass: confirmService.display}"
+		 itemscope="aa-modal" (click)="decline($event)" dataDestroy>
+
+	<div class="aa-modal-container {{confirmService.confirmDialog.dialogClass}}" data-animation="scale">
+		<div class="mdl-grid">
+			<span class="icon-wrapper"><i class="material-icons">warning</i></span>
+			<div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+				<p>{{confirmService.confirmDialog.dialogMessage}}</p>
+			</div>
+
+			<footer *ngIf="confirmService.confirmDialog.showButtons" class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+				<a dataDestroy (click)="decline($event)" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Decline</a>
+				<a (click)="confirmFunc()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect am-success-btn">Confirm</a>
+			</footer>
+		</div>
+	</div>
+</div>

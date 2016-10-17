@@ -97,6 +97,7 @@ add_action('AM_afterbody_start', 'aa_func_20160012120047',99);
 function aa_func_20160012120047()
 {
 	echo "<GlobConfirmComponent></GlobConfirmComponent>";
+	echo "<ModalDialogComponent></ModalDialogComponent>";
 	if(is_amuserpage())
 		echo "<GlobLoaderComponent></GlobLoaderComponent>";
 }
