@@ -1,4 +1,5 @@
-import { Component, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnDestroy, ElementRef,
+	trigger, state, style, transition, animate } from '@angular/core';
 
 import { CommentService } from './services/comment.service';
 import { PostService } from "./services/post.service";
@@ -10,13 +11,27 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 
 @Component( {
 	selector   : 'AMreviewShell',
-	templateUrl: componentPath + 'views/shell.html'
+	templateUrl: componentPath + 'views/shell.html',
+	animations : [
+		trigger( 'flyInOut', [
+			state( 'in', style( { transform: 'translateY(0)', opacity: 0 } ) ),
+
+			transition( 'void => *', [
+				style( { transform: 'translateY(-40%)', opacity: 1 } ),
+				animate( '300ms ease-in' )
+			] ),
+			transition( '* => void', [
+				animate( '300ms ease-out', style( { transform: 'translateX(100%)', opacity: 0 } ) )
+			] )
+		] )
+	]
 } )
 
 export class CommentsComponent implements OnDestroy {
 
 	title = 'Leave a Reply';
 	getCommentsSubscription: Subscription;
+	postSubscription: Subscription;
 
 	constructor( elm: ElementRef,
 	             private postService: PostService,
@@ -29,11 +44,17 @@ export class CommentsComponent implements OnDestroy {
 					               commentsService.commentsAll = response;
 				               }
 			               } );
+		this.postSubscription =
+			postService.getPost( this.postService.postId )
+			           .subscribe(response => {
+				           postService.post = response;
+			           })
 
 	}
 
 	ngOnDestroy(): void {
-		this.getCommentsSubscription.unsubscribe()
+		this.getCommentsSubscription.unsubscribe();
+		this.postSubscription.unsubscribe();
 	}
 
 }

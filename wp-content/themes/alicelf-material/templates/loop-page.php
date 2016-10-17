@@ -30,7 +30,7 @@
 						<li class="nav-next"><?php next_post_link( '%link &rarr;' ); ?></li>
 					</ul>
 				</nav>
-				<?php comments_template(); ?>
+				<AMreviewShell datapostid="<?php the_ID() ?>">Waiting...</AMreviewShell>
 			</div>
 
 		</div>

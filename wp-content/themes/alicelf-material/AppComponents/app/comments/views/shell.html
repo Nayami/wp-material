@@ -1,10 +1,9 @@
-<div class="mdl-grid">
-	<div class="mdl-cell">
+<div *ngIf="postService.post">
+	<div *ngIf="postService.post.comment_status === 'open'" [@flyInOut]>
 		<h4>{{title}}</h4>
+		<AMformComponent></AMformComponent>
 	</div>
 </div>
-
-<AMformComponent></AMformComponent>
 
 <ul id="comments" itemscope itemtype="http://schema.org/UserComments">
 	<listingComments>Wait comments...</listingComments>

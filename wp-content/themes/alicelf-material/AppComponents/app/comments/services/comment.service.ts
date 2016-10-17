@@ -27,7 +27,7 @@ export class CommentService implements OnDestroy {
 	getComments(postId): Observable<any> {
 		let queryUrl = AMdefaults.baseurl + "/wp-json/posts/" + postId + "/comments";
 		return this.http.get( queryUrl )
-		           .map( response => <CommentInterface[]> response.json() );
+		           ['map']( response => <CommentInterface[]> response.json() );
 	}
 
 
@@ -40,8 +40,7 @@ export class CommentService implements OnDestroy {
 		headers.append( 'Content-Type', 'application/x-www-form-urlencoded' );
 		return this.http.post( AMdefaults.ajaxurl, query, {
 			           headers: headers
-		           } )
-		           .map( response => response.json() );
+		           } )['map']( response => response.json() );
 	}
 
 	/**
@@ -53,8 +52,7 @@ export class CommentService implements OnDestroy {
 		headers.append( 'Content-Type', 'application/x-www-form-urlencoded' );
 		return this.http.post( AMdefaults.ajaxurl, query, {
 			           headers: headers
-		           } )
-		           .map( response => response.json() );
+		           } ) ['map']( response => response.json() );
 	}
 
 	/**
@@ -74,7 +72,7 @@ export class CommentService implements OnDestroy {
 		let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
 		const body = "action=ajx20165916125929&body_data="+ JSON.stringify( data );
 		return this.http.post( AMdefaults.ajaxurl, body, {headers:headers} )
-		           .map( response => response.json() );
+		           ['map']( response => response.json() );
 
 	}
 
