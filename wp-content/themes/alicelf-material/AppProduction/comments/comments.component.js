@@ -41,17 +41,17 @@ var CommentsComponent = (function () {
             selector: 'AMreviewShell',
             templateUrl: componentPath + 'views/shell.html',
             animations: [
-                core_1.trigger('flyInOut', [
-                    core_1.state('in', core_1.style({ transform: 'translateY(0)', opacity: 0 })),
+                core_1.trigger('appearForm', [
                     core_1.transition('void => *', [
-                        core_1.style({ transform: 'translateY(-40%)', opacity: 1 }),
-                        core_1.animate('300ms ease-in')
+                        core_1.style({ opacity: 0 }),
+                        core_1.animate('300ms ease-in', core_1.style({ opacity: 1 }))
                     ]),
                     core_1.transition('* => void', [
-                        core_1.animate('300ms ease-out', core_1.style({ transform: 'translateX(100%)', opacity: 0 }))
+                        core_1.style({ opacity: 1 }),
+                        core_1.animate('300ms ease-in', core_1.style({ opacity: 0 }))
                     ])
                 ])
-            ]
+            ],
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, post_service_1.PostService, comment_service_1.CommentService])
     ], CommentsComponent);

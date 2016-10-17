@@ -24,7 +24,6 @@ import { CommentsComponent }  from './comments/comments.component';
 import { FormComponent }  from './comments/comments_childs/Form.component';
 import { ListingCommentsComponent }  from './comments/comments_childs/ListingComments.component';
 
-import { EdittCommentComponent } from "./comments/comments_childs/editcomment.component";
 import { SingleProfileComponent } from "./user/user_components/subcomponents/profile.component";
 import { GlobConfirmComponent } from "./shared/components/confirm.component";
 import { GlobLoaderComponent } from "./shared/components/loaders.component";
@@ -45,7 +44,6 @@ const componentMaybeExists = [
 		selector: 'AMreviewShell', component: CommentsComponent, childs: [
 		FormComponent,
 		ListingCommentsComponent,
-		EdittCommentComponent
 	]
 	},
 	{

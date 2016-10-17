@@ -1,5 +1,5 @@
 <div *ngIf="postService.post">
-	<div *ngIf="postService.post.comment_status === 'open'" [@flyInOut]>
+	<div *ngIf="postService.post.comment_status === 'open'" [@appearForm]>
 		<h4>{{title}}</h4>
 		<AMformComponent></AMformComponent>
 	</div>

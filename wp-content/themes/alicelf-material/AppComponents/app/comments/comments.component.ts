@@ -13,18 +13,18 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 	selector   : 'AMreviewShell',
 	templateUrl: componentPath + 'views/shell.html',
 	animations : [
-		trigger( 'flyInOut', [
-			state( 'in', style( { transform: 'translateY(0)', opacity: 0 } ) ),
-
+		trigger( 'appearForm', [
 			transition( 'void => *', [
-				style( { transform: 'translateY(-40%)', opacity: 1 } ),
-				animate( '300ms ease-in' )
+				style({ opacity: 0 }),
+				animate( '300ms ease-in', style({opacity:1}))
 			] ),
 			transition( '* => void', [
-				animate( '300ms ease-out', style( { transform: 'translateX(100%)', opacity: 0 } ) )
-			] )
+				style({ opacity: 1 }),
+				animate( '300ms ease-in', style({opacity:0}))
+			])
 		] )
-	]
+	],
+
 } )
 
 export class CommentsComponent implements OnDestroy {

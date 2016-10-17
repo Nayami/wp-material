@@ -39,7 +39,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 	owner: boolean = false;
 	routerParam: Subscription;
 	logoutConfirmation: Subscription;
-	modalSubscription: Subscription;
+	//modalSubscription: Subscription;
 
 	currentUserSlug: string;
 
@@ -90,30 +90,30 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 				    }
 			    } );
 
-		this.modalSubscription =
-			this.modal.modalChange
-			    .subscribe( data => {
-				    if ( data.id === this.modal.currentID ) {
-					    if(!data.dialogAnswer) {
-						    this.modal.unplugModal()
-					    }
-				    }
-			    } )
+		//this.modalSubscription =
+		//	this.modal.modalChange
+		//	    .subscribe( data => {
+		//		    if ( data.id === this.modal.currentID ) {
+		//			    if(!data.dialogAnswer) {
+		//				    this.modal.unplugModal()
+		//			    }
+		//		    }
+		//	    } );
 
 	}
 
-	testmodal() {
-		let stamp = new Date().getTime();
-		this.modal.currentID = stamp;
-		this.modal.launchModal( {
-			id           : stamp,
-			dialogClass  : 'danger-alert',
-			dialogContent: 'jjjjjjjjjj',
-			dialogAnswer : null,
-			showButtons  : false,
-			dialogType   : 'simple'
-		} )
-	}
+	//testmodal() {
+	//	let stamp = new Date().getTime();
+	//	this.modal.currentID = stamp;
+	//	this.modal.launchModal( {
+	//		id           : stamp,
+	//		dialogClass  : 'danger-alert',
+	//		dialogContent: 'jjjjjjjjjj',
+	//		dialogAnswer : null,
+	//		showButtons  : false,
+	//		dialogType   : 'simple'
+	//	} )
+	//}
 
 	// Launch Confirm
 	askLogoutConfirm() {
@@ -162,7 +162,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.routerParam.unsubscribe();
 		this.logoutConfirmation.unsubscribe();
-		this.modalSubscription.unsubscribe();
+		//this.modalSubscription.unsubscribe();
 	}
 
 }
