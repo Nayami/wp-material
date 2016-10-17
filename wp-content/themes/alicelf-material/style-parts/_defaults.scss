@@ -1,3 +1,8 @@
+.am-success-btn {
+	background-color : $brandColor !important;
+	color            : #fff;
+}
+
 .mdl-layout__container {
 	height : auto;
 	top    : 0;
@@ -9,7 +14,8 @@
 .default-container {
 	padding          : 15px;
 	margin-bottom    : 10px;
-	border-bottom    : 1px solid rgba(23, 76, 158, 0.5);
+
+	border    : 1px solid rgba(112, 140, 96, 0.32);
 	background-color : #fff;
 	border-radius    : 2px;
 	box-shadow       : 0 5px 10px rgba(0, 0, 0, 0.26);
@@ -28,7 +34,6 @@
 
 .menu-primary-navigation-container {
 	align-self : stretch;
-
 }
 
 .relative-container {
@@ -41,7 +46,7 @@
 
 .am-link {
 	cursor : pointer;
-	&:hover{
+	&:hover {
 		text-decoration : underline;
 	}
 }

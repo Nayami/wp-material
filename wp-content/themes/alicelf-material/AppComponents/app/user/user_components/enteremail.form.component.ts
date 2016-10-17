@@ -6,6 +6,8 @@ import { Http, Response, Headers } from '@angular/http';
 import { Observable, Subscription } from 'rxjs/Rx';
 import 'rxjs/Rx';
 import { FlashNoticeService } from "../../shared/services/alert.dialog.modal/flash.notices";
+import {AMFormService} from "../../shared/services/AMFormService";
+import {AppSettingsService} from "../../shared/services/app.settings.service";
 declare var AMdefaults: any;
 
 @Component( {
@@ -25,7 +27,7 @@ declare var AMdefaults: any;
 						<input [(ngModel)]="emailvalue" class="mdl-textfield__input" type="text" id="resetpass-input">
 						<label class="mdl-textfield__label" for="resetpass-input">Enter Your Email</label>
 					</div>
-					<button (click)="submitProcess(emailvalue)" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--cyan-800 mdl-color-text--cyan-50">Send me restore password info</button>
+					<button (click)="submitProcess(emailvalue)" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect am-success-btn">Send me restore password info</button>
 				</div>
 			</div>
 		</div>
@@ -45,7 +47,11 @@ export class EnterEmailComponent implements OnDestroy {
 		block    : false
 	};
 
-	constructor( private flashes: FlashNoticeService, private http: Http ) {
+	constructor(
+		private flashes: FlashNoticeService,
+		private http: Http,
+		private appSettings : AppSettingsService
+	) {
 	}
 
 	ngOnChanges( changes: SimpleChanges ) {
@@ -65,7 +71,7 @@ export class EnterEmailComponent implements OnDestroy {
 	submitProcess( value ) {
 		this.progress = true;
 		if ( EnterEmailComponent.validateEmail( value ) ) {
-			this.confirmForm = this.sendData( {email : value, action : 'reset'} )
+			this.confirmForm = this.sendData( {email : value, actionType : 'reset'} )
 			                       .subscribe( data => {
 				                       switch (data.status) {
 					                       case 'notfound' :
@@ -98,10 +104,9 @@ export class EnterEmailComponent implements OnDestroy {
 	}
 
 	sendData( value ): Observable<any> {
-		let headers = new Headers( { "Content-Type": "application/x-www-form-urlencoded" } );
-		const body = "action=ajx20165728055701&body_data=" + JSON.stringify( value );
-		return this.http.post( AMdefaults.ajaxurl, body, { headers: headers } )
-		           .map( ( response: Response ) => response.json() );
+		const body = AMFormService.dataToPost( "ajx20165728055701", value );
+		return this.http.post( this.appSettings.settings.ajaxurl, body )
+			['map']( response => response.json() );
 	}
 
 	// close modal via click

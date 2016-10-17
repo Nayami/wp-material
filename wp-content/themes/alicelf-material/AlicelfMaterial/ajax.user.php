@@ -77,9 +77,8 @@ add_action( 'wp_ajax_nopriv_ajx20165728055701', 'ajx20165728055701' );
 add_action( 'wp_ajax_ajx20165728055701', 'ajx20165728055701' );
 function ajx20165728055701()
 {
-	$data         = str_replace( '\\', '', $_POST[ 'body_data' ] );
-	$decoded_data = json_decode( $data );
-	$email        = $decoded_data->email;
+	$data         = $_POST;
+	$email        = $data['email'];
 	$ret_val      = [
 		'email'  => $email,
 		'status' => 'fail',
@@ -100,7 +99,7 @@ function ajx20165728055701()
 		$wpdb->insert( $table, [
 			'hash'   => $token,
 			'email'  => $email,
-			'action' => $decoded_data->action,
+			'action' => $data['actionType'],
 			'time'   => date( 'Y-m-d H:i:s' )
 		], [ '%s', '%s', '%s', '%s' ] );
 		$ret_val[ 'status' ] = 'success';
