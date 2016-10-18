@@ -1,0 +1,52 @@
+Color Map:
+
+Alerts  :
+	Success : mdl-color--green-200 mdl-color-text--green-900
+	Warning : mdl-color--orange-100 mdl-color-text--orange-900
+	Danger  : mdl-color--red-200 mdl-color-text--red-900
+	Info    : mdl-color--blue-200 mdl-color-text--blue-900
+	System  : mdl-color--blue-grey-300  mdl-color-text--blue-grey-900
+
+
+
+
+b03c1180ab688532bc3e2a808ed71fe650c083b0
+c27ee3f52333b8afafd02ef6fc3a08358279d47d
+
+
+Alerts and Confirm:
+1) app\user\user_components\subcomponents\profile.component.ts
+		// @ACTION : Logout event invoke
+
+2) app\user\user_components\subcomponents\profile.component.ts
+		// @ACTION : Logout event watch
+
+Modals:
+	1) Create component (modal content)
+		 app\shared\components\modals\*Component.ts
+	2) Add Component to app module in app\app.module.ts : 43 +/-
+	3) Add Invocation method(and launch button with this method):
+			testmodal() {
+      		let stamp = new Date().getTime();
+      		this.modal.currentID = stamp;
+      		this.modal.launchModal( {
+      			id            : stamp,
+      			dialogClass   : 'danger-alert',
+      			dialogCmponent: 'TestModal', <--- there is component name
+      			dialogAnswer  : null,
+      			showButtons   : false,
+      			dialogType    : 'simple'
+      		} )
+      	}
+   4) Wait for an answer (modalSubscription: Subscription; and this.modalSubscription.unsubscribe();):
+	   this.modalSubscription =
+	        this.modal.modalChange
+	            .subscribe( data => {
+	              if ( data.id === this.modal.currentID ) {
+	                if ( !data.dialogAnswer ) {
+	                  this.modal.unplugModal()
+	                }
+	              }
+	            } );
+   5) Define this component in app\shared\components\views\modal.component.html
+      <TestModal *ngIf="modal.dialogObject.dialogCmponent==='TestModal'"></TestModal>

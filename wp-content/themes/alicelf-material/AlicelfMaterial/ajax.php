@@ -1,6 +1,5 @@
 <?php
 
-
 // ============= AMapiurl =============
 if ( ! function_exists( 'AMapiurl' ) ) {
 	function AMapiurl()
@@ -38,7 +37,8 @@ if ( ! function_exists( 'am_user' ) ) {
 			'network_meta' => [
 				'email_confirmed' => get_user_meta( $user->ID, 'am_email_confirmed', true ),
 				'user_media'      => [
-					'avatar_url' => apply_filters( 'am_user_avatar_url', get_avatar_url( $user->ID ), $user->ID )
+					'avatar_url' => apply_filters( 'am_user_avatar_url',
+						get_avatar_url( $user->ID, [ 'size' => 170 ] ), $user->ID )
 				]
 			]
 		];
@@ -207,10 +207,10 @@ function ajx20165916125929()
 	$data[ 'status' ] = null;
 	$commentID        = $decoded_data->id;
 
-	$comment = get_comment( $commentID );
+	$comment  = get_comment( $commentID );
 	$response = [
 		'status' => null,
-		'index' => $decoded_data->index
+		'index'  => $decoded_data->index
 	];
 
 	if ( ( (int) $comment->user_id === $current_user ) && is_user_logged_in() ) {

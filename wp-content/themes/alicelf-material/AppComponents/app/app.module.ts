@@ -28,6 +28,7 @@ import { SingleProfileComponent } from "./user/user_components/subcomponents/pro
 import { GlobConfirmComponent } from "./shared/components/confirm.component";
 import { GlobLoaderComponent } from "./shared/components/loaders.component";
 import {ModalDialogComponent} from "./shared/components/modal.component";
+import {TestModalComponent} from "./shared/components/modals/testmodal.component";
 
 
 /**
@@ -37,7 +38,10 @@ import {ModalDialogComponent} from "./shared/components/modal.component";
 const componentMaybeExists = [
 	{ selector: 'footer-component', component: FooterComponent, childs: [] },
 	{ selector: 'FlashNotificationsComponent', component: FlashNotificationsComponent, childs: [] },
-	{ selector: 'GlobConfirmComponent', component: ModalDialogComponent, childs: [] },
+	{ selector: 'GlobConfirmComponent', component: ModalDialogComponent, childs: [
+		TestModalComponent,
+	  // Modal Components goes there
+	] },
 	{ selector: 'GlobConfirmComponent', component: GlobConfirmComponent, childs: [] },
 	{ selector: 'GlobLoaderComponent', component: GlobLoaderComponent, childs: [] },
 	{

@@ -6,9 +6,7 @@
 		<div class="mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col">
 
-				<!--@TODO: There will be modal subcomponents depending on dialog content-->
-				<!--@TODO: maybe switch-->
-				{{modal.dialogObject.dialogContent | json}}
+				<TestModal *ngIf="modal.dialogObject.dialogCmponent==='TestModal'"></TestModal>
 
 			</div>
 

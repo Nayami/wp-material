@@ -39,7 +39,6 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 	owner: boolean = false;
 	routerParam: Subscription;
 	logoutConfirmation: Subscription;
-	//modalSubscription: Subscription;
 
 	currentUserSlug: string;
 
@@ -78,7 +77,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 
 		} );
 
-		// Logout event watch
+		// @ACTION : Logout event watch
 		this.logoutConfirmation =
 			this.confirmService.confirmationChange
 			    .subscribe( data => {
@@ -90,32 +89,12 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 				    }
 			    } );
 
-		//this.modalSubscription =
-		//	this.modal.modalChange
-		//	    .subscribe( data => {
-		//		    if ( data.id === this.modal.currentID ) {
-		//			    if(!data.dialogAnswer) {
-		//				    this.modal.unplugModal()
-		//			    }
-		//		    }
-		//	    } );
 
 	}
 
-	//testmodal() {
-	//	let stamp = new Date().getTime();
-	//	this.modal.currentID = stamp;
-	//	this.modal.launchModal( {
-	//		id           : stamp,
-	//		dialogClass  : 'danger-alert',
-	//		dialogContent: 'jjjjjjjjjj',
-	//		dialogAnswer : null,
-	//		showButtons  : false,
-	//		dialogType   : 'simple'
-	//	} )
-	//}
 
-	// Launch Confirm
+
+	// @ACTION : Logout event invoke
 	askLogoutConfirm() {
 		let stamp = new Date().getTime();
 		this.confirmService.currentID = stamp;
@@ -162,7 +141,6 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.routerParam.unsubscribe();
 		this.logoutConfirmation.unsubscribe();
-		//this.modalSubscription.unsubscribe();
 	}
 
 }
