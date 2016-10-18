@@ -46,8 +46,10 @@
 
 .am-link {
 	cursor : pointer;
+	color : $successColor;
 	&:hover {
 		text-decoration : underline;
+		color : darken($successColor, 20%);
 	}
 }
 

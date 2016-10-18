@@ -7,6 +7,10 @@
 		<div class="mdl-grid">
 			<figure class="mdl-cell mdl-cell--2-col">
 				<img [src]="scopeUser.network_meta.user_media.avatar_url" alt="">
+				<div *ngIf="owner">
+					<hr>
+					<i title="Edit Profile and Settings" routerLink="/{{scopeUser.slug}}/edit" class="material-icons icon-link-wrap">settings</i>
+				</div>
 			</figure>
 			<div class="mdl-cell mdl-cell--10-col relative-container">
 				<div *ngIf="owner && scopeUser.administrator" class="admin-actions relative-container">

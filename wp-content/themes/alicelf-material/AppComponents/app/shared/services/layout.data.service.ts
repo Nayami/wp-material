@@ -10,11 +10,14 @@ export class LayoutDataService {
 	}
 
 	invokeLoad() {
-		let elemJ = document.getElementsByClassName( 'load-rising-holder' );
-		if ( elemJ[0] ) {
+		let elemJ = document.getElementsByClassName( 'load-rising-holder' ),
+			loader = elemJ[0];
+		if ( loader ) {
 			let opacity = 1;
 			let inter = setInterval( () => {
-				elemJ[0]['style'].opacity = opacity;
+				if(loader !== undefined) {
+					loader['style'].opacity = opacity;
+				}
 				opacity -= 0.05;
 				if ( opacity <= 0 ) {
 					clearInterval( inter );

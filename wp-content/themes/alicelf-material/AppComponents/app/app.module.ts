@@ -29,6 +29,7 @@ import { GlobConfirmComponent } from "./shared/components/confirm.component";
 import { GlobLoaderComponent } from "./shared/components/loaders.component";
 import {ModalDialogComponent} from "./shared/components/modal.component";
 import {TestModalComponent} from "./shared/components/modals/testmodal.component";
+import {EditProfileComponent} from "./user/user_components/edit.profile.component";
 
 
 /**
@@ -57,7 +58,9 @@ const componentMaybeExists = [
 		AMAuthComponent,
 		EnterEmailComponent,
 		RestorePasswordComponent,
-		SingleProfileComponent
+		SingleProfileComponent,
+
+		EditProfileComponent
 	]
 	},
 	// ADD THERE COMPONENTS

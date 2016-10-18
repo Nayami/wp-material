@@ -56,6 +56,17 @@ body {
  * ==================== Single Profile view ======================
  * 07.10.2016
  */
+.top-corner-actions {
+	position : relative;
+	height : 1px;
+	display: block;
+	margin-top : -1px;
+	> .link-wrapper {
+		position : absolute;
+		top      : -10px;
+		left    : -20px;
+	}
+}
 .corner-logout-button {
 	position : absolute;
 	top      : -20px;
@@ -69,5 +80,12 @@ body {
 .single-profile {
 	h3 {
 		margin-bottom : 5px;
+	}
+}
+
+.icon-link-wrap {
+	cursor : pointer;
+	&:hover{
+		color : $successColor;
 	}
 }
