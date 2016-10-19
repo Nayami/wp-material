@@ -29,13 +29,13 @@ export class UserGlobalService implements OnDestroy {
 		let queryUrl = AMdefaults.ajaxurl + "?action=ajx20163917023918";
 		if(slug) queryUrl += "&by_slug="+slug;
 		return this.http.get( queryUrl )
-		           .map( ( response: Response ) => response.json() );
+		           ['map']( ( response: Response ) => response.json() );
 	}
 
 	checkAccessAndEmailConfirmation( user: any, auth: any ) {
 		let htmlButton = '<a class="mdl-color-text--blue-grey-900" href="' + AMdefaults.networkEndpoint + '?am_confirm_email=confirm">Confirm Now!</a>';
 		return this.http.get( AMdefaults.ajaxurl + '?action=ajx20162128122131' )
-		           .map( ( response: Response ) => response.json() )
+		           ['map']( ( response: Response ) => response.json() )
 		           .subscribe( data => {
 			           let strategy = data.auth_info.registration_strategy;
 
@@ -64,7 +64,7 @@ export class UserGlobalService implements OnDestroy {
 	 */
 	doLogout(): Observable<any> {
 		return this.http.get( AMdefaults.ajaxurl + '?action=ajx20160101040141' )
-		           .map( ( response: Response ) => response.json() );
+		           ['map']( ( response: Response ) => response.json() );
 	}
 
 }

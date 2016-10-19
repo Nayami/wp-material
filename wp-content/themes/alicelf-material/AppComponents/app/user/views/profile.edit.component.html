@@ -11,9 +11,39 @@
 						<i routerLink="/" class="material-icons icon-link-wrap">home</i>
 					</div>
 				</div>
+				<div class="mdl-cell mdl-cell--12-col relative-container">
+					<!--<pre>{{scopeUser | json}}</pre>-->
 
-				<pre>{{scopeUser | json}}</pre>
+					<form [formGroup]="editFormHandler" *ngIf="owner" (ngSubmit)="changeProfileSettings()">
+						<div class="mdl-grid">
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+								<input class="mdl-textfield__input" disabled type="text" id="emaillg" formControlName="email">
+								<label class="mdl-textfield__label" for="emaillg">Email</label>
+							</div>
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+								<input class="mdl-textfield__input" type="text" id="u-slug" formControlName="slug">
+								<label class="mdl-textfield__label" for="u-pass">Slug</label>
+							</div>
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+								<input class="mdl-textfield__input" type="text" id="u-pass" formControlName="pass">
+								<label class="mdl-textfield__label" for="u-pass">Password</label>
+							</div>
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+								<input class="mdl-textfield__input" type="text" id="u-confirm" formControlName="confirm">
+								<label class="mdl-textfield__label" for="u-pass">Password Confirm</label>
+							</div>
+						</div>
+						<div class="mdl-grid">
+							<div class="mdl-cell mdl-cell--12-col mdl-typography--text-right">
+								<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect am-success-btn">Submit</button>
+							</div>
+						</div>
+					</form>
 
+					<div *ngIf="owner" class="corner-logout-button">
+						<i (click)="askLogoutConfirm()" class="material-icons">exit_to_app</i>
+					</div>
+				</div>
 
 			</div>
 		</div>

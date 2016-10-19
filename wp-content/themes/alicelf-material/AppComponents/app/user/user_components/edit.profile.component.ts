@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy
 import {LayoutDataService} from "../../shared/services/layout.data.service";
 import { Router,ActivatedRoute } from "@angular/router";
 import { Observable, Subscription } from 'rxjs/Rx';
+import { Http, Response } from '@angular/http';
 import 'rxjs/Rx';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AuthGlobalService } from "../../shared/services/auth.service";
@@ -12,6 +13,7 @@ import { ModalService } from "../../shared/services/alert.dialog.modal/modal.ser
 import { GlobConfirmService } from "../../shared/services/alert.dialog.modal/confirm.service";
 import { UserGlobalService } from "../../shared/services/user.global.service";
 import {AMAuthComponent} from "./auth.component";
+import {AMFormService} from "../../shared/services/AMFormService";
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
@@ -46,6 +48,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 
 	constructor( private layoutData: LayoutDataService,
 	             private router: Router,
+	             private http: Http,
 	             private auth: AuthGlobalService,
 	             private activatedRoute: ActivatedRoute,
 	             private flashes: FlashNoticeService,
@@ -74,25 +77,93 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 					    if ( result.is_current_user ) {
 						    this.loadEditForm( result );
 						    this.owner = true;
+					    } else {
+						    this.router.navigate( ['/'] );
 					    }
 					    this.spinner = false;
 				    } )
 			}
-
 		} );
+		// @ACTION : Logout event watch
+		this.logoutConfirmation =
+			this.confirmService.confirmationChange
+			    .subscribe( data => {
+				    if ( data.id === this.confirmService.currentID ) {
+					    if ( data.dialogAnswer ) {
+						    this.logoutAction();
+					    }
+					    this.confirmService.unplugConfirmation();
+				    }
+			    } );
 	}
 
+	// @ACTION : Logout event invoke
+	askLogoutConfirm() {
+		let stamp = new Date().getTime();
+		this.confirmService.currentID = stamp;
+		this.confirmService.launchConfirm( {
+			id           : stamp,
+			dialogClass  : 'danger-alert',
+			dialogMessage: 'Are you sure want to logout?',
+			dialogAnswer : null,
+			showButtons  : true
+		} )
+	}
+
+	logoutAction() {
+		this.spinner = true;
+		this.userService.doLogout()
+		    .subscribe( data => {
+			    if ( data === "logout_confirmed" ) {
+				    this.userService.currentUser = null;
+				    this.auth.authorized = false;
+				    this.router.navigate( ['/screen/auth'] );
+			    }
+
+			    this.flashes.attachNotifications( {
+				    message : 'You are logged out.',
+				    cssClass: 'mdl-color--blue-200 mdl-color-text--blue-900',
+				    type    : 'dismissable',
+			    } );
+
+			    this.spinner = false;
+		    } )
+	}
 
 	loadEditForm( user ) {
 		this.editFormHandler = this.fbuilder.group( {
-			email: ["", [AMAuthComponent.authEmailValidation]],
-			slug : [user.slug, [Validators.required, Validators.minLength( 5 )]],
-			pass : ["", [Validators.required, Validators.minLength( 5 )]],
+			email  : [user.user_email, [AMAuthComponent.authEmailValidation]],
+			slug   : [user.slug, [Validators.required, Validators.minLength( 5 )]],
+			pass   : ["", [Validators.required, Validators.minLength( 5 )]],
+			confirm: ["", [Validators.required, Validators.minLength( 5 )]],
 		} );
+	}
+
+	changeProfileSettings() {
+		if ( this.editFormHandler.status === "VALID" ) {
+			// @TODO: Check pass confirmation
+			const body = AMFormService.dataToPost( "ajx20163519013508", this.editFormHandler.value );
+			this.http.post( AMdefaults.ajaxurl, body )['map']
+			( ( response: Response ) => response.json() )
+				.subscribe( data => {
+
+					console.log( data );
+
+					if ( data.status === 'success' ) {
+						this.scopeUser = data.user_data;
+						this.userService.currentUser = data.user_data;
+						this.router.navigate( ['/' + this.scopeUser.slug] );
+					} else {
+						// @TODO: handle server response errors
+					}
+				} )
+		} else {
+			// @TODO: Handle Errors
+		}
 	}
 
 	ngOnDestroy(): void {
 		this.routerParam.unsubscribe();
-		//this.logoutConfirmation.unsubscribe();
+		this.logoutConfirmation.unsubscribe();
 	}
 }

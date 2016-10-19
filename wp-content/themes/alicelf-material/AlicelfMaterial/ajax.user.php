@@ -9,17 +9,17 @@ add_action( 'wp_ajax_nopriv_ajx20163917023918', 'ajx20163917023918' );
 add_action( 'wp_ajax_ajx20163917023918', 'ajx20163917023918' );
 function ajx20163917023918()
 {
-	$ret_user     = [
+	$ret_user = [
 		'ID'        => null,
 		'logged_in' => false
 	];
 
-	if ( isset($_GET['by_slug']) ) {
+	if ( isset( $_GET[ 'by_slug' ] ) ) {
 		global $wpdb;
-		$query_result = $wpdb->get_row("SELECT user_id FROM {$wpdb->usermeta}
-														WHERE meta_key='am_slug' AND meta_value='{$_GET['by_slug']}'");
-		if( $query_result ) {
-			$ret_user = am_user($query_result->user_id);
+		$query_result = $wpdb->get_row( "SELECT user_id FROM {$wpdb->usermeta}
+														WHERE meta_key='am_slug' AND meta_value='{$_GET['by_slug']}'" );
+		if ( $query_result ) {
+			$ret_user = am_user( $query_result->user_id );
 		}
 	} else {
 		if ( is_user_logged_in() ) {
@@ -41,19 +41,19 @@ add_action( 'wp_ajax_nopriv_ajx20162924062955', 'ajx20162924062955' );
 add_action( 'wp_ajax_ajx20162924062955', 'ajx20162924062955' );
 function ajx20162924062955()
 {
-	$data         = $_POST;
-	$login        = $data['fname'];
-	$response     = [
+	$data     = $_POST;
+	$login    = $data[ 'fname' ];
+	$response = [
 		'message' => null
 	];
-	$user         = get_user_by( 'login', $login );
+	$user     = get_user_by( 'login', $login );
 
 	if ( ! $user ) {
 		$response[ 'message' ] = 'notfound';
 		echo json_encode( $response );
 		die;
 	}
-	if ( $user && wp_check_password( $data['passw'], $user->data->user_pass, $user->ID ) ) {
+	if ( $user && wp_check_password( $data[ 'passw' ], $user->data->user_pass, $user->ID ) ) {
 		wp_set_auth_cookie( $user->ID );
 
 		$filtered_user         = am_user( $user->ID );
@@ -77,9 +77,9 @@ add_action( 'wp_ajax_nopriv_ajx20165728055701', 'ajx20165728055701' );
 add_action( 'wp_ajax_ajx20165728055701', 'ajx20165728055701' );
 function ajx20165728055701()
 {
-	$data         = $_POST;
-	$email        = $data['email'];
-	$ret_val      = [
+	$data    = $_POST;
+	$email   = $data[ 'email' ];
+	$ret_val = [
 		'email'  => $email,
 		'status' => 'fail',
 		'reason' => null
@@ -99,7 +99,7 @@ function ajx20165728055701()
 		$wpdb->insert( $table, [
 			'hash'   => $token,
 			'email'  => $email,
-			'action' => $data['actionType'],
+			'action' => $data[ 'actionType' ],
 			'time'   => date( 'Y-m-d H:i:s' )
 		], [ '%s', '%s', '%s', '%s' ] );
 		$ret_val[ 'status' ] = 'success';
@@ -165,7 +165,7 @@ function ajx20162929092956()
 		'check_mail' => null
 	];
 	if ( $registration_allowed === 'yes' ) {
-		$check_user = get_user_by( 'email', $data['login'] );
+		$check_user = get_user_by( 'email', $data[ 'login' ] );
 
 		if ( $check_user ) {
 			$response_data[ 'status' ] = 'user_exists';
@@ -178,11 +178,11 @@ function ajx20162929092956()
 		 * After this confirmation, next step is hash exists ajx20161128111129
 		 */
 		if ( $strategy === 'confirm_before' ) {
-			$token = send_me_confirmation_registration_link( $data['login'], 'confirm' );
+			$token = send_me_confirmation_registration_link( $data[ 'login' ], 'confirm' );
 			if ( $token ) {
 				$wpdb->insert( $table, [
 					'hash'   => $token,
-					'email'  => $data['login'],
+					'email'  => $data[ 'login' ],
 					'action' => 'confirm',
 					'time'   => date( 'Y-m-d H:i:s' )
 				], [ '%s', '%s', '%s', '%s' ] );
@@ -194,23 +194,23 @@ function ajx20162929092956()
 
 		} else {
 			$userdata = [
-				'user_login' => $data['login'],
-				'user_email' => $data['login'],
-				'user_pass'  => $data['passw']
+				'user_login' => $data[ 'login' ],
+				'user_email' => $data[ 'login' ],
+				'user_pass'  => $data[ 'passw' ]
 			];
 			wp_insert_user( $userdata );
 
-			$user = get_user_by( 'email', $data['login'] );
+			$user = get_user_by( 'email', $data[ 'login' ] );
 			update_user_meta( $user->ID, 'am_email_confirmed', 'not_confirmed' );
 			$response_data[ 'user' ] = am_user( $user->ID );
 			update_user_meta( $user->ID, 'am_slug', sha1( $user->data->user_email . uniqid() ) );
 
 			if ( $strategy === 'confirm_after' ) {
-				$token = send_me_confirmation_registration_link( $data['login'], 'confirm' );
+				$token = send_me_confirmation_registration_link( $data[ 'login' ], 'confirm' );
 				if ( $token ) {
 					$wpdb->insert( $table, [
 						'hash'   => $token,
-						'email'  => $data['login'],
+						'email'  => $data[ 'login' ],
 						'action' => 'confirm',
 						'time'   => date( 'Y-m-d H:i:s' )
 					], [ '%s', '%s', '%s', '%s' ] );
@@ -322,5 +322,47 @@ function ajx20160101040141()
 //	wp_clear_auth_cookie();
 	wp_logout();
 	echo json_encode( "logout_confirmed" );
+	die;
+}
+
+/**
+ * ==================== EDIT USER ======================
+ */
+add_action( 'wp_ajax_nopriv_ajx20163519013508', 'ajx20163519013508' );
+add_action( 'wp_ajax_ajx20163519013508', 'ajx20163519013508' );
+function ajx20163519013508()
+{
+	global $wpdb;
+	$data         = $_POST;
+	$uid = get_current_user_id();
+	$current_user = get_user_by( "ID", $uid );
+	$response     = [
+		'user_data' => null,
+		'status'    => 'failed'
+	];
+
+	if ( $current_user->data->user_email === $data[ 'email' ] ) {
+		if ( $data[ 'pass' ] !== $data[ 'confirm' ] ) {
+			$response[ 'status' ] = 'pass_missmath';
+			echo json_encode( $response );
+			die;
+		}
+
+		$query_result = $wpdb->get_row( "SELECT user_id FROM {$wpdb->usermeta}
+														WHERE meta_key='am_slug' AND meta_value='{$data['slug']}'" );
+		if ( $query_result ) {
+			$response[ 'status' ] = 'slug_taken';
+			echo json_encode( $response );
+			die;
+		}
+
+		// @TODO: Update password
+
+		update_user_meta($uid, 'am_slug', $data['slug']);
+		$response['user_data'] = am_user($uid);
+		$response['status']='success';
+	}
+
+	echo json_encode( $response );
 	die;
 }
