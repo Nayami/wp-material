@@ -334,33 +334,44 @@ function ajx20163519013508()
 {
 	global $wpdb;
 	$data         = $_POST;
-	$uid = get_current_user_id();
+	$uid          = get_current_user_id();
 	$current_user = get_user_by( "ID", $uid );
 	$response     = [
-		'user_data' => null,
-		'status'    => 'failed'
+		'user_data'  => null,
+		'debug_data' => null,
+		'status'     => 'failed'
 	];
 
 	if ( $current_user->data->user_email === $data[ 'email' ] ) {
+
+		// Password and confirmation missmath
 		if ( $data[ 'pass' ] !== $data[ 'confirm' ] ) {
 			$response[ 'status' ] = 'pass_missmath';
 			echo json_encode( $response );
 			die;
 		}
 
-		$query_result = $wpdb->get_row( "SELECT user_id FROM {$wpdb->usermeta}
-														WHERE meta_key='am_slug' AND meta_value='{$data['slug']}'" );
-		if ( $query_result ) {
-			$response[ 'status' ] = 'slug_taken';
+		// Short password
+		if ( strlen( $data[ 'pass' ] ) < 5 ) {
+			$response[ 'status' ] = 'short_pass';
 			echo json_encode( $response );
 			die;
 		}
 
-		// @TODO: Update password
+		$query_result = $wpdb->get_row( "SELECT user_id FROM {$wpdb->usermeta}
+														WHERE meta_key='am_slug' AND meta_value='{$data['slug']}'" );
+		if ( (int) $query_result->user_id !== $current_user->ID ) {
+			if ( $query_result ) {
+				$response[ 'status' ] = 'slug_taken';
+				echo json_encode( $response );
+				die;
+			}
+		}
 
-		update_user_meta($uid, 'am_slug', $data['slug']);
-		$response['user_data'] = am_user($uid);
-		$response['status']='success';
+		wp_set_password( $data[ 'pass' ], $current_user->ID );
+		update_user_meta( $uid, 'am_slug', $data[ 'slug' ] );
+		$response[ 'user_data' ] = am_user( $uid );
+		$response[ 'status' ]    = 'success';
 	}
 
 	echo json_encode( $response );
