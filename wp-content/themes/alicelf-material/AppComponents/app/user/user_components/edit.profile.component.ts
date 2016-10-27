@@ -140,9 +140,19 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 	}
 
 	changeProfileSettings() {
+		let formVal = this.editFormHandler.value;
 		if ( this.editFormHandler.status === "VALID" ) {
-			// @TODO: Check pass confirmation
-			const body = AMFormService.dataToPost( "ajx20163519013508", this.editFormHandler.value );
+
+			if ( formVal.pass !== formVal.confirm ) {
+				this.flashes.attachNotifications( {
+					message : "Password and confirmation should match",
+					cssClass: 'mdl-color--blue-200 mdl-color-text--blue-900',
+					type    : 'dismissable',
+				} );
+				return;
+			}
+
+			const body = AMFormService.dataToPost( "ajx20163519013508", formVal );
 			this.http.post( AMdefaults.ajaxurl, body )['map']
 			( ( response: Response ) => response.json() )
 				.subscribe( data => {
@@ -159,6 +169,42 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 				} )
 		} else {
 			// @TODO: Handle Errors
+			let ctrls = this.editFormHandler.controls;
+			for ( var control in ctrls ) {
+				let ctrl = ctrls[control];
+				if ( ctrl.errors ) {
+					let thisErr = Object.keys( ctrl.errors )[0];
+					let controlMap = {
+						email  : 'Login',
+						slug   : 'Unique Slug',
+						pass   : 'Password',
+						confirm: 'Password confirmation',
+					};
+					switch ( thisErr ) {
+						case "required" :
+							this.flashes.attachNotifications( {
+								message : controlMap[control] + " Cannot be blank",
+								cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
+								type    : 'dismissable',
+							} );
+							break;
+						case "minlength" :
+							this.flashes.attachNotifications( {
+								message : controlMap[control] + " Too Short",
+								cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
+								type    : 'dismissable',
+							} );
+							break;
+						default:
+							this.flashes.attachNotifications( {
+								message : 'Fill correct all fields!',
+								cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
+								type    : 'dismissable',
+							} );
+					}
+
+				}
+			}
 		}
 	}
 

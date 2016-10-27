@@ -13,6 +13,9 @@ Alerts  :
 b03c1180ab688532bc3e2a808ed71fe650c083b0
 c27ee3f52333b8afafd02ef6fc3a08358279d47d
 
+validation form
+\AppComponents\app\user\user_components\auth.component.ts
+
 
 Alerts and Confirm:
 1) app\user\user_components\subcomponents\profile.component.ts
