@@ -5,13 +5,19 @@
 	</div>
 	<div class="content-grid">
 		<div class="mdl-grid">
-			<figure class="mdl-cell mdl-cell--2-col">
-				<img [src]="scopeUser.network_meta.user_media.avatar_url" alt="">
+			<div class="mdl-cell mdl-cell--2-col user-sidebar">
+				<figure>
+					<img [src]="scopeUser.network_meta.user_media.avatar_url" alt="">
+					<figcaption *ngIf="owner" id="change-my-avatar">
+						<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--blue-grey-100" (click)="IwantToChangeAvatar()">Change my pic</button>
+					</figcaption>
+				</figure>
 				<div *ngIf="owner">
 					<hr>
 					<i title="Edit Profile and Settings" routerLink="/{{scopeUser.slug}}/edit" class="material-icons icon-link-wrap">settings</i>
 				</div>
-			</figure>
+			</div>
+
 			<div class="mdl-cell mdl-cell--10-col relative-container">
 				<div *ngIf="owner && scopeUser.administrator" class="admin-actions relative-container">
 					<a target="_blank" href="{{appSettings.settings.baseurl}}/wp-admin" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">

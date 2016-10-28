@@ -2,11 +2,12 @@
 		 [ngClass]="{show: modal.showClass, blockClass: modal.render}"
 		 itemscope="aa-modal" (click)="decline($event)" dataDestroy>
 
-	<div class="aa-modal-container {{modal.dialogObject.dialogClass}}" data-animation="flip-x">
+	<div class="aa-modal-container {{modal.dialogObject.dialogClass}}"
+			 [attr.data-animation]="modal.dialogObject.dialogAnimation">
 		<div class="mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col">
 
-				<TestModal *ngIf="modal.dialogObject.dialogCmponent==='TestModal'"></TestModal>
+				<ChangeAvatar *ngIf="modal.dialogObject.dialogCmponent==='ChangeAvatar'"></ChangeAvatar>
 
 			</div>
 

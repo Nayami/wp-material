@@ -1,5 +1,5 @@
 <?php
-
+use AlicelfMaterial\Helpers\AmAttachment;
 /**
  * ================================================
  * ==================== USER ======================
@@ -375,5 +375,20 @@ function ajx20163519013508()
 	}
 
 	echo json_encode( $response );
+	die;
+}
+
+
+/**
+ * ==================== Change Avatar ======================
+ */
+add_action('wp_ajax_nopriv_ajx20160628050625', 'ajx20160628050625');
+add_action('wp_ajax_ajx20160628050625', 'ajx20160628050625');
+function ajx20160628050625()
+{
+	$data = $_POST;
+	$files = $_FILES;
+	$response = AmAttachment::uploadfiles();
+	echo json_encode($response);
 	die;
 }

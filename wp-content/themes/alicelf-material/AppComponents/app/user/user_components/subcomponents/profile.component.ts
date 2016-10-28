@@ -39,6 +39,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 	owner: boolean = false;
 	routerParam: Subscription;
 	logoutConfirmation: Subscription;
+	changeAvatar: Subscription;
 
 	currentUserSlug: string;
 
@@ -72,7 +73,8 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 					    this.currentUserSlug = slug;
 					    if ( result.is_current_user )
 						    this.owner = true;
-				    } )
+				    } );
+
 			}
 
 		} );
@@ -88,10 +90,21 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 					    this.confirmService.unplugConfirmation();
 				    }
 			    } );
+		// @ACTION : Change Avatar Event watch
+		this.changeAvatar =
+			this.modal.modalChange
+			    .subscribe( data => {
+				    if ( data.id === this.modal.currentID ) {
+					    if ( !data.dialogAnswer ) {
+						    this.modal.unplugModal()
+					    }
+
+					    console.log( data );
+				    }
+			    } );
 
 
 	}
-
 
 
 	// @ACTION : Logout event invoke
@@ -104,7 +117,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 			dialogMessage: 'Are you sure want to logout?',
 			dialogAnswer : null,
 			showButtons  : true
-		} )
+		} );
 	}
 
 
@@ -138,9 +151,28 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 		    } )
 	}
 
+	/**
+	 * ==================== Change avatar dialog ======================
+	 */
+	IwantToChangeAvatar() {
+		let stamp = new Date().getTime();
+		this.modal.currentID = stamp;
+		this.modal.launchModal( {
+			id             : stamp,
+			dialogClass    : 'change-avatar-dialog',
+			dialogCmponent : 'ChangeAvatar',
+			dialogAnswer   : null,
+			showButtons    : false,
+			dialogType     : 'simple',
+			dialogAnimation: 'scale'
+		} )
+	}
+
 	ngOnDestroy(): void {
 		this.routerParam.unsubscribe();
 		this.logoutConfirmation.unsubscribe();
+		this.changeAvatar.unsubscribe();
 	}
+
 
 }

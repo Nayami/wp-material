@@ -38,7 +38,8 @@ Modals:
       			dialogCmponent: 'TestModal', <--- there is component name
       			dialogAnswer  : null,
       			showButtons   : false,
-      			dialogType    : 'simple'
+      			dialogType    : 'simple',
+      			dialogAnimation: 'scale'
       		} )
       	}
    4) Wait for an answer (modalSubscription: Subscription; and this.modalSubscription.unsubscribe();):
@@ -53,3 +54,5 @@ Modals:
 	            } );
    5) Define this component in app\shared\components\views\modal.component.html
       <TestModal *ngIf="modal.dialogObject.dialogCmponent==='TestModal'"></TestModal>
+
+   6) add to ngOnDestroy() this watcher
