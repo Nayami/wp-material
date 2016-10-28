@@ -1,9 +1,12 @@
 @include loadFont("style-parts/fonts/alicelf-font/");
+a {
+	color : $cloudy;
+}
 #text-logo {
-	color : $brandColor;
+	color : $cloudy;
 	@include transition();
 	&:hover{
-		color : $redFox;
+		color : $brandColor;
 	}
 	i {
 		font-size    : 40px;
@@ -105,7 +108,7 @@ body {
 }
 
 .mdl-layout__header {
-	background-color : $pastel;
+	background-color : #fff;
 }
 
 .menu-primary-navigation-container {

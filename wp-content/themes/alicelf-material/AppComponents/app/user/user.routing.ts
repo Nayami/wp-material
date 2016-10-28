@@ -6,7 +6,8 @@ import { NotFoundComponent } from "./user_components/notfound.component";
 import { NetworkComponent } from "./user_components/network.component";
 import { AMAuthComponent } from "./user_components/auth.component";
 import { RestorePasswordComponent } from "./user_components/restore.password.component";
-import {EditProfileComponent} from "./user_components/edit.profile.component";
+import {EditProfileComponent} from "./user_components/subcomponents/edit.profile.component";
+
 
 const appRoutes: Routes = [
 	{ path: '', component: NetworkComponent },

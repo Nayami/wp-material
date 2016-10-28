@@ -28,8 +28,9 @@ import { SingleProfileComponent } from "./user/user_components/subcomponents/pro
 import { GlobConfirmComponent } from "./shared/components/confirm.component";
 import { GlobLoaderComponent } from "./shared/components/loaders.component";
 import {ModalDialogComponent} from "./shared/components/modal.component";
-import {EditProfileComponent} from "./user/user_components/edit.profile.component";
+
 import {ChangeAvatarComponent} from "./shared/components/modals/changeAvatar.component";
+import {EditProfileComponent} from "./user/user_components/subcomponents/edit.profile.component";
 
 
 /**

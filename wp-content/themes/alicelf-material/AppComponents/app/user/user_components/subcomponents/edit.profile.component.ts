@@ -1,19 +1,22 @@
 import { Component, OnInit, OnDestroy
 	,trigger, state, style, transition, animate} from '@angular/core';
-import {LayoutDataService} from "../../shared/services/layout.data.service";
+
 import { Router,ActivatedRoute } from "@angular/router";
 import { Observable, Subscription } from 'rxjs/Rx';
 import { Http, Response } from '@angular/http';
 import 'rxjs/Rx';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { AuthGlobalService } from "../../shared/services/auth.service";
-import { FlashNoticeService } from "../../shared/services/alert.dialog.modal/flash.notices";
-import { AppSettingsService } from "../../shared/services/app.settings.service";
-import { ModalService } from "../../shared/services/alert.dialog.modal/modal.service";
-import { GlobConfirmService } from "../../shared/services/alert.dialog.modal/confirm.service";
-import { UserGlobalService } from "../../shared/services/user.global.service";
-import {AMAuthComponent} from "./auth.component";
-import {AMFormService} from "../../shared/services/AMFormService";
+import {LayoutDataService} from "../../../shared/services/layout.data.service";
+import {AuthGlobalService} from "../../../shared/services/auth.service";
+import {FlashNoticeService} from "../../../shared/services/alert.dialog.modal/flash.notices";
+import {AppSettingsService} from "../../../shared/services/app.settings.service";
+import {ModalService} from "../../../shared/services/alert.dialog.modal/modal.service";
+import {GlobConfirmService} from "../../../shared/services/alert.dialog.modal/confirm.service";
+import {UserGlobalService} from "../../../shared/services/user.global.service";
+import {AMAuthComponent} from "../auth.component";
+import {AMFormService} from "../../../shared/services/AMFormService";
+
+
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';

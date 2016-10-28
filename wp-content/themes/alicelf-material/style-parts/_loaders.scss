@@ -412,7 +412,7 @@ body {
  */
 .load-rising-holder {
 	$size : 120px;
-	$color1 : $brandColor;
+	$color1 : transparentize($brandColor, .5);
 	$color2 : #fff;
 	@mixin keyframes($name) {
 		@-o-keyframes #{$name} { @content };

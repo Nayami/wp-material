@@ -16,6 +16,20 @@ body {
 			width           : 100%;
 			height          : 100%;
 		}
+		.menu-primary-navigation-container {
+			li:not(.network-classes) {
+				background-color : transparent;
+				&:hover {
+					background-color : transparentize($brandColor, .3);
+					a {
+						color : #fff;
+					}
+				}
+				a {
+					color : $textColor;
+				}
+			}
+		}
 		.page-content {
 			overflow   : hidden;
 			min-height : 650px;
@@ -24,6 +38,13 @@ body {
 			color : $textColor;
 		}
 
+	}
+}
+
+.modal-backdrop[itemscope="aa-modal"] {
+	.change-avatar-dialog {
+		top        : 80px;
+		max-height : 70%;
 	}
 }
 
@@ -90,7 +111,7 @@ body {
 .icon-link-wrap {
 	cursor : pointer;
 	&:hover {
-		color : $successColor;
+		color : $brandColor;
 	}
 }
 
@@ -126,6 +147,6 @@ body {
 
 .input-filegroup {
 	input[type="file"] {
-		display: none;
+		display : none;
 	}
 }

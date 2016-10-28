@@ -14,6 +14,11 @@ import {AppSettingsService} from "../../services/app.settings.service";
 	selector: 'ChangeAvatar',
 	template: `
 		<div id="change-avatar-form">
+			<figure *ngIf="uploadedImage">
+				<img [src]="uploadedImage" alt="uploaded image">
+				@TODO: create confirmation/delete/crop func-ty
+			</figure>
+
 			<div class="input-filegroup">
 				<input (change)="fileChange($event)" type="file" name="" id="chos3-file">
 				<label for="chos3-file" class="mdl-button mdl-js-button mdl-button--raised">Select File</label>
@@ -24,6 +29,7 @@ import {AppSettingsService} from "../../services/app.settings.service";
 export class ChangeAvatarComponent {
 
 	private ajaxurl;
+	public uploadedImage;
 
 	constructor( private http: Http,
 	             private modal: ModalService,
@@ -43,8 +49,8 @@ export class ChangeAvatarComponent {
 			( ( response: Response ) => response.json() )
 				.subscribe( data => {
 					if(data.status === 'success') {
-						console.log( data.data );
-						// @TODO: work with uploaded file
+						console.log( data.data[0] );
+						this.uploadedImage = data.data[0].src;
 					}
 				} );
 		}
