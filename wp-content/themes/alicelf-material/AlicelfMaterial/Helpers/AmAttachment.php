@@ -6,11 +6,10 @@ use AlicelfMaterial\Helpers\Helper;
 
 class AmAttachment {
 
-	static function get_attachment( $attachment_id )
+	static function get_attachment( $attachment_id, $with_meta = false )
 	{
 		$attachment = get_post( $attachment_id );
-
-		return [
+		$data       = [
 			'attachment_ID' => $attachment->ID,
 			'alt'           => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
 			'caption'       => $attachment->post_excerpt,
@@ -19,6 +18,16 @@ class AmAttachment {
 			'src'           => $attachment->guid,
 			'title'         => $attachment->post_title
 		];
+		if ( $with_meta ) {
+			$data[ 'meta' ] = wp_get_attachment_metadata( $attachment->ID );
+		}
+
+		$path = get_attached_file( $attachment->ID );
+		if ( ! is_wp_error( $path ) ) {
+			$data[ 'filepath' ] = $path;
+		}
+
+		return $data;
 	}
 
 	static function delete_attachment( $id )
@@ -29,20 +38,23 @@ class AmAttachment {
 	function upload_user_file( $file = [ ] )
 	{
 		require_once( ABSPATH . 'wp-admin/includes/admin.php' );
-		$file_return = wp_handle_upload( $file, array( 'test_form' => false ) );
+		$file_return = wp_handle_upload( $file, [ 'test_form' => false ] );
+
 		if ( isset( $file_return[ 'error' ] ) || isset( $file_return[ 'upload_error_handler' ] ) ) {
 			return false;
 		} else {
-			$filename = $file_return[ 'file' ];
-
+			$filename      = $file_return[ 'file' ];
+			$filetype      = wp_check_filetype( basename( $filename ), null );
+			$wp_upload_dir = wp_upload_dir();
 			$attachment    = array(
-				'post_mime_type' => $file_return[ 'type' ],
+				'guid'           => $wp_upload_dir[ 'url' ] . '/' . basename( $filename ),
+				'post_mime_type' => $filetype[ 'type' ],
 				'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
 				'post_content'   => '',
 				'post_status'    => 'inherit',
-				'guid'           => $file_return[ 'url' ]
 			);
-			$attachment_id = wp_insert_attachment( $attachment, $file_return[ 'url' ] );
+			$attachment_id = wp_insert_attachment( $attachment, $file_return[ 'file' ] );
+
 			require_once( ABSPATH . 'wp-admin/includes/image.php' );
 			$attachment_data = wp_generate_attachment_metadata( $attachment_id, $filename );
 			wp_update_attachment_metadata( $attachment_id, $attachment_data );
@@ -66,15 +78,19 @@ class AmAttachment {
 
 				if ( ! in_array( $file[ 'type' ], $allowed_types ) ) {
 					$response[ 'message' ] = 'wrong_type';
+
 					return $response;
 				}
 
 				if ( $file[ 'size' ] > $size ) {
 					$response[ 'message' ] = 'filesize_exceed';
+
 					return $response;
 				}
-				$id                   = self::upload_user_file( $file );
-				$response[ 'data' ][] = self::get_attachment( $id );
+
+				$attachment_id        = self::upload_user_file( $file );
+				$response[ 'data' ][] = self::get_attachment( $attachment_id );
+
 			}
 		}
 		if ( ! empty( $response[ 'data' ] ) ) {

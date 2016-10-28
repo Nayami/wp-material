@@ -49,7 +49,7 @@ export class ChangeAvatarComponent {
 			( ( response: Response ) => response.json() )
 				.subscribe( data => {
 					if(data.status === 'success') {
-						console.log( data.data[0] );
+						console.log( data );
 						this.uploadedImage = data.data[0].src;
 					}
 				} );

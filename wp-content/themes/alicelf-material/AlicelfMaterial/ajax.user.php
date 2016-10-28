@@ -386,6 +386,7 @@ add_action('wp_ajax_nopriv_ajx20160628050625', 'ajx20160628050625');
 add_action('wp_ajax_ajx20160628050625', 'ajx20160628050625');
 function ajx20160628050625()
 {
+
 	echo json_encode(AmAttachment::uploadfiles());
 	die;
 }
