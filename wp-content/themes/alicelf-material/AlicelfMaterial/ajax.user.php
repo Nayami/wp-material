@@ -379,6 +379,19 @@ function ajx20163519013508()
 	die;
 }
 
+
+/**
+ * ==================== Get Image ======================
+ * 30.10.2016
+ */
+add_action('wp_ajax_nopriv_ajx20160330120357', 'ajx20160330120357');
+add_action('wp_ajax_ajx20160330120357', 'ajx20160330120357');
+function ajx20160330120357()
+{
+	$data = $_GET['imageId'];
+	echo json_encode(AmAttachment::get_attachment($data));
+	die;
+}
 /**
  * ==================== Upload files ======================
  */

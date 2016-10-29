@@ -95,9 +95,11 @@ export class ChangeAvatarComponent implements OnDestroy {
 								avatarWrapper.style.maxHeight = this.imageObject.height() + "px";
 
 								this.cropOptions = {
-									aspectRatio: 8 / 10,
-									preview    : '.img-preview',
-									crop       : ( e ) => {
+									aspectRatio             : 8 / 10,
+									toggleDragModeOnDblclick: false,
+									zoomable                : false,
+									preview                 : '.img-preview',
+									crop                    : ( e ) => {
 										this.cropData = {
 											offsetX: Math.round( e.x ),
 											offsetY: Math.round( e.y ),
@@ -151,14 +153,11 @@ export class ChangeAvatarComponent implements OnDestroy {
 		this.submitCrop = this.http.post( this.ajaxurl, body )['map']
 		( ( response: Response ) => response.json() )
 			.subscribe( data => {
-
 				if ( data.status === 'success' ) {
-					console.log( data.status );
-					console.log( "dml", data.newImageData.src );
 					this.modal.invokeAnswer( {
 						id          : this.modal.currentID,
 						status      : 'success',
-						newImageData: data.newImageData.src
+						newImageData: data.newImageData
 					} );
 				} else {
 					this.modal.invokeAnswer( false );

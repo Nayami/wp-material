@@ -99,16 +99,24 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 						    this.modal.unplugModal()
 					    }
 
-					    if(data.status === 'success') {
-						    this.userService.currentUser['network_meta'].user_media.avatar_url = data.newImageData;
-						    this.scopeUser.network_meta.user_media.avatar_url = data.newImageData;
-						    // @TODO: update image
+					    if ( data.status === 'success' ) {
+						    this.updatePicture( data.newImageData.src );
 					    }
 
 				    }
 			    } );
 
 
+	}
+
+	updatePicture( dataSrc ) {
+		this.scopeUser.network_meta.user_media.avatar_url = dataSrc;
+		this.userService.currentUser['network_meta'].user_media.avatar_url = dataSrc;
+		this.flashes.attachNotifications( {
+			message : 'You may need to refresh the page for view correct size of your userpic',
+			cssClass: 'mdl-color--blue-grey-300  mdl-color-text--blue-grey-900',
+			type    : 'dismissable',
+		} );
 	}
 
 
