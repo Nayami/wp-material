@@ -45,9 +45,8 @@ $basepath : "";
 }
 
 .preview-lg {
-	width       : 120px;
-	height      : 150px;
-	margin-left : 20px;
+	width  : 120px;
+	height : 150px;
 }
 
 body {
@@ -124,8 +123,16 @@ body {
 	.image-promise {
 		background      : url("#{$basepath}img/image-placeholder.jpg") no-repeat center center;
 		background-size : cover;
+		display         : flex;
+		justify-content : center;
+		align-items     : center;
 		img {
 			max-width : 100%;
+		}
+	}
+	.images-actions {
+		> .mdl-grid {
+			padding-top : 0;
 		}
 	}
 	.loader-line-modal {

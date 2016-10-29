@@ -1,5 +1,6 @@
 <?php
 use AlicelfMaterial\Helpers\AmAttachment;
+
 /**
  * ================================================
  * ==================== USER ======================
@@ -378,14 +379,39 @@ function ajx20163519013508()
 	die;
 }
 
-
 /**
  * ==================== Upload files ======================
  */
-add_action('wp_ajax_nopriv_ajx20160628050625', 'ajx20160628050625');
-add_action('wp_ajax_ajx20160628050625', 'ajx20160628050625');
+add_action( 'wp_ajax_nopriv_ajx20160628050625', 'ajx20160628050625' );
+add_action( 'wp_ajax_ajx20160628050625', 'ajx20160628050625' );
 function ajx20160628050625()
 {
-	echo json_encode(AmAttachment::uploadfiles());
+	// 60Kb
+	echo json_encode( AmAttachment::uploadfiles( 60000 ) );
+	die;
+}
+
+add_action( 'wp_ajax_nopriv_ajx20162129102106', 'ajx20162129102106' );
+add_action( 'wp_ajax_ajx20162129102106', 'ajx20162129102106' );
+function ajx20162129102106()
+{
+	$data        = $_POST;
+	$imageDbData = stringify_to_object( $data[ 'imageDbData' ] );
+	$cropData    = stringify_to_object( $data[ 'cropData' ] );
+	$response    = [
+		'status' => 'fail',
+		'newImageData' => null
+	];
+
+	if ( ! is_wp_error( $imageDbData->filepath ) ) {
+		$image_editor = wp_get_image_editor( $imageDbData->filepath );
+		$image_editor->crop( $cropData->offsetX, $cropData->offsetY, $cropData->width, $cropData->height );
+		$image_editor->save( $imageDbData->filepath );
+		update_user_meta( get_current_user_id(), 'am_user_avatar_url', $imageDbData->src );
+		$response[ 'status' ] = 'success';
+		$response['newImageData'] = AmAttachment::get_attachment($imageDbData->attachment_ID);
+	}
+
+	echo json_encode( $response );
 	die;
 }

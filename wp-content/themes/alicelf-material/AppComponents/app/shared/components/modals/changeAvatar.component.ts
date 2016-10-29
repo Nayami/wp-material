@@ -27,14 +27,22 @@ declare var $: any;
 					</div>
 				</div>
 				<div class="mdl-cell--6-col images-actions">
-					<div class="img-preview preview-lg"></div>
+					<div class="mdl-grid">
+						<div class="img-preview preview-lg"></div>
+					</div>
+					<div class="mdl-grid">
+						@TODO: crop buttons
+					</div>
 				</div>
 			</div>
 			<div class="mdl-grid">
-				<div class="input-filegroup mdl-cell--12-col">
+				<div *ngIf="!uploadedImage" class="input-filegroup mdl-cell--12-col">
 					<input (change)="fileChange($event)" type="file" name="" id="chos3-file">
 					<label for="chos3-file" class="mdl-button mdl-js-button mdl-button--raised">Upload Image</label>
 				</div>
+				<div *ngIf="uploadedImage" class="mdl-cell--12-col">
+					<a (click)="cropImage()" class="mdl-button am-success-btn mdl-js-button mdl-button--raised mdl-js-ripple-effect">Crop and set as profile image</a>
+					</div>
 			</div>
 
 		</div>
@@ -42,9 +50,10 @@ declare var $: any;
 } )
 export class ChangeAvatarComponent implements OnDestroy {
 
-	progressline : boolean = false;
+	progressline: boolean = false;
 
 	fileuploadSubscription: Subscription;
+	submitCrop: Subscription;
 
 	private ajaxurl;
 	public uploadedImage;     // Image Url
@@ -74,13 +83,17 @@ export class ChangeAvatarComponent implements OnDestroy {
 			( ( response: Response ) => response.json() )
 				.subscribe( data => {
 					if ( data.status === 'success' ) {
-						console.log( data );
 						this.imageDbData = data.data[0];
 						this.uploadedImage = this.imageDbData.src;
 
 						let waitForimage = setInterval( ()=> {
 							if ( document.getElementById( 'uploadedImagePromise' ) ) {
 								this.imageObject = $( '#uploadedImagePromise' );
+								let avatarWrapper = document.getElementById( 'upload-ava-holder' );
+
+								avatarWrapper.style.maxWidth = this.imageObject.width() + "px";
+								avatarWrapper.style.maxHeight = this.imageObject.height() + "px";
+
 								this.cropOptions = {
 									aspectRatio: 8 / 10,
 									preview    : '.img-preview',
@@ -94,7 +107,6 @@ export class ChangeAvatarComponent implements OnDestroy {
 											scaleX : e.scaleX,
 											scaleY : e.scaleY
 										};
-										console.log( this.cropData );
 									}
 								};
 								this.imageObject.cropper( this.cropOptions );
@@ -128,10 +140,41 @@ export class ChangeAvatarComponent implements OnDestroy {
 		}
 	}
 
+	cropImage(): void {
+		this.progressline = true;
+
+		const body = AMFormService.dataToPost( "ajx20162129102106", {
+			imageDbData: JSON.stringify( this.imageDbData ),
+			cropData   : JSON.stringify( this.cropData )
+		} );
+
+		this.submitCrop = this.http.post( this.ajaxurl, body )['map']
+		( ( response: Response ) => response.json() )
+			.subscribe( data => {
+
+				if ( data.status === 'success' ) {
+					console.log( data.status );
+					console.log( "dml", data.newImageData.src );
+					this.modal.invokeAnswer( {
+						id          : this.modal.currentID,
+						status      : 'success',
+						newImageData: data.newImageData.src
+					} );
+				} else {
+					this.modal.invokeAnswer( false );
+				}
+				//this.modal.unplugModal();
+
+				this.progressline = false;
+			} );
+
+	}
+
 	ngOnDestroy(): void {
-		if ( this.fileuploadSubscription ) {
+		if ( this.fileuploadSubscription )
 			this.fileuploadSubscription.unsubscribe();
-		}
+		if ( this.submitCrop )
+			this.submitCrop.unsubscribe();
 	}
 
 }

@@ -10,9 +10,6 @@ import {ModalService} from "../../../shared/services/alert.dialog.modal/modal.se
 import {GlobConfirmService} from "../../../shared/services/alert.dialog.modal/confirm.service";
 import {UserGlobalService} from "../../../shared/services/user.global.service";
 
-
-
-
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 
@@ -97,11 +94,17 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 			this.modal.modalChange
 			    .subscribe( data => {
 				    if ( data.id === this.modal.currentID ) {
+
 					    if ( !data.dialogAnswer ) {
 						    this.modal.unplugModal()
 					    }
 
-					    console.log( data );
+					    if(data.status === 'success') {
+						    this.userService.currentUser['network_meta'].user_media.avatar_url = data.newImageData;
+						    this.scopeUser.network_meta.user_media.avatar_url = data.newImageData;
+						    // @TODO: update image
+					    }
+
 				    }
 			    } );
 

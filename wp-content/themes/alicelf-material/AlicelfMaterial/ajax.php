@@ -56,6 +56,17 @@ function aa_func_20165729035750( $avatar_url, $user_id )
 	return $avatar_url;
 }
 
+
+// ============= Stringify_to_object =============
+if ( ! function_exists( 'stringify_to_object' ) ) {
+	function stringify_to_object( $data )
+	{
+		$newdata = str_replace('\"', "\"", $data);
+		$newdata = str_replace('\\\\', '\\', $newdata);
+		return json_decode($newdata);
+	}
+}
+
 if ( ! function_exists( 'send_me_confirmation_registration_link' ) ) {
 
 	/**
