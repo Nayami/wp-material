@@ -3,6 +3,98 @@
 //$blur: "aa-blur2.jpg";
 //$blur: "aa-blur3.jpg";
 $blur : "aa-blur4.jpg";
+$basepath : "";
+/* Basic */
+
+body {
+	margin: 0;
+	overflow-x: hidden;
+}
+
+.browserupgrade {
+	margin: 0;
+	padding: .5em 1em;
+	background-color: #fcfcfc;
+	text-align: center;
+}
+
+
+/* Header */
+
+.docs-header {
+	margin-bottom: 0;
+}
+
+.navbar-toggle:hover,
+.navbar-toggle:focus {
+	border-color: #0074d9;
+}
+
+.navbar-toggle .icon-bar {
+	background-color: #0074d9;
+}
+
+
+/* Jumbotron */
+
+.docs-jumbotron {
+	background-color: #0074d9;
+	color: #fff;
+}
+
+.docs-jumbotron .version {
+	font-size: 14px;
+	color: #fff;
+	filter: alpha(opacity=50);
+	opacity: 0.5;
+}
+
+
+/* Content */
+
+.img-container,
+.img-preview {
+	background-color: #f7f7f7;
+	width: 100%;
+	text-align: center;
+}
+
+.img-container {
+	min-height: 200px;
+	max-height: 516px;
+	margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+	.img-container {
+		min-height: 516px;
+	}
+}
+
+.img-container > img {
+	max-width: 100%;
+}
+
+.docs-preview {
+	margin-right: -15px;
+}
+
+.img-preview {
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+.img-preview > img {
+	max-width: 100%;
+}
+
+.preview-lg {
+	width: 120px;
+	height: 150px;
+	margin-left : 20px;
+}
 
 body {
 	&.am-user-page {
@@ -63,8 +155,22 @@ body {
 	}
 }
 
-.content-grid {
-	@extend .default-container;
+#upload-ava-holder {
+	margin : 0;
+	display: block;
+}
+#change-avatar-form {
+	.image-promise,
+	.images-actions {
+		min-height : 300px;
+	}
+	.image-promise {
+		background: url("#{$basepath}img/image-placeholder.jpg") no-repeat;
+		background-size: contain;
+		img {
+			max-width: 100%;
+		}
+	}
 }
 
 .login-spinner-handler {

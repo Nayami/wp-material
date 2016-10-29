@@ -35,11 +35,16 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 	]
 } )
 
-export class AMAuthComponent {
+export class AMAuthComponent implements OnDestroy {
+
 	private loginFormHandler: FormGroup;
 	private registerFormHandler: FormGroup;
 	private forgotEmitter: boolean = false;
 	private strategy: string = null;
+
+	loginSubscription: Subscription;
+	cfbSubscription: Subscription;
+	cfaSubscription: Subscription;
 
 	spinner: boolean = false;
 
@@ -127,40 +132,41 @@ export class AMAuthComponent {
 	doLogin() {
 		if ( this.loginFormHandler.status === "VALID" ) {
 			this.spinner = true;
-			this.auth.authorizeMe( this.loginFormHandler.value )
-			    .subscribe( data => {
-				    switch ( data.message ) {
-					    case 'success' :
-						    this.userService.currentUser = data.user;
-						    this.auth.loaded = true;
-						    this.auth.authorized = true;
-						    this.router.navigate( ['/'] );
-						    this.flashes.attachNotifications( {
-							    message : 'Success !',
-							    cssClass: 'mdl-color--green-200 mdl-color-text--green-900',
-							    type    : 'dismissable',
-						    } );
+			this.loginSubscription =
+				this.auth.authorizeMe( this.loginFormHandler.value )
+				    .subscribe( data => {
+					    switch ( data.message ) {
+						    case 'success' :
+							    this.userService.currentUser = data.user;
+							    this.auth.loaded = true;
+							    this.auth.authorized = true;
+							    this.router.navigate( ['/'] );
+							    this.flashes.attachNotifications( {
+								    message : 'Success !',
+								    cssClass: 'mdl-color--green-200 mdl-color-text--green-900',
+								    type    : 'dismissable',
+							    } );
 
-						    break;
-					    case 'notfound' :
-						    this.flashes.attachNotifications( {
-							    message : 'User not found',
-							    cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
-							    type    : 'dismissable',
-						    } );
-						    break;
-					    case 'notmatch' :
-						    this.flashes.attachNotifications( {
-							    message : 'Password not match',
-							    cssClass: 'mdl-color--orange-100 mdl-color-text--orange-700',
-							    type    : 'dismissable',
-						    } );
-						    break;
-					    default:
-						    console.log( data );
-				    }
-				    this.spinner = false;
-			    } );
+							    break;
+						    case 'notfound' :
+							    this.flashes.attachNotifications( {
+								    message : 'User not found',
+								    cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
+								    type    : 'dismissable',
+							    } );
+							    break;
+						    case 'notmatch' :
+							    this.flashes.attachNotifications( {
+								    message : 'Password not match',
+								    cssClass: 'mdl-color--orange-100 mdl-color-text--orange-700',
+								    type    : 'dismissable',
+							    } );
+							    break;
+						    default:
+							    console.log( data );
+					    }
+					    this.spinner = false;
+				    } );
 		}
 	}
 
@@ -174,46 +180,48 @@ export class AMAuthComponent {
 
 			if ( this.strategy === 'confirm_before' ) {
 
-				this.http.post( AMdefaults.ajaxurl, body )['map']
-				( ( response: Response ) => response.json() )
-					.subscribe( data => {
+				this.cfbSubscription =
+					this.http.post( AMdefaults.ajaxurl, body )['map']
+					( ( response: Response ) => response.json() )
+						.subscribe( data => {
 
-						switch ( data.status ) {
-							case "user_exists" :
-								this.flashes.attachNotifications( {
-									message : 'Sorry, this email already taken!',
-									cssClass: 'mdl-color--orange-100 mdl-color-text--orange-900',
-									type    : 'dismissable',
-								} );
-								break;
-							case "email_fail" :
-								this.flashes.attachNotifications( {
-									message : 'Something happend with email server, try again later',
-									cssClass: 'mdl-color--orange-100 mdl-color-text--orange-900',
-									type    : 'dismissable',
-								} );
-								break;
-							case "success" :
-
-								if ( data.check_mail ) {
+							switch ( data.status ) {
+								case "user_exists" :
 									this.flashes.attachNotifications( {
-										message : 'Check your email for confirmation link!',
-										cssClass: 'mdl-color--blue-grey-300  mdl-color-text--blue-grey-900',
+										message : 'Sorry, this email already taken!',
+										cssClass: 'mdl-color--orange-100 mdl-color-text--orange-900',
 										type    : 'dismissable',
 									} );
-								}
-								break;
-							default :
-								console.log( data );
-						}
-						(<FormControl>this.registerFormHandler.controls['login']).setValue( "", {} );
-					} )
+									break;
+								case "email_fail" :
+									this.flashes.attachNotifications( {
+										message : 'Something happend with email server, try again later',
+										cssClass: 'mdl-color--orange-100 mdl-color-text--orange-900',
+										type    : 'dismissable',
+									} );
+									break;
+								case "success" :
+
+									if ( data.check_mail ) {
+										this.flashes.attachNotifications( {
+											message : 'Check your email for confirmation link!',
+											cssClass: 'mdl-color--blue-grey-300  mdl-color-text--blue-grey-900',
+											type    : 'dismissable',
+										} );
+									}
+									break;
+								default :
+									console.log( data );
+							}
+							(<FormControl>this.registerFormHandler.controls['login']).setValue( "", {} );
+						} )
 			} else {
 				/**
 				 * REGISTRATION FOR confirm after and without confirm
 				 */
 				if ( regValues.passw === regValues.confirm ) {
-					this.http.post( AMdefaults.ajaxurl, body )['map']
+					this.cfaSubscription =
+						this.http.post( AMdefaults.ajaxurl, body )['map']
 					( ( response: Response ) => response.json() )
 						.subscribe( data => {
 
@@ -323,6 +331,15 @@ export class AMAuthComponent {
 
 	launchInfoBack( event ) {
 		this.forgotEmitter = event;
+	}
+
+	ngOnDestroy(): void {
+		if ( this.loginSubscription )
+			this.loginSubscription.unsubscribe();
+		if ( this.cfbSubscription )
+			this.cfbSubscription.unsubscribe();
+		if ( this.cfaSubscription )
+			this.cfaSubscription.unsubscribe();
 	}
 
 }

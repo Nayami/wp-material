@@ -45,6 +45,17 @@ if ( ! function_exists( 'am_user' ) ) {
 	}
 }
 
+add_filter( 'am_user_avatar_url', 'aa_func_20165729035750', 10, 2 );
+function aa_func_20165729035750( $avatar_url, $user_id )
+{
+	$meta_avatar_url = get_user_meta( $user_id, 'am_user_avatar_url', true );
+	if ( ! empty( $meta_avatar_url ) ) {
+		$avatar_url = $meta_avatar_url;
+	}
+
+	return $avatar_url;
+}
+
 if ( ! function_exists( 'send_me_confirmation_registration_link' ) ) {
 
 	/**
