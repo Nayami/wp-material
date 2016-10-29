@@ -9,6 +9,7 @@ import { UserGlobalService } from "../../services/user.global.service";
 // const body = AMFormService.dataToPost( "ajx20163519013508", formVal );
 import {AMFormService} from "../../services/AMFormService";
 import {AppSettingsService} from "../../services/app.settings.service";
+import {FlashNoticeService} from "../../services/alert.dialog.modal/flash.notices";
 
 declare var $: any;
 
@@ -16,6 +17,9 @@ declare var $: any;
 	selector: 'ChangeAvatar',
 	template: `
 		<div id="change-avatar-form">
+			<div class="loader-line-modal">
+				<div *ngIf="progressline" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+			</div>
 			<div class="mdl-grid">
 				<div class="mdl-cell--6-col image-promise">
 					<div *ngIf="uploadedImage" id="upload-ava-holder">
@@ -38,6 +42,7 @@ declare var $: any;
 } )
 export class ChangeAvatarComponent implements OnDestroy {
 
+	progressline : boolean = false;
 
 	fileuploadSubscription: Subscription;
 
@@ -51,11 +56,14 @@ export class ChangeAvatarComponent implements OnDestroy {
 	constructor( private http: Http,
 	             private modal: ModalService,
 	             private userService: UserGlobalService,
+	             private flashes: FlashNoticeService,
 	             private appSettings: AppSettingsService ) {
 		this.ajaxurl = appSettings.settings.ajaxurl;
 	}
 
 	fileChange( fileInput: any ) {
+		this.progressline = true;
+
 		if ( fileInput.target.files && fileInput.target.files[0] ) {
 			let file = fileInput.target.files[0];
 			const body = AMFormService.dataToPost( "ajx20160628050625", {
@@ -94,7 +102,28 @@ export class ChangeAvatarComponent implements OnDestroy {
 							}
 						}, 50 );
 
+					} else {
+						this.modal.invokeAnswer( false );
+						this.modal.unplugModal();
+
+						switch ( data.message ) {
+							case "filesize_exceed":
+								this.flashes.attachNotifications( {
+									message : 'File is to large.',
+									cssClass: 'mdl-color--orange-100 mdl-color-text--orange-700',
+									type    : 'dismissable',
+								} );
+								break;
+							default:
+								console.log( "FAIL: ", data.message );
+								this.flashes.attachNotifications( {
+									message : 'Something wrong. File Not loaded!',
+									cssClass: 'mdl-color--red-200 mdl-color-text--red-900',
+									type    : 'dismissable',
+								} );
+						}
 					}
+					this.progressline = false;
 				} );
 		}
 	}

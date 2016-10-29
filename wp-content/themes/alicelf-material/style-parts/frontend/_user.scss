@@ -6,93 +6,47 @@ $blur : "aa-blur4.jpg";
 $basepath : "";
 /* Basic */
 
-body {
-	margin: 0;
-	overflow-x: hidden;
-}
-
-.browserupgrade {
-	margin: 0;
-	padding: .5em 1em;
-	background-color: #fcfcfc;
-	text-align: center;
-}
-
-
-/* Header */
-
-.docs-header {
-	margin-bottom: 0;
-}
-
-.navbar-toggle:hover,
-.navbar-toggle:focus {
-	border-color: #0074d9;
-}
-
-.navbar-toggle .icon-bar {
-	background-color: #0074d9;
-}
-
-
-/* Jumbotron */
-
-.docs-jumbotron {
-	background-color: #0074d9;
-	color: #fff;
-}
-
-.docs-jumbotron .version {
-	font-size: 14px;
-	color: #fff;
-	filter: alpha(opacity=50);
-	opacity: 0.5;
-}
-
-
-/* Content */
-
 .img-container,
 .img-preview {
-	background-color: #f7f7f7;
-	width: 100%;
-	text-align: center;
+	background-color : #f7f7f7;
+	width            : 100%;
+	text-align       : center;
 }
 
 .img-container {
-	min-height: 200px;
-	max-height: 516px;
-	margin-bottom: 20px;
+	min-height    : 200px;
+	max-height    : 516px;
+	margin-bottom : 20px;
 }
 
-@media (min-width: 768px) {
+@media (min-width : 768px) {
 	.img-container {
-		min-height: 516px;
+		min-height : 516px;
 	}
 }
 
 .img-container > img {
-	max-width: 100%;
+	max-width : 100%;
 }
 
 .docs-preview {
-	margin-right: -15px;
+	margin-right : -15px;
 }
 
 .img-preview {
-	float: left;
-	margin-right: 10px;
-	margin-bottom: 10px;
-	overflow: hidden;
+	float         : left;
+	margin-right  : 10px;
+	margin-bottom : 10px;
+	overflow      : hidden;
 }
 
 .img-preview > img {
-	max-width: 100%;
+	max-width : 100%;
 }
 
 .preview-lg {
-	width: 120px;
-	height: 150px;
+	width       : 120px;
+	height      : 150px;
 	margin-left : 20px;
 }
 
@@ -135,8 +89,10 @@ body {
 
 .modal-backdrop[itemscope="aa-modal"] {
 	.change-avatar-dialog {
-		top        : 80px;
-		max-height : 70%;
+		top           : 80px;
+		max-height    : 70%;
+		border        : none;
+		border-radius : 2px;
 	}
 }
 
@@ -156,19 +112,29 @@ body {
 }
 
 #upload-ava-holder {
-	margin : 0;
-	display: block;
+	margin  : 0;
+	display : block;
 }
+
 #change-avatar-form {
 	.image-promise,
 	.images-actions {
 		min-height : 300px;
 	}
 	.image-promise {
-		background: url("#{$basepath}img/image-placeholder.jpg") no-repeat;
-		background-size: contain;
+		background      : url("#{$basepath}img/image-placeholder.jpg") no-repeat center center;
+		background-size : cover;
 		img {
-			max-width: 100%;
+			max-width : 100%;
+		}
+	}
+	.loader-line-modal {
+		position : absolute;
+		top      : 0;
+		left     : 0;
+		width    : 100%;
+		.mdl-progress {
+			width : 100%;
 		}
 	}
 }
@@ -234,6 +200,18 @@ body {
 			figcaption {
 				opacity : 1;
 			}
+		}
+	}
+	img {
+		max-width : 100%;
+		/*Desktop*/
+		@media (min-width : 952px) {
+			width : 100%;
+		}
+		/*Tablet*/
+		@media (max-width : 951px) {
+			margin-left  : auto;
+			margin-right : auto;
 		}
 	}
 }
