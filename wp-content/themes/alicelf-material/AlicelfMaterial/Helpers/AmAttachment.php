@@ -35,32 +35,32 @@ class AmAttachment {
 		return Helper::deleteAttachment( $id );
 	}
 
-	function upload_user_file( $file = [ ] )
+	static function upload_user_file( $file = [ ] )
 	{
 		require_once( ABSPATH . 'wp-admin/includes/admin.php' );
 		$file_return = wp_handle_upload( $file, [ 'test_form' => false ] );
 
 		if ( isset( $file_return[ 'error' ] ) || isset( $file_return[ 'upload_error_handler' ] ) ) {
 			return false;
-		} else {
-			$filename      = $file_return[ 'file' ];
-			$filetype      = wp_check_filetype( basename( $filename ), null );
-			$wp_upload_dir = wp_upload_dir();
-			$attachment    = array(
-				'guid'           => $wp_upload_dir[ 'url' ] . '/' . basename( $filename ),
-				'post_mime_type' => $filetype[ 'type' ],
-				'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
-				'post_content'   => '',
-				'post_status'    => 'inherit',
-			);
-			$attachment_id = wp_insert_attachment( $attachment, $file_return[ 'file' ] );
+		}
 
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
-			$attachment_data = wp_generate_attachment_metadata( $attachment_id, $filename );
-			wp_update_attachment_metadata( $attachment_id, $attachment_data );
-			if ( 0 < intval( $attachment_id ) ) {
-				return $attachment_id;
-			}
+		$filename      = $file_return[ 'file' ];
+		$filetype      = wp_check_filetype( basename( $filename ), null );
+		$wp_upload_dir = wp_upload_dir();
+		$attachment    = array(
+			'guid'           => $wp_upload_dir[ 'url' ] . '/' . basename( $filename ),
+			'post_mime_type' => $filetype[ 'type' ],
+			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+			'post_content'   => '',
+			'post_status'    => 'inherit',
+		);
+		$attachment_id = wp_insert_attachment( $attachment, $file_return[ 'file' ] );
+
+		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+		$attachment_data = wp_generate_attachment_metadata( $attachment_id, $filename );
+		wp_update_attachment_metadata( $attachment_id, $attachment_data );
+		if ( 0 < intval( $attachment_id ) ) {
+			return $attachment_id;
 		}
 
 		return false;

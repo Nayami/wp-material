@@ -128,6 +128,13 @@ export class ChangeAvatarComponent implements OnDestroy {
 									type    : 'dismissable',
 								} );
 								break;
+							case "wrong_type":
+								this.flashes.attachNotifications( {
+									message : 'Wrong File Type (only .jpg/.jpeg and .png allowed)',
+									cssClass: 'mdl-color--orange-100 mdl-color-text--orange-700',
+									type    : 'dismissable',
+								} );
+								break;
 							default:
 								console.log( "FAIL: ", data.message );
 								this.flashes.attachNotifications( {
@@ -162,7 +169,6 @@ export class ChangeAvatarComponent implements OnDestroy {
 				} else {
 					this.modal.invokeAnswer( false );
 				}
-				//this.modal.unplugModal();
 
 				this.progressline = false;
 			} );

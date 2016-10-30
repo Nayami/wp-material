@@ -422,7 +422,7 @@ function ajx20162129102106()
 		$image_editor->save( $imageDbData->filepath );
 		update_user_meta( get_current_user_id(), 'am_user_avatar_url', $imageDbData->src );
 		$response[ 'status' ] = 'success';
-		$response['newImageData'] = AmAttachment::get_attachment($imageDbData->attachment_ID);
+		$response['newImageData'] = $imageDbData;
 	}
 
 	echo json_encode( $response );
