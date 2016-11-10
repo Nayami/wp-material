@@ -371,6 +371,7 @@ function ajx20163519013508()
 
 		wp_set_password( $data[ 'pass' ], $current_user->ID );
 		update_user_meta( $uid, 'am_slug', $data[ 'slug' ] );
+		wp_set_auth_cookie($uid);
 		$response[ 'user_data' ] = am_user( $uid );
 		$response[ 'status' ]    = 'success';
 	}

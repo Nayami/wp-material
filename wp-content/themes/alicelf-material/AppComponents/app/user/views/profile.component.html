@@ -14,9 +14,13 @@
 						<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--blue-grey-100" (click)="IwantToChangeAvatar()">Change my pic</button>
 					</figcaption>
 				</figure>
-				<div *ngIf="owner">
+				<div>
 					<hr>
-					<i title="Edit Profile and Settings" routerLink="/{{scopeUser.slug}}/edit" class="material-icons icon-link-wrap">settings</i>
+					<div class="link-wrapper">
+						<i routerLink="/" class="material-icons icon-link-wrap">home</i>
+						<i *ngIf="owner" (click)="IwantToChangeAvatar()" class="material-icons icon-link-wrap">perm_media</i>
+						<i *ngIf="owner" title="Edit Profile and Settings" routerLink="/{{scopeUser.slug}}/edit" class="material-icons icon-link-wrap">settings</i>
+					</div>
 				</div>
 			</div>
 

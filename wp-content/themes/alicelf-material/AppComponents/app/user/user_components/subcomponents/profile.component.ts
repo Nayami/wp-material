@@ -64,8 +64,9 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 
 				this.userService.getUser( slug )
 				    .subscribe( result => {
-					    if ( !result.ID && this.auth.authorized )
+					    if ( !result.ID && this.auth.authorized ) {
 						    this.router.navigate( ['/notfound'] );
+					    }
 
 					    this.scopeUser = result;
 					    this.currentUserSlug = slug;
@@ -163,6 +164,7 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 			    this.spinner = false;
 		    } )
 	}
+
 
 	/**
 	 * ==================== Change avatar dialog ======================
