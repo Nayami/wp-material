@@ -98,8 +98,9 @@ function aa_func_20160012120047()
 {
 	echo "<GlobConfirmComponent></GlobConfirmComponent>";
 	echo "<ModalDialogComponent></ModalDialogComponent>";
-	if(is_amuserpage())
+	if(is_amuserpage()) {
 		echo "<GlobLoaderComponent></GlobLoaderComponent>";
+	}
 }
 
 add_action( 'AM_content', 'aa_func_20164926084929' );

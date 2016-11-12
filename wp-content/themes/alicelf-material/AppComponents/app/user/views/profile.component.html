@@ -5,11 +5,10 @@
 	</div>
 	<div class="content-grid">
 		<div class="mdl-grid">
+
 			<div class="mdl-cell mdl-cell--2-col user-sidebar">
 				<figure>
-
 					<img [src]="scopeUser.network_meta.user_media.avatar_url" alt="">
-
 					<figcaption *ngIf="owner" id="change-my-avatar">
 						<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--blue-grey-100" (click)="IwantToChangeAvatar()">Change my pic</button>
 					</figcaption>

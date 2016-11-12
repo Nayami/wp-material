@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit
+	//,ElementRef, Renderer
+} from '@angular/core';
 import {LayoutDataService} from "../services/layout.data.service";
 
 @Component( {
@@ -13,7 +15,12 @@ import {LayoutDataService} from "../services/layout.data.service";
 	`
 } )
 export class GlobLoaderComponent implements OnInit {
-	constructor(private layoutData : LayoutDataService) {
+
+	constructor( private layoutData: LayoutDataService
+		//, el: ElementRef, renderer: Renderer
+	) {
+		//let customAttr = el.nativeElement.getAttribute('customAttr');
+		//console.log( customAttr );
 	}
 
 	ngOnInit() {

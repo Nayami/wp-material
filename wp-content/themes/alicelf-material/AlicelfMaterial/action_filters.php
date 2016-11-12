@@ -42,7 +42,7 @@ function aa_func_20165803055837()
 
 add_theme_support( 'post-thumbnails' );
 add_filter( 'widget_text', 'do_shortcode' );
-//add_theme_support( 'woocommerce' );
+add_theme_support( 'woocommerce' );
 
 if ( ! current_user_can( 'manage_options' ) ) {
 	show_admin_bar( false );
@@ -54,6 +54,21 @@ function custom_revisions_number( $num, $post )
 	$num = 3;
 
 	return $num;
+}
+
+/**
+ * Restict duplicate images with different sizes
+ *
+ * @param $sizes
+ */
+add_filter('intermediate_image_sizes_advanced', 'aa_func_20162612122629', 10, 1);
+function aa_func_20162612122629($sizes)
+{
+	//	unset( $sizes[ 'thumbnail' ] );
+	unset( $sizes[ 'medium' ] );
+	unset( $sizes[ 'large' ] );
+
+	return $sizes;
 }
 
 /**
@@ -152,7 +167,7 @@ function aa_func_20164902064936()
 		'func_20160802070842',
 		'nav-menus',
 		'side',
-		'high'
+		'low'
 	);
 }
 
@@ -160,7 +175,7 @@ function aa_func_20164902064936()
 if ( ! function_exists( 'func_20160802070842' ) ) {
 	function func_20160802070842()
 	{
-		$box_id       = "neworks-endpoints-id";
+		$box_id       = "networks-endpoints-id";
 		$net_endpoint = get_am_network_endpoint();
 		?>
 		<div id="<?php echo $box_id ?>" class="posttypediv">
@@ -169,7 +184,7 @@ if ( ! function_exists( 'func_20160802070842' ) ) {
 					<li>
 						<label class="menu-item-title">
 							<input type="checkbox" name="menu-item[-1][menu-item-object-id]" value="-1">
-							Nework
+							Network
 						</label>
 						<input type="hidden" name="menu-item[-1][menu-item-type]" value="custom">
 						<input type="hidden" name="menu-item[-1][menu-item-object]" value="network_link">
@@ -179,16 +194,34 @@ if ( ! function_exists( 'func_20160802070842' ) ) {
 					</li>
 				</ul>
 			</div>
-			<p class="button-controls">
-        			<span class="list-controls">
-        				<a href="<?php echo get_site_url() ?>/wp-admin/nav-menus.php?page-tab=all&amp;selectall=1#<?php echo $box_id ?>" class="select-all">Select All</a>
-        			</span>
-        			<span class="add-to-menu">
-        				<input type="submit" class="button-secondary submit-add-to-menu right" value="Add to Menu" name="add-post-type-menu-item" id="submit-<?php echo $box_id ?>">
-        				<span class="spinner"></span>
-        			</span>
-			</p>
+			<div class="button-controls">
+				<span class="list-controls">
+					<a href="<?php echo get_site_url() ?>/wp-admin/nav-menus.php?page-tab=all&amp;selectall=1#<?php echo $box_id ?>" class="select-all">Select All</a>
+				</span>
+				<span class="add-to-menu">
+					<input type="submit" class="button-secondary submit-add-to-menu right" value="Add to Menu" name="add-post-type-menu-item" id="submit-<?php echo $box_id ?>"><span class="spinner"></span>
+				</span>
+			</div>
 		</div>
 		<?php
+	}
+}
+
+
+/**
+ * ==================== Page Options ======================
+ * 12.11.2016
+ */
+add_action('aa_page_loop_start', 'aa_func_20163812013800', 10);
+function aa_func_20163812013800()
+{
+	// define( 'WPCF7_AUTOP', false ); add this to wp-config
+	// [remove_br_from_shortcodes]
+	// [contact-form-7 id="701" title="Contact form 1"]
+	// [/remove_br_from_shortcodes]
+
+	if(get_field('remove_autoformat', get_the_ID())) {
+		remove_filter( 'the_content', 'wpautop' );
+		remove_filter( 'the_excerpt', 'wpautop' );
 	}
 }
