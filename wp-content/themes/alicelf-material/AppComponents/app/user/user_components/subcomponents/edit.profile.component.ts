@@ -17,7 +17,6 @@ import {AMAuthComponent} from "../auth.component";
 import {AMFormService} from "../../../shared/services/AMFormService";
 
 
-
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/user/views/';
 
@@ -135,7 +134,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 
 	loadEditForm( user ) {
 		this.editFormHandler = this.fbuilder.group( {
-			email  : [user.user_email, [AMAuthComponent.authEmailValidation]],
+			email  : [{ value: user.user_email, disabled: true }, [AMAuthComponent.authEmailValidation]],
 			slug   : [user.slug, [Validators.required, Validators.minLength( 5 )]],
 			pass   : ["", [Validators.required, Validators.minLength( 5 )]],
 			confirm: ["", [Validators.required, Validators.minLength( 5 )]],

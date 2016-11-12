@@ -5,7 +5,6 @@ import { Component,
 
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
-import { HTTP_PROVIDERS } from '@angular/http';
 import { CommentService } from '../services/comment.service';
 import { CommentInterface } from "../mocks/CommentInterface";
 import { PostService } from "../services/post.service";

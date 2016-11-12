@@ -8,6 +8,7 @@ import {LayoutDataService} from "./services/layout.data.service";
 import {AMFormService} from "./services/AMFormService";
 import {GlobConfirmService} from "./services/alert.dialog.modal/confirm.service";
 import {ModalService} from "./services/alert.dialog.modal/modal.service";
+import {CartService} from "./services/woocommerce/cart.service";
 
 @NgModule( {} )
 
@@ -23,6 +24,7 @@ export class SharedModule {
 				GlobConfirmService,
 				AMFormService,
 				ModalService,
+				CartService,
 
 				LayoutDataService
 			]
@@ -38,5 +40,6 @@ export {
 	AMFormService,
 	LayoutDataService,
 	ModalService,
-	GlobConfirmService
+	GlobConfirmService,
+	CartService
 }

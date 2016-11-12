@@ -31,13 +31,15 @@ import {ModalDialogComponent} from "./shared/components/modal.component";
 
 import {ChangeAvatarComponent} from "./shared/components/modals/changeAvatar.component";
 import {EditProfileComponent} from "./user/user_components/subcomponents/edit.profile.component";
+import {WooComponent} from "./woocommerce/minicart.component";
 
 
 /**
  * ==================== COMPONENTS ======================
- * 26.09.2016
+ * 26.09.2016 { useValue: MdToolbar, multi: true }
  */
 const componentMaybeExists = [
+	{ selector: 'AMinicartRoot', component: WooComponent, childs: [] },
 	{ selector: 'footer-component', component: FooterComponent, childs: [] },
 	{ selector: 'FlashNotificationsComponent', component: FlashNotificationsComponent, childs: [] },
 	{ selector: 'GlobConfirmComponent', component: ModalDialogComponent, childs: [

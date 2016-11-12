@@ -34,6 +34,7 @@ global $_am;
 				'walker'         => new AMenu()
 			] );
 		}
+		do_action('after_main_menu');
 		?>
 	</div>
 </header>

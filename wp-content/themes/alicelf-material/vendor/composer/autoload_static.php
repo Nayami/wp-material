@@ -12,6 +12,7 @@ class ComposerStaticInitb6f04ed7e1f797b95ad60e857e3cc76d
         '982c9002c12920c2ec9966b8680fa3e3' => __DIR__ . '/../..' . '/AlicelfMaterial/ng_dirrectives.php',
         '9ddef3587d0ea992a5107bf3fcf312d5' => __DIR__ . '/../..' . '/AlicelfMaterial/ajax.php',
         'a327e9e384d48f89bf84dece90446a56' => __DIR__ . '/../..' . '/AlicelfMaterial/ajax.user.php',
+        '9e1e0c7e56a72520bb36ff6342516c8e' => __DIR__ . '/../..' . '/AlicelfMaterial/ajax.woo.php',
         '483f980016bb7a9172a59c66184115cf' => __DIR__ . '/../..' . '/AlicelfMaterial/user/init.php',
         'f3b19fdb945bea8a7f9f7e43c0dd64e9' => __DIR__ . '/../..' . '/AlicelfMaterial/sidebars.php',
         '8b2ad1836f1688f773463ec916e32ac1' => __DIR__ . '/../..' . '/AlicelfMaterial/form_actions.php',
@@ -41,6 +42,7 @@ class ComposerStaticInitb6f04ed7e1f797b95ad60e857e3cc76d
     );
 
     public static $classMap = array (
+        'AlicelfMaterial\\Helpers\\AmAttachment' => __DIR__ . '/../..' . '/AlicelfMaterial/Helpers/AmAttachment.php',
         'AlicelfMaterial\\Helpers\\AmDb' => __DIR__ . '/../..' . '/AlicelfMaterial/Helpers/AmDb.php',
         'AlicelfMaterial\\Helpers\\Arr' => __DIR__ . '/../..' . '/AlicelfMaterial/Helpers/Arr.php',
         'AlicelfMaterial\\Helpers\\Helper' => __DIR__ . '/../..' . '/AlicelfMaterial/Helpers/Helper.php',

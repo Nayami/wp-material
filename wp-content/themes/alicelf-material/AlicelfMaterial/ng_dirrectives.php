@@ -102,6 +102,17 @@ function aa_func_20160012120047()
 		echo "<GlobLoaderComponent></GlobLoaderComponent>";
 	}
 }
+add_action('after_main_menu', 'aa_func_20160012070004');
+function aa_func_20160012070004()
+{
+	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+		?>
+		<div id="minicart-head">
+			<AMinicartRoot></AMinicartRoot>
+		</div>
+		<?php
+	}
+}
 
 add_action( 'AM_content', 'aa_func_20164926084929' );
 function aa_func_20164926084929()

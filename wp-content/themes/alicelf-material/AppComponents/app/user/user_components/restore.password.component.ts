@@ -47,7 +47,7 @@ export class RestorePasswordComponent implements OnDestroy {
 	             private userService: UserGlobalService ) {
 		this.progress = true;
 		this.tokenSubscription = router
-			.routerState.queryParams // token, email
+			.routerState.root.queryParams // token, email
 			.subscribe( ( data: any ) => {
 				this.checkInfo( data )
 				    .subscribe( response => {
@@ -85,7 +85,7 @@ export class RestorePasswordComponent implements OnDestroy {
 		let headers = new Headers( { "Content-Type": "application/x-www-form-urlencoded" } );
 		const body = "action=ajx20161128111129&body_data=" + JSON.stringify( data );
 		return this.http.post( AMdefaults.ajaxurl, body, { headers: headers } )
-		           .map( ( response: Response ) => response.json() );
+		           ['map']( ( response: Response ) => response.json() );
 	}
 
 	setNewPass() {
@@ -137,7 +137,7 @@ export class RestorePasswordComponent implements OnDestroy {
 		let headers = new Headers( { "Content-Type": "application/x-www-form-urlencoded" } );
 		const body = "action=ajx20160928110922&body_data=" + JSON.stringify( this.checkdata.data );
 		return this.http.post( AMdefaults.ajaxurl, body, { headers: headers } )
-		           .map( ( response: Response ) => response.json() );
+		           ['map']( ( response: Response ) => response.json() );
 	}
 
 	ngOnDestroy() {

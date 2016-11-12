@@ -13,6 +13,7 @@
       "AlicelfMaterial/ng_dirrectives.php",
       "AlicelfMaterial/ajax.php",
       "AlicelfMaterial/ajax.user.php",
+      "AlicelfMaterial/ajax.woo.php",
       "AlicelfMaterial/user/init.php",
 
       "AlicelfMaterial/sidebars.php",

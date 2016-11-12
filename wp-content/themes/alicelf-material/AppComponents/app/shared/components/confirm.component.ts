@@ -10,6 +10,7 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/shared/components/
 export class GlobConfirmComponent {
 
 	constructor( private confirmService: GlobConfirmService ) {
+
 	}
 
 	confirmFunc() {
