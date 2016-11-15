@@ -4,9 +4,6 @@ import 'rxjs/Rx';
 
 import {CartService} from "../shared/services/woocommerce/cart.service";
 
-declare var AMdefaults: any;
-var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
-
 @Component( {
 	selector: 'AMinicartRoot',
 	template: ``
@@ -16,6 +13,7 @@ export class WooComponent implements OnInit, OnDestroy {
 	productsSubscription: Subscription;
 
 	constructor( private cartService: CartService ) {
+
 	}
 
 	ngOnInit() {

@@ -221,9 +221,9 @@ body.aa-modal-overlay {
 }
 
 #header-notifications {
-	position : relative;
-	top      : 0;
-	height   : 1px;
+	position   : relative;
+	top        : 100px;
+	height     : 1px;
 	margin-top : -1px;
 	ul {
 		position : absolute;
@@ -252,7 +252,7 @@ body.aa-modal-overlay {
 }
 
 #global-modal-dialog {
-	perspective: 1000px;
+	perspective : 1000px;
 }
 
 .alert-popup {

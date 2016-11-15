@@ -21,24 +21,24 @@ declare var $: any;
 				<div *ngIf="progressline" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 			</div>
 			<div class="mdl-grid">
-				<div class="mdl-cell--6-col image-promise">
+				<div class="mdl-cell mdl-cell--4-col image-promise">
 					<div *ngIf="uploadedImage" id="upload-ava-holder">
 						<img id="uploadedImagePromise" [src]="uploadedImage" alt="uploaded image">
 					</div>
 				</div>
-				<div class="mdl-cell--6-col images-actions">
+				<div class="mdl-cell mdl-cell--8-col images-actions">
 					<div class="mdl-grid">
-						<div class="img-preview preview-lg"></div>
-					</div>
-					<div class="mdl-grid">
-						@TODO: crop buttons
+						<div class="mdl-cell mdl-cell--4-col img-preview preview-lg"></div>
+						<div class="mdl-cell mdl-cell--9-col my-images-listing">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate debitis illum iure iusto perferendis quam quasi quidem sequi? Ad architecto beatae consequuntur deleniti dolorum exercitationem ratione repudiandae similique sunt tenetur.
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="mdl-grid">
-				<div *ngIf="!uploadedImage" class="input-filegroup mdl-cell--12-col">
+				<div *ngIf="!uploadedImage" class="input-filegroup mdl-cell mdl-cell--12-col">
 					<input (change)="fileChange($event)" type="file" name="" id="chos3-file">
-					<label for="chos3-file" class="mdl-button mdl-js-button mdl-button--raised">Upload Image</label>
+					<label for="chos3-file" class="mdl-button mdl-js-button mdl-button--raised">Upload New Image</label>
 				</div>
 				<div *ngIf="uploadedImage" class="mdl-cell--12-col">
 					<a (click)="cropImage()" class="mdl-button am-success-btn mdl-js-button mdl-button--raised mdl-js-ripple-effect">Crop and set as profile image</a>
@@ -68,6 +68,14 @@ export class ChangeAvatarComponent implements OnDestroy {
 	             private flashes: FlashNoticeService,
 	             private appSettings: AppSettingsService ) {
 		this.ajaxurl = appSettings.settings.ajaxurl;
+
+		let waitForuser = setInterval(() =>{
+			if(userService.currentUser) {
+				clearInterval(waitForuser);
+				console.log( appSettings.settings );
+			}
+		},200);
+
 	}
 
 	fileChange( fileInput: any ) {

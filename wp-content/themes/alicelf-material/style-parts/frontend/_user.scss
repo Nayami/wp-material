@@ -116,6 +116,9 @@ body {
 }
 
 #change-avatar-form {
+	.mdl-grid {
+		padding : 0;
+	}
 	.image-promise,
 	.images-actions {
 		min-height : 300px;
@@ -133,6 +136,9 @@ body {
 	.images-actions {
 		> .mdl-grid {
 			padding-top : 0;
+			>.mdl-cell {
+				margin-top : 0;
+			}
 		}
 	}
 	.loader-line-modal {
@@ -237,7 +243,17 @@ body {
 }
 
 .input-filegroup {
+	margin-bottom : 0;
+	margin-top : 0;
 	input[type="file"] {
 		display : none;
+	}
+}
+
+.my-images-listing {
+	width: calc(78% - 16px);
+	/*Mobile*/
+	@media (max-width : 767px) {
+		width: calc(100% - 16px);
 	}
 }

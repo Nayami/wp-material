@@ -14,6 +14,8 @@ export class UserGlobalService implements OnDestroy {
 	public currentUser: UserInterface;
 	public allUsers: UserInterface[] = [];
 	private userSubscription: Subscription;
+	private mediaSubscription: Subscription;
+	public userMedia : any = [];
 
 	constructor( private http: Http,
 	             private auth: AuthGlobalService,
