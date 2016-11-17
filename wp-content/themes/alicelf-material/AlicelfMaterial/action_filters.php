@@ -18,6 +18,19 @@ function aa_func_20161027071039()
 }
 
 /**
+ * ==================== WP Check Authentification ======================
+ * 17.11.2016
+ */
+add_action('admin_init', 'aa_func_20165217065225');
+function aa_func_20165217065225()
+{
+	global $_am;
+	if($_am[ 'disable-regular-wplogin' ] === 'yes') {
+		remove_action( 'admin_enqueue_scripts', 'wp_auth_check_load' );
+	}
+}
+
+/**
  * ==================== Disable admin area for non admins ======================
  * 03.10.2016
  */
