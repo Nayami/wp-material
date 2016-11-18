@@ -36,11 +36,9 @@ import {WooComponent} from "./woocommerce/minicart.component";
 
 /**
  * ==================== COMPONENTS ======================
- * 26.09.2016 { useValue: MdToolbar, multi: true }
  */
 const componentMaybeExists = [
 	{ selector: 'AMinicartRoot', component: WooComponent, childs: [] },
-	{ selector: 'footer-component', component: FooterComponent, childs: [] },
 	{ selector: 'FlashNotificationsComponent', component: FlashNotificationsComponent, childs: [] },
 	{ selector: 'GlobConfirmComponent', component: ModalDialogComponent, childs: [
 		ChangeAvatarComponent,
@@ -66,6 +64,7 @@ const componentMaybeExists = [
 		EditProfileComponent
 	]
 	},
+	{ selector: 'footer-component', component: FooterComponent, childs: [] },
 	// ADD THERE COMPONENTS
 ];
 let totalBootstrap     = [],

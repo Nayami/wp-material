@@ -1,0 +1,10 @@
+@TODO: images listing in dialog
+@TODO: images with native wp gallery
+@TODO: user posts
+@TODO: user interractions
+
+@TODO: woocommerce layouts
+
+@TODO: network layouts
+
+@TODO: commerce plugin development (customization fields)

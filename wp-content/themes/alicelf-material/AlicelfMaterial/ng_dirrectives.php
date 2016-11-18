@@ -65,9 +65,6 @@ function aa_func_20162526072510()
 {
 	?>
 	<script>
-		System.import('app').catch(function(err) {
-			console.error(err);
-		});
 		var mdlUpgradeDom = false;
 		setInterval(function() {
 			if (mdlUpgradeDom) {

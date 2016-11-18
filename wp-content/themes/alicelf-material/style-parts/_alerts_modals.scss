@@ -220,6 +220,7 @@ body.aa-modal-overlay {
 	box-shadow    : 0 3px 10px rgba(0, 0, 0, 0.26);
 }
 
+
 #header-notifications {
 	position   : relative;
 	top        : 100px;
@@ -232,6 +233,13 @@ body.aa-modal-overlay {
 		z-index  : 2;
 		li {
 			@include am-alert();
+		}
+	}
+}
+body {
+	&.admin-bar {
+		#header-notifications {
+			top : 130px;
 		}
 	}
 }

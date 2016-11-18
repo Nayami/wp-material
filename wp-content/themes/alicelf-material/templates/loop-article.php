@@ -14,7 +14,7 @@
 					<li class="nav-next"><?php next_post_link( '%link &rarr;' ); ?></li>
 				</ul>
 			</nav>
-			<AMreviewShell datapostid="<?php the_ID() ?>">Waiting...</AMreviewShell>
+			<AMreviewShell id="AMreviewShell" datapostid="<?php the_ID() ?>">Waiting...</AMreviewShell>
 		</div>
 
 	<?php endwhile; ?>

@@ -5,7 +5,7 @@
 </div><!--.page-content END-->
 
 <footer id="am-footer">
-	<footer-component></footer-component>
+<!--	<footer-component></footer-component>-->
 
 	<div class="ghostly-wrap">
 		<div class="mdl-grid">
