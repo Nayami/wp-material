@@ -8,7 +8,7 @@
 		"experimentalDecorators" : true,
 		"removeComments"         : false,
 		"noImplicitAny"          : false,
-		"outDir"                 : "AppProduction"
+		"outDir"                 : "AppDevelopment"
 	},
 	"exclude"         : [
 		"node_modules",

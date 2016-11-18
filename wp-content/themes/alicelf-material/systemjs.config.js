@@ -4,7 +4,7 @@
  */
 (function(global) {
 	// map tells the System loader where to look for things
-	var componentUrl = '/AppProduction/';
+	var componentUrl = '/AppDevelopment/';
 	var componetsPath = AMdefaults.themeurl + componentUrl;
 	var map = {
 		'app'     : componetsPath,

@@ -2,7 +2,7 @@ Live/Development states:
 1) switch tsconfig.json and package.json
 2) in main.ts set production mode and comment core-js, reflect-metadata,zone.js/dist/zone.js
 3) Change includes in .\AlicelfMaterial\media_links.php
-4) dont forget minify script
+4) dont forget to minify script
 
 npm run build - production
 npm run tsc:w - development
