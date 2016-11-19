@@ -42,7 +42,6 @@ export class CommentsComponent implements OnDestroy {
 			               .subscribe( response => {
 				               if ( response.length > 0 ) {
 					               commentsService.commentsAll = response;
-					               console.log( response );
 				               }
 			               } );
 

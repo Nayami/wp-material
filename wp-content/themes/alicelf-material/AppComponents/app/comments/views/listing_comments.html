@@ -6,8 +6,8 @@
 >
 
 	<div class="mdl-grid">
-		<figure [attr.thumbnailUrl]="cmnt.author_avatar_urls.am_network" class="mdl-cell mdl-cell--2-col">
-			<img [src]="cmnt.author_avatar_urls.am_network" alt="avatar image">
+		<figure [attr.thumbnailUrl]="getAuthorAvatarUrl(cmnt.author_avatar_urls)" class="mdl-cell mdl-cell--2-col">
+			<img [src]="getAuthorAvatarUrl(cmnt.author_avatar_urls)" alt="avatar image">
 		</figure>
 
 		<div class="mdl-cell mdl-cell--10-col relative-container">

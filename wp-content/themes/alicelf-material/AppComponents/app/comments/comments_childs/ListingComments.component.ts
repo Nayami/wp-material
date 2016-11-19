@@ -41,8 +41,9 @@ export class ListingCommentsComponent implements OnDestroy, OnInit {
 	currentlyEdit: number;
 	currentlyEditText: any;
 	currentEditComment: any;
-
 	delSubscription: Subscription;
+	updateSubscription: Subscription;
+
 	maybedestroy: any = {
 		id   : null,
 		index: null
@@ -53,6 +54,11 @@ export class ListingCommentsComponent implements OnDestroy, OnInit {
 	             private confirmService: GlobConfirmService,
 	             private CommentsObj: CommentService ) {
 		this.editForm = formBuild.group( {} );
+	}
+
+	getAuthorAvatarUrl(avatar_urls : any){
+		console.log( avatar_urls );
+		return avatar_urls['am_network'] || avatar_urls['96'];
 	}
 
 	ngOnInit() {
@@ -81,7 +87,7 @@ export class ListingCommentsComponent implements OnDestroy, OnInit {
 	updateReview() {
 		if ( this.editForm.status === "VALID" ) {
 			this.currentEditComment.content = this.editForm.value.updatedValueReview;
-			this.CommentsObj.updateComment( this.currentEditComment )
+			this.updateSubscription = this.CommentsObj.updateComment( this.currentEditComment )
 			    .subscribe( response => {
 				    if ( response.status === 'success' ) {
 					    // let cmn = this.CommentsObj.commentsAll.filter( x => x['id'] == response.id );
@@ -131,6 +137,7 @@ export class ListingCommentsComponent implements OnDestroy, OnInit {
 
 	ngOnDestroy(): void {
 		this.delSubscription.unsubscribe();
+		this.updateSubscription.unsubscribe();
 	}
 
 }

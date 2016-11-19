@@ -59,7 +59,7 @@ var FormComponent = (function () {
         if (this.commentForm.status === 'VALID') {
             var commentData = this.commentForm.value;
             commentData['postId'] = this.postService.postId;
-            this.commentService.insertComment(commentData)
+            this.addReviewSubscription = this.commentService.insertComment(commentData)
                 .subscribe(function (response) {
                 _this.commentService.addComment(response);
                 _this.commentForm.controls['body'].setValue(null, {});
@@ -67,6 +67,9 @@ var FormComponent = (function () {
         }
         else {
         }
+    };
+    FormComponent.prototype.ngOnDestroy = function () {
+        this.addReviewSubscription.unsubscribe();
     };
     FormComponent = __decorate([
         core_1.Component({

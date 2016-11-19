@@ -27,6 +27,10 @@ var ListingCommentsComponent = (function () {
         };
         this.editForm = formBuild.group({});
     }
+    ListingCommentsComponent.prototype.getAuthorAvatarUrl = function (avatar_urls) {
+        console.log(avatar_urls);
+        return avatar_urls['am_network'] || avatar_urls['96'];
+    };
     ListingCommentsComponent.prototype.ngOnInit = function () {
         var _this = this;
         // Watch delete comment approove
@@ -53,7 +57,7 @@ var ListingCommentsComponent = (function () {
         var _this = this;
         if (this.editForm.status === "VALID") {
             this.currentEditComment.content = this.editForm.value.updatedValueReview;
-            this.CommentsObj.updateComment(this.currentEditComment)
+            this.updateSubscription = this.CommentsObj.updateComment(this.currentEditComment)
                 .subscribe(function (response) {
                 if (response.status === 'success') {
                     // let cmn = this.CommentsObj.commentsAll.filter( x => x['id'] == response.id );
@@ -98,6 +102,7 @@ var ListingCommentsComponent = (function () {
     };
     ListingCommentsComponent.prototype.ngOnDestroy = function () {
         this.delSubscription.unsubscribe();
+        this.updateSubscription.unsubscribe();
     };
     ListingCommentsComponent = __decorate([
         core_1.Component({

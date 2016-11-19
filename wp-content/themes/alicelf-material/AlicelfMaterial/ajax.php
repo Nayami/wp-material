@@ -183,6 +183,7 @@ function aa_func_20162519102517( $response, $comment, $request )
 	$data = $response->data;
 	$user = am_user( $data[ 'author' ] );
 	if ( $user ) {
+		//@TODO: author slug and link to account
 		$response->data[ 'author_avatar_urls' ][ 'am_network' ] = $user[ 'network_meta' ][ 'user_media' ][ 'avatar_url' ];
 	}
 
