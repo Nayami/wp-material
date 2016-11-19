@@ -124,8 +124,8 @@ body {
 		min-height : 300px;
 	}
 	.image-promise {
-		background      : url("#{$basepath}img/image-placeholder.jpg") no-repeat center center;
-		background-size : cover;
+		background      : url("#{$basepath}img/image-placeholder.jpg") no-repeat top center;
+		background-size : contain;
 		display         : flex;
 		justify-content : center;
 		align-items     : center;
@@ -136,7 +136,7 @@ body {
 	.images-actions {
 		> .mdl-grid {
 			padding-top : 0;
-			>.mdl-cell {
+			> .mdl-cell {
 				margin-top : 0;
 			}
 		}
@@ -244,16 +244,41 @@ body {
 
 .input-filegroup {
 	margin-bottom : 0;
-	margin-top : 0;
+	margin-top    : 0;
 	input[type="file"] {
 		display : none;
 	}
 }
 
 .my-images-listing {
-	width: calc(78% - 16px);
+	width      : calc(77% - 13px);
+	overflow-y : auto;
+	max-height : 290px;
+	ul {
+		margin-top      : 0;
+		list-style-type : none;
+		padding         : 0;
+		img {
+			max-width : 70px;
+		}
+		li {
+			word-break    : break-all;
+			display       : flex;
+			margin-bottom : 8px;
+			border        : 1px solid #eee;
+			padding       : 5px;
+			border-radius : 2px;
+			figure {
+				margin        : 0;
+				padding-right : 15px;
+			}
+			.img-description {
+
+			}
+		}
+	}
 	/*Mobile*/
 	@media (max-width : 767px) {
-		width: calc(100% - 16px);
+		width : calc(100% - 16px);
 	}
 }

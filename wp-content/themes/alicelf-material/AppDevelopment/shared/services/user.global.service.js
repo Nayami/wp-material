@@ -53,6 +53,10 @@ var UserGlobalService = (function () {
     UserGlobalService.prototype.ngOnDestroy = function () {
         this.userSubscription.unsubscribe();
     };
+    UserGlobalService.prototype.getUserMedia = function (userId) {
+        var body = AMdefaults.baseurl + "/wp-json/wp/v2/media?media_type=image&author=" + userId;
+        return this.http.get(body)['map'](function (response) { return response.json(); });
+    };
     /**
      * ==================== Logout ======================
      * 01.10.2016

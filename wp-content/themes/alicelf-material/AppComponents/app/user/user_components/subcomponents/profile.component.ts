@@ -1,7 +1,9 @@
-import { Component, OnInit, OnDestroy
-	,trigger, state, style, transition, animate} from '@angular/core';
-import { Router,ActivatedRoute } from "@angular/router";
-import { Observable, Subscription } from 'rxjs/Rx';
+import {
+	Component, OnInit, OnDestroy
+	, trigger, state, style, transition, animate
+} from '@angular/core';
+import {Router, ActivatedRoute} from "@angular/router";
+import {Observable, Subscription} from 'rxjs/Rx';
 import 'rxjs/Rx';
 import {AuthGlobalService} from "../../../shared/services/auth.service";
 import {FlashNoticeService} from "../../../shared/services/alert.dialog.modal/flash.notices";
@@ -180,7 +182,8 @@ export class SingleProfileComponent implements OnInit, OnDestroy {
 			showButtons    : false,
 			dialogType     : 'simple',
 			dialogAnimation: 'scale'
-		} )
+		} );
+
 	}
 
 	ngOnDestroy(): void {

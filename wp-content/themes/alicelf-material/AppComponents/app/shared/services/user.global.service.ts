@@ -59,6 +59,11 @@ export class UserGlobalService implements OnDestroy {
 		this.userSubscription.unsubscribe();
 	}
 
+	getUserMedia( userId: number ):Observable<any> {
+		const body = AMdefaults.baseurl + "/wp-json/wp/v2/media?media_type=image&author=" + userId;
+		return this.http.get( body )['map']( response => response.json() );
+	}
+
 
 	/**
 	 * ==================== Logout ======================

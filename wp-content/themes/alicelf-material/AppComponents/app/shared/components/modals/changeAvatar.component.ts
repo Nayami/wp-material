@@ -30,7 +30,14 @@ declare var $: any;
 					<div class="mdl-grid">
 						<div class="mdl-cell mdl-cell--4-col img-preview preview-lg"></div>
 						<div class="mdl-cell mdl-cell--9-col my-images-listing">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate debitis illum iure iusto perferendis quam quasi quidem sequi? Ad architecto beatae consequuntur deleniti dolorum exercitationem ratione repudiandae similique sunt tenetur.
+						<ul>
+							<li *ngFor="let mediaItem of userService.userMedia">
+							<figure>
+							<img [src]="mediaItem.media_details.sizes.thumbnail.source_url" [attr.alt]="mediaItem.slug">
+							</figure>
+							<div class="img-description">{{mediaItem.slug}}</div>
+							</li>
+						</ul>
 						</div>
 					</div>
 				</div>
@@ -54,6 +61,7 @@ export class ChangeAvatarComponent implements OnDestroy {
 
 	fileuploadSubscription: Subscription;
 	submitCrop: Subscription;
+	getUserMedia: Subscription;
 
 	private ajaxurl;
 	public uploadedImage;     // Image Url
@@ -72,10 +80,20 @@ export class ChangeAvatarComponent implements OnDestroy {
 		let waitForuser = setInterval(() =>{
 			if(userService.currentUser) {
 				clearInterval(waitForuser);
-				console.log( appSettings.settings );
+				this.loadUserGallery();
 			}
 		},200);
 
+	}
+
+	loadUserGallery() {
+		this.progressline = true;
+		this.getUserMedia =
+			this.userService.getUserMedia( this.userService.currentUser['ID'] )
+			    .subscribe( response => {
+				    this.userService.userMedia = response;
+				    this.progressline = false;
+			    } );
 	}
 
 	fileChange( fileInput: any ) {
@@ -188,6 +206,8 @@ export class ChangeAvatarComponent implements OnDestroy {
 			this.fileuploadSubscription.unsubscribe();
 		if ( this.submitCrop )
 			this.submitCrop.unsubscribe();
+		if ( this.submitCrop )
+			this.getUserMedia.unsubscribe();
 	}
 
 }

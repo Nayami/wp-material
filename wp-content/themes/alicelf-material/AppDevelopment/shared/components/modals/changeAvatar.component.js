@@ -19,6 +19,7 @@ var app_settings_service_1 = require("../../services/app.settings.service");
 var flash_notices_1 = require("../../services/alert.dialog.modal/flash.notices");
 var ChangeAvatarComponent = (function () {
     function ChangeAvatarComponent(http, modal, userService, flashes, appSettings) {
+        var _this = this;
         this.http = http;
         this.modal = modal;
         this.userService = userService;
@@ -29,10 +30,20 @@ var ChangeAvatarComponent = (function () {
         var waitForuser = setInterval(function () {
             if (userService.currentUser) {
                 clearInterval(waitForuser);
-                console.log(appSettings.settings);
+                _this.loadUserGallery();
             }
         }, 200);
     }
+    ChangeAvatarComponent.prototype.loadUserGallery = function () {
+        var _this = this;
+        this.progressline = true;
+        this.getUserMedia =
+            this.userService.getUserMedia(this.userService.currentUser['ID'])
+                .subscribe(function (response) {
+                _this.userService.userMedia = response;
+                _this.progressline = false;
+            });
+    };
     ChangeAvatarComponent.prototype.fileChange = function (fileInput) {
         var _this = this;
         this.progressline = true;
@@ -132,11 +143,13 @@ var ChangeAvatarComponent = (function () {
             this.fileuploadSubscription.unsubscribe();
         if (this.submitCrop)
             this.submitCrop.unsubscribe();
+        if (this.submitCrop)
+            this.getUserMedia.unsubscribe();
     };
     ChangeAvatarComponent = __decorate([
         core_1.Component({
             selector: 'ChangeAvatar',
-            template: "\n\t\t<div id=\"change-avatar-form\">\n\t\t\t<div class=\"loader-line-modal\">\n\t\t\t\t<div *ngIf=\"progressline\" class=\"mdl-progress mdl-js-progress mdl-progress__indeterminate\"></div>\n\t\t\t</div>\n\t\t\t<div class=\"mdl-grid\">\n\t\t\t\t<div class=\"mdl-cell mdl-cell--4-col image-promise\">\n\t\t\t\t\t<div *ngIf=\"uploadedImage\" id=\"upload-ava-holder\">\n\t\t\t\t\t\t<img id=\"uploadedImagePromise\" [src]=\"uploadedImage\" alt=\"uploaded image\">\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"mdl-cell mdl-cell--8-col images-actions\">\n\t\t\t\t\t<div class=\"mdl-grid\">\n\t\t\t\t\t\t<div class=\"mdl-cell mdl-cell--4-col img-preview preview-lg\"></div>\n\t\t\t\t\t\t<div class=\"mdl-cell mdl-cell--9-col my-images-listing\">\n\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate debitis illum iure iusto perferendis quam quasi quidem sequi? Ad architecto beatae consequuntur deleniti dolorum exercitationem ratione repudiandae similique sunt tenetur.\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"mdl-grid\">\n\t\t\t\t<div *ngIf=\"!uploadedImage\" class=\"input-filegroup mdl-cell mdl-cell--12-col\">\n\t\t\t\t\t<input (change)=\"fileChange($event)\" type=\"file\" name=\"\" id=\"chos3-file\">\n\t\t\t\t\t<label for=\"chos3-file\" class=\"mdl-button mdl-js-button mdl-button--raised\">Upload New Image</label>\n\t\t\t\t</div>\n\t\t\t\t<div *ngIf=\"uploadedImage\" class=\"mdl-cell--12-col\">\n\t\t\t\t\t<a (click)=\"cropImage()\" class=\"mdl-button am-success-btn mdl-js-button mdl-button--raised mdl-js-ripple-effect\">Crop and set as profile image</a>\n\t\t\t\t\t</div>\n\t\t\t</div>\n\n\t\t</div>\n\t"
+            template: "\n\t\t<div id=\"change-avatar-form\">\n\t\t\t<div class=\"loader-line-modal\">\n\t\t\t\t<div *ngIf=\"progressline\" class=\"mdl-progress mdl-js-progress mdl-progress__indeterminate\"></div>\n\t\t\t</div>\n\t\t\t<div class=\"mdl-grid\">\n\t\t\t\t<div class=\"mdl-cell mdl-cell--4-col image-promise\">\n\t\t\t\t\t<div *ngIf=\"uploadedImage\" id=\"upload-ava-holder\">\n\t\t\t\t\t\t<img id=\"uploadedImagePromise\" [src]=\"uploadedImage\" alt=\"uploaded image\">\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"mdl-cell mdl-cell--8-col images-actions\">\n\t\t\t\t\t<div class=\"mdl-grid\">\n\t\t\t\t\t\t<div class=\"mdl-cell mdl-cell--4-col img-preview preview-lg\"></div>\n\t\t\t\t\t\t<div class=\"mdl-cell mdl-cell--9-col my-images-listing\">\n\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t<li *ngFor=\"let mediaItem of userService.userMedia\">\n\t\t\t\t\t\t\t<figure>\n\t\t\t\t\t\t\t<img [src]=\"mediaItem.media_details.sizes.thumbnail.source_url\" [attr.alt]=\"mediaItem.slug\">\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t\t<div class=\"img-description\">{{mediaItem.slug}}</div>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"mdl-grid\">\n\t\t\t\t<div *ngIf=\"!uploadedImage\" class=\"input-filegroup mdl-cell mdl-cell--12-col\">\n\t\t\t\t\t<input (change)=\"fileChange($event)\" type=\"file\" name=\"\" id=\"chos3-file\">\n\t\t\t\t\t<label for=\"chos3-file\" class=\"mdl-button mdl-js-button mdl-button--raised\">Upload New Image</label>\n\t\t\t\t</div>\n\t\t\t\t<div *ngIf=\"uploadedImage\" class=\"mdl-cell--12-col\">\n\t\t\t\t\t<a (click)=\"cropImage()\" class=\"mdl-button am-success-btn mdl-js-button mdl-button--raised mdl-js-ripple-effect\">Crop and set as profile image</a>\n\t\t\t\t\t</div>\n\t\t\t</div>\n\n\t\t</div>\n\t"
         }), 
         __metadata('design:paramtypes', [http_1.Http, modal_service_1.ModalService, user_global_service_1.UserGlobalService, flash_notices_1.FlashNoticeService, app_settings_service_1.AppSettingsService])
     ], ChangeAvatarComponent);
