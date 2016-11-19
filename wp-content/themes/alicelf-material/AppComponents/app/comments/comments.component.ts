@@ -42,13 +42,15 @@ export class CommentsComponent implements OnDestroy {
 			               .subscribe( response => {
 				               if ( response.length > 0 ) {
 					               commentsService.commentsAll = response;
+					               console.log( response );
 				               }
 			               } );
+
 		this.postSubscription =
 			postService.getPost( this.postService.postId )
 			           .subscribe(response => {
 				           postService.post = response;
-			           })
+			           });
 
 	}
 
@@ -56,5 +58,6 @@ export class CommentsComponent implements OnDestroy {
 		this.getCommentsSubscription.unsubscribe();
 		this.postSubscription.unsubscribe();
 	}
+
 
 }

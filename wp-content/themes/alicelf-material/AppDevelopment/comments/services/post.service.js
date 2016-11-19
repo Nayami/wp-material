@@ -17,7 +17,7 @@ var PostService = (function () {
     }
     PostService.prototype.getPost = function (postId) {
         var id = postId || this.postId;
-        return this.http.get(AMdefaults.baseurl + "/wp-json/posts/" + id)['map'](function (res) { return res.json(); });
+        return this.http.get(AMdefaults.baseurl + "/wp-json/wp/v2/posts/" + id)['map'](function (res) { return res.json(); });
     };
     PostService = __decorate([
         core_1.Injectable(), 

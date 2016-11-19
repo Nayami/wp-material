@@ -1,26 +1,26 @@
 <li
 	*ngFor="let cmnt of CommentsObj.commentsAll; let elmX=index"
 	class="comment"
-	id="comment-id-{{cmnt.ID}}"
+	id="comment-id-{{cmnt.id}}"
 	[@flyInOut]
 >
 
 	<div class="mdl-grid">
-		<figure [attr.thumbnailUrl]="cmnt.author.avatar" class="mdl-cell mdl-cell--2-col">
-			<img [src]="cmnt.author.avatar" alt="avatar image">
+		<figure [attr.thumbnailUrl]="cmnt.author_avatar_urls.am_network" class="mdl-cell mdl-cell--2-col">
+			<img [src]="cmnt.author_avatar_urls.am_network" alt="avatar image">
 		</figure>
 
 		<div class="mdl-cell mdl-cell--10-col relative-container">
 			<h4 itemprop="name" class="author">
 				<span itemprop="commentTime"> on {{cmnt.date | date:'dd/MM/yyyy'}}</span>,
-				<strong>{{cmnt.author.name}}</strong>
+				<strong>{{cmnt.author_name}}</strong>
 			</h4>
 
-			<div itemprop="commentText" class="content-review-text" [innerHTML]="cmnt.content"></div>
+			<div itemprop="commentText" class="content-review-text" [innerHTML]="cmnt.content.rendered || cmnt.content"></div>
 
 			<form
 				[formGroup]="editForm" (ngSubmit)="updateReview()"
-				*ngIf="currentlyEdit == cmnt.ID"
+				*ngIf="currentlyEdit == cmnt.id"
 				[ngClass]="{showeditform: currentlyEdit > 0}">
 
 				<div class="mdl-grid">
@@ -48,12 +48,13 @@
 			<footer class="mdl-grid">
 				<div class="mdl-cell mdl-cell--2-col">
 					<!--Unlock Reply action-->
-					<button  *ngIf="cmnt.author.ID != userId" (click)="replyAction(cmnt, elmX)" class="mdl-button mdl-js-button mdl-button--icon hidden">
+					<button  *ngIf="cmnt.author != userId" (click)="replyAction(cmnt, elmX)" class="mdl-button mdl-js-button mdl-button--icon hidden">
 						<i class="material-icons">reply</i>
 					</button>
 				</div>
+
 				<!--@TODO: hide for non logged-->
-				<div *ngIf="cmnt.author.ID == userId && userId > 0" class="mdl-cell mdl-cell--10-col mdl-typography--text-right single-comment-actions">
+				<div *ngIf="cmnt.author == userId && userId > 0" class="mdl-cell mdl-cell--10-col mdl-typography--text-right single-comment-actions">
 					<button (click)="editAction(cmnt)" class="mdl-button mdl-js-button mdl-button--icon">
 						<i class="material-icons">edit</i>
 					</button>

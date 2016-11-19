@@ -1,7 +1,7 @@
 export interface CommentInterface {
 	ID        : number;     // coment Id
 	author    : any;        // obj author (url, avatar name)
-	content   : string;     // text
+	content   : any;     // text
 	date      : any;
 	date_gmt? : any;
 	date_tz?  : any;        // utc etc.

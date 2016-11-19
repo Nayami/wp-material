@@ -9,7 +9,7 @@ module.exports = {
 	},
 	module: {
 		loaders: [{
-			test: /\.ts$/, loader: 'ts', exclude: /node_modules/
+			test: /\.ts$/, loader: 'ts', exclude: [/\.(spec|e2e)\.ts$/, /node_modules\/(?!(ng2-.+))/]
 		}]
 	},
 	resolve: {

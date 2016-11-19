@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import { CommentInterface } from '../mocks/CommentInterface';
@@ -6,6 +6,7 @@ import { CommentService } from '../services/comment.service';
 import { PostService } from "../services/post.service";
 import {UserGlobalService} from "../../shared/services/user.global.service";
 import {AuthGlobalService} from "../../shared/services/auth.service";
+import { Observable, Subscription } from 'rxjs/Rx';
 
 declare var AMdefaults: any;
 var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
@@ -15,10 +16,11 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 	templateUrl: componentPath + 'views/form.html',
 } )
 
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
+
 
 	userId: number = AMdefaults.currentUser;
-
+	addReviewSubscription : Subscription;
 	commentForm: FormGroup;
 
 	currentCommenter: any = {
@@ -68,7 +70,7 @@ export class FormComponent implements OnInit {
 		if ( this.commentForm.status === 'VALID' ) {
 			let commentData = this.commentForm.value;
 			commentData['postId'] = this.postService.postId;
-			this.commentService.insertComment( commentData )
+			this.addReviewSubscription = this.commentService.insertComment( commentData )
 			    .subscribe( response => {
 				    this.commentService.addComment( response );
 				    (<FormControl>this.commentForm.controls['body']).setValue(null, {});
@@ -76,6 +78,10 @@ export class FormComponent implements OnInit {
 		} else {
 			// @TODO: handle errors
 		}
+	}
+
+	ngOnDestroy(): void {
+		this.addReviewSubscription.unsubscribe();
 	}
 
 }

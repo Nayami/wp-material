@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var post_service_1 = require("../services/post.service");
+var AMFormService_1 = require("../../shared/services/AMFormService");
 require('rxjs/Rx');
 var CommentService = (function () {
     function CommentService(http, postService) {
@@ -19,43 +20,34 @@ var CommentService = (function () {
         this.commentsAll = [];
     }
     CommentService.prototype.addComment = function (data) {
-        this.commentsAll.unshift(data);
+        this.commentsAll.push(data);
     };
     /**
      * ==================== GET COMMENTS ======================
      */
     CommentService.prototype.getComments = function (postId) {
-        var queryUrl = AMdefaults.baseurl + "/wp-json/posts/" + postId + "/comments";
+        var queryUrl = AMdefaults.baseurl + "/wp-json/wp/v2/comments?order=asc&post=" + postId;
         return this.http.get(queryUrl)['map'](function (response) { return response.json(); });
     };
     /**
      * ==================== UPDATE ======================
      */
     CommentService.prototype.updateComment = function (data) {
-        var headers = new http_1.Headers();
-        var query = CommentService.requestToString(data, "ajx20161116071151");
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this.http.post(AMdefaults.ajaxurl, query, {
-            headers: headers
-        })['map'](function (response) { return response.json(); });
+        var body = AMFormService_1.AMFormService.dataToPost("ajx20161116071151", data);
+        return this.http.post(AMdefaults.ajaxurl, body)['map'](function (response) { return response.json(); });
     };
     /**
      * ==================== INSERT ======================
      */
     CommentService.prototype.insertComment = function (data) {
-        var headers = new http_1.Headers();
-        var query = CommentService.requestToString(data, "ajx20163414083403");
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this.http.post(AMdefaults.ajaxurl, query, {
-            headers: headers
-        })['map'](function (response) { return response.json(); });
+        var body = AMFormService_1.AMFormService.dataToPost("ajx20163414083403", data);
+        return this.http.post(AMdefaults.ajaxurl, body)['map'](function (response) { return response.json(); });
     };
     /**
      * ==================== DELETE ======================
      */
     CommentService.prototype.delAction = function (comment) {
         var _this = this;
-        console.log(comment);
         this.delSubscription =
             this.destroyComment(comment).subscribe(function (data) {
                 if (data.status === 'success') {

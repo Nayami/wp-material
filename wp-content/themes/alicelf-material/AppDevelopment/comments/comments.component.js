@@ -24,6 +24,7 @@ var CommentsComponent = (function () {
                 .subscribe(function (response) {
                 if (response.length > 0) {
                     commentsService.commentsAll = response;
+                    console.log(response);
                 }
             });
         this.postSubscription =

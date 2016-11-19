@@ -4,17 +4,18 @@ declare var AMdefaults: any;
 import { Injectable, OnDestroy } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { PostService } from "../services/post.service";
+import {AMFormService} from "../../shared/services/AMFormService";
 import { Observable, Subscription } from 'rxjs/Rx';
 import 'rxjs/Rx';
 
 @Injectable()
 export class CommentService implements OnDestroy {
 
-	commentsAll: CommentInterface[] = [];
+	commentsAll = [];
 	delSubscription:Subscription;
 
 	addComment( data ) {
-		this.commentsAll.unshift( data );
+		this.commentsAll.push( data );
 	}
 
 	constructor( private http: Http,
@@ -25,9 +26,9 @@ export class CommentService implements OnDestroy {
 	 * ==================== GET COMMENTS ======================
 	 */
 	getComments(postId): Observable<any> {
-		let queryUrl = AMdefaults.baseurl + "/wp-json/posts/" + postId + "/comments";
+		let queryUrl = AMdefaults.baseurl + "/wp-json/wp/v2/comments?order=asc&post="+postId;
 		return this.http.get( queryUrl )
-		           ['map']( response => <CommentInterface[]> response.json() );
+		           ['map']( response => response.json() );
 	}
 
 
@@ -35,31 +36,22 @@ export class CommentService implements OnDestroy {
 	 * ==================== UPDATE ======================
 	 */
 	updateComment(data):Observable<any> {
-		let headers = new Headers();
-		const query = CommentService.requestToString( data, "ajx20161116071151" );
-		headers.append( 'Content-Type', 'application/x-www-form-urlencoded' );
-		return this.http.post( AMdefaults.ajaxurl, query, {
-			           headers: headers
-		           } )['map']( response => response.json() );
+		const body = AMFormService.dataToPost( "ajx20161116071151", data );
+		return this.http.post( AMdefaults.ajaxurl, body )['map']( response => response.json() );
 	}
 
 	/**
 	 * ==================== INSERT ======================
 	 */
 	insertComment( data ): Observable<any> {
-		let headers = new Headers();
-		const query = CommentService.requestToString( data, "ajx20163414083403" );
-		headers.append( 'Content-Type', 'application/x-www-form-urlencoded' );
-		return this.http.post( AMdefaults.ajaxurl, query, {
-			           headers: headers
-		           } ) ['map']( response => response.json() );
+		const body = AMFormService.dataToPost( "ajx20163414083403", data );
+		return this.http.post( AMdefaults.ajaxurl, body ) ['map']( response => response.json() );
 	}
 
 	/**
 	 * ==================== DELETE ======================
 	 */
 	delAction( comment ) {
-		console.log( comment );
 		this.delSubscription =
 			this.destroyComment(comment ).subscribe(data =>{
 				if(data.status === 'success') {

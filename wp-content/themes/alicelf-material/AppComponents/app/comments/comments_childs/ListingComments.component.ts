@@ -22,7 +22,7 @@ var componentPath = AMdefaults.themeurl + '/AppComponents/app/comments/';
 			state( 'in', style( { transform: 'translateY(0)', opacity: 0 } ) ),
 
 			transition( 'void => *', [
-				style( { transform: 'translateY(-40%)', opacity: 1 } ),
+				style( { transform: 'translateY(40%)', opacity: 1 } ),
 				animate( '300ms ease-in' )
 			] ),
 			transition( '* => void', [
@@ -39,7 +39,7 @@ export class ListingCommentsComponent implements OnDestroy, OnInit {
 	editForm: FormGroup;
 
 	currentlyEdit: number;
-	currentlyEditText: string;
+	currentlyEditText: any;
 	currentEditComment: any;
 
 	delSubscription: Subscription;
@@ -84,6 +84,7 @@ export class ListingCommentsComponent implements OnDestroy, OnInit {
 			this.CommentsObj.updateComment( this.currentEditComment )
 			    .subscribe( response => {
 				    if ( response.status === 'success' ) {
+					    // let cmn = this.CommentsObj.commentsAll.filter( x => x['id'] == response.id );
 					    this.cancelEdit();
 				    }
 			    } )
@@ -92,8 +93,8 @@ export class ListingCommentsComponent implements OnDestroy, OnInit {
 
 	// OPEN EDIT TEXTAREA
 	editAction( comment ) {
-		this.currentlyEdit = comment.ID;
-		this.currentlyEditText = comment.content;
+		this.currentlyEdit = comment.id;
+		this.currentlyEditText = this.htmlToPlaintext(comment.content.rendered || comment.content);
 		this.currentEditComment = comment;
 
 		this.editForm = this.formBuild.group( {
@@ -104,6 +105,9 @@ export class ListingCommentsComponent implements OnDestroy, OnInit {
 		} );
 	}
 
+	htmlToPlaintext(text) {
+		return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+	}
 	// CANCEL EDIT
 	cancelEdit() {
 		this.currentlyEdit = 0;
@@ -112,7 +116,7 @@ export class ListingCommentsComponent implements OnDestroy, OnInit {
 
 	// Ask Confirmaiton
 	deleteAction( comment, index ) {
-		this.maybedestroy.id = comment.ID;
+		this.maybedestroy.id = comment.id;
 		this.maybedestroy.index = index;
 		let stamp = new Date().getTime();
 		this.confirmService.currentID = stamp;

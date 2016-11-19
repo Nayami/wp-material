@@ -16,7 +16,7 @@ export class PostService {
 
 	getPost(postId): Observable<any> {
 		let id = postId || this.postId;
-		return this.http.get( AMdefaults.baseurl + "/wp-json/posts/" + id )
+		return this.http.get( AMdefaults.baseurl + "/wp-json/wp/v2/posts/" + id )
 		           ['map']( res => res.json() );
 
 	}

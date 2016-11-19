@@ -1,10 +1,9 @@
 <?php
 
-// ============= AMapiurl =============
 if ( ! function_exists( 'AMapiurl' ) ) {
 	function AMapiurl()
 	{
-		return get_site_url() . '/wp-json/';
+		return get_site_url() . '/wp-json/wp/v2/';
 	}
 }
 add_filter( 'wp_mail_content_type', 'aa_func_20162528072509' );
@@ -56,14 +55,14 @@ function aa_func_20165729035750( $avatar_url, $user_id )
 	return $avatar_url;
 }
 
-
 // ============= Stringify_to_object =============
 if ( ! function_exists( 'stringify_to_object' ) ) {
 	function stringify_to_object( $data )
 	{
-		$newdata = str_replace('\"', "\"", $data);
-		$newdata = str_replace('\\\\', '\\', $newdata);
-		return json_decode($newdata);
+		$newdata = str_replace( '\"', "\"", $data );
+		$newdata = str_replace( '\\\\', '\\', $newdata );
+
+		return json_decode( $newdata );
 	}
 }
 
@@ -178,6 +177,17 @@ function aa_func_20150827030852()
  * ==================== COMMENTS ======================
  * ====================================================
  */
+add_filter( 'rest_prepare_comment', 'aa_func_20162519102517', 30, 3 );
+function aa_func_20162519102517( $response, $comment, $request )
+{
+	$data = $response->data;
+	$user = am_user( $data[ 'author' ] );
+	if ( $user ) {
+		$response->data[ 'author_avatar_urls' ][ 'am_network' ] = $user[ 'network_meta' ][ 'user_media' ][ 'avatar_url' ];
+	}
+
+	return $response;
+}
 
 /**
  * ==================== Create Comment ======================
@@ -195,23 +205,17 @@ function ajx20163414083403()
 		'comment_author'       => sanitize_text_field( $data[ 'name' ] ),
 		'comment_author_email' => $data[ 'email' ],
 		'comment_author_url'   => $data[ 'website' ],
-		'comment_content'      => wp_strip_all_tags( $data[ 'body' ] ),
+		'comment_content'      => sanitize_text_field( $data[ 'body' ] ),
 		'comment_date'         => $time,
-
-		'comment_parent' => 0,
-//		'comment_type'      => '',
-		'user_id'        => get_current_user_id(),
-//		'comment_author_IP' => '127.0.0.1',
-//		'comment_agent'     => '',
-
-		'comment_approved' => 1,
+		'comment_parent'       => 0,
+		'user_id'              => get_current_user_id(),
+		'comment_approved'     => 1,
 	);
-
 	$commentid = wp_insert_comment( $comment_data );
-//	$commentid = 1;
-	$comment = wp_remote_get( AMapiurl() . 'posts/' . $data[ 'postId' ] . '/comments/' . $commentid );
+	$comment = wp_remote_get(AMapiurl()."comments/".$commentid);
 
-	echo $comment[ 'body' ];
+	echo $comment['body'];
+
 	die;
 }
 
@@ -253,13 +257,11 @@ add_action( 'wp_ajax_ajx20161116071151', 'ajx20161116071151' );
 function ajx20161116071151()
 {
 	$data             = $_REQUEST;
+	$current_user     = get_current_user_id();
 	$data[ 'status' ] = null;
-	$data[ 'author' ] = json_decode( stripslashes( $data[ 'author' ] ) );
-	$data[ 'meta' ]   = json_decode( stripslashes( $data[ 'meta' ] ) );
-
-	$commentID    = $data[ 'ID' ];
-	$comment      = get_comment( $commentID );
-	$current_user = get_current_user_id();
+	$data[ 'meta' ]   = json_decode( $data[ 'meta' ] );
+	$commentID        = $data[ 'id' ];
+	$comment          = get_comment( $commentID );
 
 	if ( ( (int) $comment->user_id === $current_user ) && is_user_logged_in() ) {
 		wp_update_comment( [

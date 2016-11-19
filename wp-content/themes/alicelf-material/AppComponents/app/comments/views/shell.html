@@ -1,10 +1,9 @@
+<ul id="comments" itemscope itemtype="http://schema.org/UserComments">
+	<listingComments>Wait comments...</listingComments>
+</ul>
 <div *ngIf="postService.post">
 	<div *ngIf="postService.post.comment_status === 'open'" [@appearForm]>
 		<h4>{{title}}</h4>
 		<AMformComponent></AMformComponent>
 	</div>
 </div>
-
-<ul id="comments" itemscope itemtype="http://schema.org/UserComments">
-	<listingComments>Wait comments...</listingComments>
-</ul>

@@ -56,6 +56,7 @@ var ListingCommentsComponent = (function () {
             this.CommentsObj.updateComment(this.currentEditComment)
                 .subscribe(function (response) {
                 if (response.status === 'success') {
+                    // let cmn = this.CommentsObj.commentsAll.filter( x => x['id'] == response.id );
                     _this.cancelEdit();
                 }
             });
@@ -63,8 +64,8 @@ var ListingCommentsComponent = (function () {
     };
     // OPEN EDIT TEXTAREA
     ListingCommentsComponent.prototype.editAction = function (comment) {
-        this.currentlyEdit = comment.ID;
-        this.currentlyEditText = comment.content;
+        this.currentlyEdit = comment.id;
+        this.currentlyEditText = this.htmlToPlaintext(comment.content.rendered || comment.content);
         this.currentEditComment = comment;
         this.editForm = this.formBuild.group({
             "updatedValueReview": [
@@ -73,6 +74,9 @@ var ListingCommentsComponent = (function () {
             ]
         });
     };
+    ListingCommentsComponent.prototype.htmlToPlaintext = function (text) {
+        return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+    };
     // CANCEL EDIT
     ListingCommentsComponent.prototype.cancelEdit = function () {
         this.currentlyEdit = 0;
@@ -80,7 +84,7 @@ var ListingCommentsComponent = (function () {
     };
     // Ask Confirmaiton
     ListingCommentsComponent.prototype.deleteAction = function (comment, index) {
-        this.maybedestroy.id = comment.ID;
+        this.maybedestroy.id = comment.id;
         this.maybedestroy.index = index;
         var stamp = new Date().getTime();
         this.confirmService.currentID = stamp;
@@ -103,7 +107,7 @@ var ListingCommentsComponent = (function () {
                 core_1.trigger('flyInOut', [
                     core_1.state('in', core_1.style({ transform: 'translateY(0)', opacity: 0 })),
                     core_1.transition('void => *', [
-                        core_1.style({ transform: 'translateY(-40%)', opacity: 1 }),
+                        core_1.style({ transform: 'translateY(40%)', opacity: 1 }),
                         core_1.animate('300ms ease-in')
                     ]),
                     core_1.transition('* => void', [
