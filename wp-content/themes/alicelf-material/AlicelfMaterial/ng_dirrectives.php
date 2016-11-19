@@ -39,22 +39,23 @@ function aa_func_20163526113508()
 			ajaxurl        : "<?php echo admin_url( 'admin-ajax.php' ) ?>",
 			currentUser    : "<?php echo get_current_user_id(); ?>",
 			networkEndpoint: "<?php echo get_am_network_endpoint() ?>",
-			themeSettings  : <?php echo json_encode( $values ) ?>
+			themeSettings  : <?php echo json_encode( $values ) ?>,
+			uploadDir      : <?php echo json_encode(wp_upload_dir()[ 'basedir' ])?> +"/"
 		};
 	</script>
 	<base href="<?php echo apply_filters( 'AMbaseHref', $site_url ) ?>">
 	<?php
 }
 
-add_action('admin_head', 'aa_func_20163316093324');
+add_action( 'admin_head', 'aa_func_20163316093324' );
 function aa_func_20163316093324()
 {
-	$allSidebars = json_encode($GLOBALS['wp_registered_sidebars']);
+	$allSidebars = json_encode( $GLOBALS[ 'wp_registered_sidebars' ] );
 	?>
 	<script>
 		var AdminDefaults = {
-			editpostId : "<?php echo $_GET['post'] ?>",
-			allSidebars : <?php echo $allSidebars ?>
+			editpostId : "<?php echo $_GET[ 'post' ] ?>",
+			allSidebars: <?php echo $allSidebars ?>
 		};
 	</script>
 	<?php
@@ -89,18 +90,19 @@ function aa_func_20162526072510()
 	<?php
 }
 
-add_action('AM_afterbody_start', 'aa_func_20160012120047',99);
+add_action( 'AM_afterbody_start', 'aa_func_20160012120047', 99 );
 function aa_func_20160012120047()
 {
 	echo "<GlobConfirmComponent></GlobConfirmComponent>";
 	echo "<ModalDialogComponent></ModalDialogComponent>";
 	echo "<FlashNotificationsComponent></FlashNotificationsComponent>";
-	if(is_amuserpage()) {
+	if ( is_amuserpage() ) {
 		echo "<GlobLoaderComponent></GlobLoaderComponent>";
 	}
 
 }
-add_action('after_main_menu', 'aa_func_20160012070004');
+
+add_action( 'after_main_menu', 'aa_func_20160012070004' );
 function aa_func_20160012070004()
 {
 	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {

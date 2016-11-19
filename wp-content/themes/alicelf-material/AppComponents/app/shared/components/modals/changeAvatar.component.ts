@@ -1,59 +1,23 @@
-import { Component, OnDestroy} from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Http, Response } from '@angular/http';
-import { Observable, Subscription } from 'rxjs/Rx';
+import {Component, OnDestroy} from '@angular/core';
+import {FormGroup, FormControl, Validators, FormBuilder} from '@angular/forms';
+import {Http, Response} from '@angular/http';
+import {Observable, Subscription} from 'rxjs/Rx';
 import 'rxjs/Rx';
 
-import { ModalService } from "../../services/alert.dialog.modal/modal.service";
-import { UserGlobalService } from "../../services/user.global.service";
+import {ModalService} from "../../services/alert.dialog.modal/modal.service";
+import {UserGlobalService} from "../../services/user.global.service";
 // const body = AMFormService.dataToPost( "ajx20163519013508", formVal );
 import {AMFormService} from "../../services/AMFormService";
 import {AppSettingsService} from "../../services/app.settings.service";
 import {FlashNoticeService} from "../../services/alert.dialog.modal/flash.notices";
 
 declare var $: any;
+declare var AMdefaults: any;
+var componentPath = AMdefaults.themeurl + '/AppComponents/app/shared/components/views';
 
 @Component( {
-	selector: 'ChangeAvatar',
-	template: `
-		<div id="change-avatar-form">
-			<div class="loader-line-modal">
-				<div *ngIf="progressline" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-			</div>
-			<div class="mdl-grid">
-				<div class="mdl-cell mdl-cell--4-col image-promise">
-					<div *ngIf="uploadedImage" id="upload-ava-holder">
-						<img id="uploadedImagePromise" [src]="uploadedImage" alt="uploaded image">
-					</div>
-				</div>
-				<div class="mdl-cell mdl-cell--8-col images-actions">
-					<div class="mdl-grid">
-						<div class="mdl-cell mdl-cell--4-col img-preview preview-lg"></div>
-						<div class="mdl-cell mdl-cell--9-col my-images-listing">
-						<ul>
-							<li *ngFor="let mediaItem of userService.userMedia">
-							<figure>
-							<img [src]="mediaItem.media_details.sizes.thumbnail.source_url" [attr.alt]="mediaItem.slug">
-							</figure>
-							<div class="img-description">{{mediaItem.slug}}</div>
-							</li>
-						</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="mdl-grid">
-				<div *ngIf="!uploadedImage" class="input-filegroup mdl-cell mdl-cell--12-col">
-					<input (change)="fileChange($event)" type="file" name="" id="chos3-file">
-					<label for="chos3-file" class="mdl-button mdl-js-button mdl-button--raised">Upload New Image</label>
-				</div>
-				<div *ngIf="uploadedImage" class="mdl-cell--12-col">
-					<a (click)="cropImage()" class="mdl-button am-success-btn mdl-js-button mdl-button--raised mdl-js-ripple-effect">Crop and set as profile image</a>
-					</div>
-			</div>
-
-		</div>
-	`
+	selector   : 'ChangeAvatar',
+	templateUrl: componentPath + "/changeavatar.modal.html"
 } )
 export class ChangeAvatarComponent implements OnDestroy {
 
@@ -77,12 +41,12 @@ export class ChangeAvatarComponent implements OnDestroy {
 	             private appSettings: AppSettingsService ) {
 		this.ajaxurl = appSettings.settings.ajaxurl;
 
-		let waitForuser = setInterval(() =>{
-			if(userService.currentUser) {
-				clearInterval(waitForuser);
+		let waitForuser = setInterval( () => {
+			if ( userService.currentUser ) {
+				clearInterval( waitForuser );
 				this.loadUserGallery();
 			}
-		},200);
+		}, 200 );
 
 	}
 
@@ -94,6 +58,57 @@ export class ChangeAvatarComponent implements OnDestroy {
 				    this.userService.userMedia = response;
 				    this.progressline = false;
 			    } );
+	}
+
+	setAsProfile( media: any ) {
+		console.log( media );
+		this.uploadedImage = media.source_url;
+		console.log( this.uploadedImage );
+		this.imageDbData = {
+			alt          : media.alt_text,
+			attachment_ID: media.id,
+			caption      : media.caption,
+			description  : media.description,
+			filepath     : AMdefaults.uploadDir + media.media_details.file,
+			href         : media.link,
+			src          : media.source_url,
+			title        : media.title.rendered
+		};
+		this.waitForImage( this.uploadedImage );
+	}
+
+	waitForImage( newImageUrl: string = null ) {
+		let waitForimage = setInterval( ()=> {
+			this.imageObject = $( '#uploadedImagePromise' );
+			let avatarWrapper = document.getElementById( 'upload-ava-holder' );
+			avatarWrapper.style.maxWidth = this.imageObject.width() + "px";
+			avatarWrapper.style.maxHeight = this.imageObject.height() + "px";
+
+			this.cropOptions = {
+				aspectRatio             : 8 / 10,
+				toggleDragModeOnDblclick: false,
+				zoomable                : false,
+				// minContainerWidth          : 250,
+				// minContainerHeight          : 373,
+				preview                 : '.img-preview',
+				crop                    : ( e ) => {
+					this.cropData = {
+						offsetX: Math.round( e.x ),
+						offsetY: Math.round( e.y ),
+						width  : Math.round( e.width ),
+						height : Math.round( e.height ),
+						rotate : e.rotate,
+						scaleX : e.scaleX,
+						scaleY : e.scaleY
+					};
+				}
+			};
+			this.imageObject.cropper( this.cropOptions );
+			if ( newImageUrl ) {
+				this.imageObject.cropper( 'replace', newImageUrl );
+			}
+			clearInterval( waitForimage );
+		}, 50 );
 	}
 
 	fileChange( fileInput: any ) {
@@ -111,36 +126,7 @@ export class ChangeAvatarComponent implements OnDestroy {
 					if ( data.status === 'success' ) {
 						this.imageDbData = data.data[0];
 						this.uploadedImage = this.imageDbData.src;
-
-						let waitForimage = setInterval( ()=> {
-							if ( document.getElementById( 'uploadedImagePromise' ) ) {
-								this.imageObject = $( '#uploadedImagePromise' );
-								let avatarWrapper = document.getElementById( 'upload-ava-holder' );
-
-								avatarWrapper.style.maxWidth = this.imageObject.width() + "px";
-								avatarWrapper.style.maxHeight = this.imageObject.height() + "px";
-
-								this.cropOptions = {
-									aspectRatio             : 8 / 10,
-									toggleDragModeOnDblclick: false,
-									zoomable                : false,
-									preview                 : '.img-preview',
-									crop                    : ( e ) => {
-										this.cropData = {
-											offsetX: Math.round( e.x ),
-											offsetY: Math.round( e.y ),
-											width  : Math.round( e.width ),
-											height : Math.round( e.height ),
-											rotate : e.rotate,
-											scaleX : e.scaleX,
-											scaleY : e.scaleY
-										};
-									}
-								};
-								this.imageObject.cropper( this.cropOptions );
-								clearInterval( waitForimage );
-							}
-						}, 50 );
+						this.waitForImage();
 
 					} else {
 						this.modal.invokeAnswer( false );

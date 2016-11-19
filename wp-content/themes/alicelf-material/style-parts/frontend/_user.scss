@@ -92,6 +92,9 @@ body {
 		max-height    : 70%;
 		border        : none;
 		border-radius : 2px;
+		padding-left  : 0;
+		padding-right : 0;
+		padding-top   : 0;
 	}
 }
 
@@ -113,6 +116,16 @@ body {
 #upload-ava-holder {
 	margin  : 0;
 	display : block;
+	min-width : 100%;
+	min-height : 100%;
+	&:after,
+	&:before {
+		content: "";
+		display: table;
+		width : 100%;
+		clear: both;
+		float: none;
+	}
 }
 
 #change-avatar-form {
@@ -121,12 +134,11 @@ body {
 	}
 	.image-promise,
 	.images-actions {
-		min-height : 300px;
+		min-height : 380px;
 	}
 	.image-promise {
 		background      : url("#{$basepath}img/image-placeholder.jpg") no-repeat top center;
 		background-size : contain;
-		display         : flex;
 		justify-content : center;
 		align-items     : center;
 		img {
@@ -254,13 +266,14 @@ body {
 	width      : calc(77% - 13px);
 	overflow-y : auto;
 	max-height : 290px;
+	h4 {
+		font-size : 15px;
+		margin    : 0 0 15px;
+	}
 	ul {
 		margin-top      : 0;
 		list-style-type : none;
 		padding         : 0;
-		img {
-			max-width : 70px;
-		}
 		li {
 			word-break    : break-all;
 			display       : flex;
@@ -268,12 +281,31 @@ body {
 			border        : 1px solid #eee;
 			padding       : 5px;
 			border-radius : 2px;
+			img {
+				width : 100%;
+			}
 			figure {
-				margin        : 0;
-				padding-right : 15px;
+				margin     : 0;
+				flex-basis : 20%;
 			}
 			.img-description {
-
+				flex-basis  : 75%;
+				margin-left : auto;
+			}
+		}
+	}
+	.media-actions {
+		display : flex;
+		.close {
+			margin-left : auto;
+		}
+		i {
+			cursor : pointer;
+			&:first-of-type {
+				margin-right : 10px;
+			}
+			&:hover {
+				color : $brandColor;
 			}
 		}
 	}

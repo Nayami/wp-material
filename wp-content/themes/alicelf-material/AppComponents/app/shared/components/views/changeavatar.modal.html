@@ -1,0 +1,44 @@
+<div id="change-avatar-form">
+	<div class="loader-line-modal">
+		<div *ngIf="progressline" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+	</div>
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--4-col image-promise">
+			<div id="upload-ava-holder">
+				<img *ngIf="uploadedImage" id="uploadedImagePromise" [src]="uploadedImage" alt="uploaded image">
+			</div>
+		</div>
+		<div class="mdl-cell mdl-cell--8-col images-actions">
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--4-col img-preview preview-lg"></div>
+				<div class="mdl-cell mdl-cell--9-col my-images-listing">
+					<ul>
+						<li *ngFor="let mediaItem of userService.userMedia">
+							<figure>
+								<img [src]="mediaItem.media_details.sizes.thumbnail.source_url" [attr.alt]="mediaItem.slug">
+							</figure>
+							<div class="img-description">
+								<h4>{{mediaItem.slug}}</h4>
+								<footer class="media-actions">
+									<i (click)="setAsProfile(mediaItem)" title="Set As Profile Image" class="material-icons">keyboard_backspace</i>
+									<i title="View Full Size" class="material-icons">photo</i>
+									<i title="Delete" class="material-icons close">close</i>
+								</footer>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="mdl-grid">
+		<div *ngIf="!uploadedImage" class="input-filegroup mdl-cell mdl-cell--12-col">
+			<input (change)="fileChange($event)" type="file" name="" id="chos3-file">
+			<label for="chos3-file" class="mdl-button mdl-js-button mdl-button--raised">Upload New Image</label>
+		</div>
+		<div *ngIf="uploadedImage" class="mdl-cell--12-col">
+			<a (click)="cropImage()" class="mdl-button am-success-btn mdl-js-button mdl-button--raised mdl-js-ripple-effect">Crop and set as profile image</a>
+		</div>
+	</div>
+
+</div>

@@ -17,6 +17,7 @@ var user_global_service_1 = require("../../services/user.global.service");
 var AMFormService_1 = require("../../services/AMFormService");
 var app_settings_service_1 = require("../../services/app.settings.service");
 var flash_notices_1 = require("../../services/alert.dialog.modal/flash.notices");
+var componentPath = AMdefaults.themeurl + '/AppComponents/app/shared/components/views';
 var ChangeAvatarComponent = (function () {
     function ChangeAvatarComponent(http, modal, userService, flashes, appSettings) {
         var _this = this;
@@ -44,6 +45,56 @@ var ChangeAvatarComponent = (function () {
                 _this.progressline = false;
             });
     };
+    ChangeAvatarComponent.prototype.setAsProfile = function (media) {
+        console.log(media);
+        this.uploadedImage = media.source_url;
+        console.log(this.uploadedImage);
+        this.imageDbData = {
+            alt: media.alt_text,
+            attachment_ID: media.id,
+            caption: media.caption,
+            description: media.description,
+            filepath: AMdefaults.uploadDir + media.media_details.file,
+            href: media.link,
+            src: media.source_url,
+            title: media.title.rendered
+        };
+        this.waitForImage(this.uploadedImage);
+    };
+    ChangeAvatarComponent.prototype.waitForImage = function (newImageUrl) {
+        var _this = this;
+        if (newImageUrl === void 0) { newImageUrl = null; }
+        var waitForimage = setInterval(function () {
+            _this.imageObject = $('#uploadedImagePromise');
+            var avatarWrapper = document.getElementById('upload-ava-holder');
+            avatarWrapper.style.maxWidth = _this.imageObject.width() + "px";
+            avatarWrapper.style.maxHeight = _this.imageObject.height() + "px";
+            _this.cropOptions = {
+                aspectRatio: 8 / 10,
+                toggleDragModeOnDblclick: false,
+                zoomable: false,
+                // minContainerWidth          : 250,
+                // minContainerHeight          : 373,
+                preview: '.img-preview',
+                crop: function (e) {
+                    _this.cropData = {
+                        offsetX: Math.round(e.x),
+                        offsetY: Math.round(e.y),
+                        width: Math.round(e.width),
+                        height: Math.round(e.height),
+                        rotate: e.rotate,
+                        scaleX: e.scaleX,
+                        scaleY: e.scaleY
+                    };
+                }
+            };
+            _this.imageObject.cropper(_this.cropOptions);
+            if (newImageUrl) {
+                _this.imageObject.cropper('replace', newImageUrl);
+            }
+            clearInterval(waitForimage);
+        }, 50);
+    };
     ChangeAvatarComponent.prototype.fileChange = function (fileInput) {
         var _this = this;
         this.progressline = true;
@@ -57,33 +108,7 @@ var ChangeAvatarComponent = (function () {
                 if (data.status === 'success') {
                     _this.imageDbData = data.data[0];
                     _this.uploadedImage = _this.imageDbData.src;
-                    var waitForimage_1 = setInterval(function () {
-                        if (document.getElementById('uploadedImagePromise')) {
-                            _this.imageObject = $('#uploadedImagePromise');
-                            var avatarWrapper = document.getElementById('upload-ava-holder');
-                            avatarWrapper.style.maxWidth = _this.imageObject.width() + "px";
-                            avatarWrapper.style.maxHeight = _this.imageObject.height() + "px";
-                            _this.cropOptions = {
-                                aspectRatio: 8 / 10,
-                                toggleDragModeOnDblclick: false,
-                                zoomable: false,
-                                preview: '.img-preview',
-                                crop: function (e) {
-                                    _this.cropData = {
-                                        offsetX: Math.round(e.x),
-                                        offsetY: Math.round(e.y),
-                                        width: Math.round(e.width),
-                                        height: Math.round(e.height),
-                                        rotate: e.rotate,
-                                        scaleX: e.scaleX,
-                                        scaleY: e.scaleY
-                                    };
-                                }
-                            };
-                            _this.imageObject.cropper(_this.cropOptions);
-                            clearInterval(waitForimage_1);
-                        }
-                    }, 50);
+                    _this.waitForImage();
                 }
                 else {
                     _this.modal.invokeAnswer(false);
@@ -149,7 +174,7 @@ var ChangeAvatarComponent = (function () {
     ChangeAvatarComponent = __decorate([
         core_1.Component({
             selector: 'ChangeAvatar',
-            template: "\n\t\t<div id=\"change-avatar-form\">\n\t\t\t<div class=\"loader-line-modal\">\n\t\t\t\t<div *ngIf=\"progressline\" class=\"mdl-progress mdl-js-progress mdl-progress__indeterminate\"></div>\n\t\t\t</div>\n\t\t\t<div class=\"mdl-grid\">\n\t\t\t\t<div class=\"mdl-cell mdl-cell--4-col image-promise\">\n\t\t\t\t\t<div *ngIf=\"uploadedImage\" id=\"upload-ava-holder\">\n\t\t\t\t\t\t<img id=\"uploadedImagePromise\" [src]=\"uploadedImage\" alt=\"uploaded image\">\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"mdl-cell mdl-cell--8-col images-actions\">\n\t\t\t\t\t<div class=\"mdl-grid\">\n\t\t\t\t\t\t<div class=\"mdl-cell mdl-cell--4-col img-preview preview-lg\"></div>\n\t\t\t\t\t\t<div class=\"mdl-cell mdl-cell--9-col my-images-listing\">\n\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t<li *ngFor=\"let mediaItem of userService.userMedia\">\n\t\t\t\t\t\t\t<figure>\n\t\t\t\t\t\t\t<img [src]=\"mediaItem.media_details.sizes.thumbnail.source_url\" [attr.alt]=\"mediaItem.slug\">\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t\t<div class=\"img-description\">{{mediaItem.slug}}</div>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"mdl-grid\">\n\t\t\t\t<div *ngIf=\"!uploadedImage\" class=\"input-filegroup mdl-cell mdl-cell--12-col\">\n\t\t\t\t\t<input (change)=\"fileChange($event)\" type=\"file\" name=\"\" id=\"chos3-file\">\n\t\t\t\t\t<label for=\"chos3-file\" class=\"mdl-button mdl-js-button mdl-button--raised\">Upload New Image</label>\n\t\t\t\t</div>\n\t\t\t\t<div *ngIf=\"uploadedImage\" class=\"mdl-cell--12-col\">\n\t\t\t\t\t<a (click)=\"cropImage()\" class=\"mdl-button am-success-btn mdl-js-button mdl-button--raised mdl-js-ripple-effect\">Crop and set as profile image</a>\n\t\t\t\t\t</div>\n\t\t\t</div>\n\n\t\t</div>\n\t"
+            templateUrl: componentPath + "/changeavatar.modal.html"
         }), 
         __metadata('design:paramtypes', [http_1.Http, modal_service_1.ModalService, user_global_service_1.UserGlobalService, flash_notices_1.FlashNoticeService, app_settings_service_1.AppSettingsService])
     ], ChangeAvatarComponent);
