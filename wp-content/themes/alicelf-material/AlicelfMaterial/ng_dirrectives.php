@@ -102,7 +102,7 @@ function aa_func_20160012120047()
 
 }
 
-add_action( 'after_main_menu', 'aa_func_20160012070004' );
+//add_action( 'after_main_menu', 'aa_func_20160012070004' );
 function aa_func_20160012070004()
 {
 	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {

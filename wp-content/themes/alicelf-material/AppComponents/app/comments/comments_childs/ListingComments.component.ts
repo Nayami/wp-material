@@ -56,11 +56,6 @@ export class ListingCommentsComponent implements OnDestroy, OnInit {
 		this.editForm = formBuild.group( {} );
 	}
 
-	getAuthorAvatarUrl(avatar_urls : any){
-		console.log( avatar_urls );
-		return avatar_urls['am_network'] || avatar_urls['96'];
-	}
-
 	ngOnInit() {
 		// Watch delete comment approove
 		this.delSubscription =

@@ -27,10 +27,6 @@ var ListingCommentsComponent = (function () {
         };
         this.editForm = formBuild.group({});
     }
-    ListingCommentsComponent.prototype.getAuthorAvatarUrl = function (avatar_urls) {
-        console.log(avatar_urls);
-        return avatar_urls['am_network'] || avatar_urls['96'];
-    };
     ListingCommentsComponent.prototype.ngOnInit = function () {
         var _this = this;
         // Watch delete comment approove

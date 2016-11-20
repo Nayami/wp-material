@@ -19,6 +19,7 @@ var CommentsComponent = (function () {
         this.commentsService = commentsService;
         this.title = 'Leave a Reply';
         this.postService.postId = parseInt(elm.nativeElement.getAttribute('datapostid'));
+        this.postService.type = elm.nativeElement.getAttribute('dataposttype');
         this.getCommentsSubscription =
             commentsService.getComments(this.postService.postId)
                 .subscribe(function (response) {
@@ -27,10 +28,7 @@ var CommentsComponent = (function () {
                 }
             });
         this.postSubscription =
-            postService.getPost(this.postService.postId)
-                .subscribe(function (response) {
-                postService.post = response;
-            });
+            postService.getPost().subscribe(function (response) { postService.post = response; });
     }
     CommentsComponent.prototype.ngOnDestroy = function () {
         this.getCommentsSubscription.unsubscribe();

@@ -37,6 +37,8 @@ export class CommentsComponent implements OnDestroy {
 	             private postService: PostService,
 	             private commentsService: CommentService ) {
 		this.postService.postId = parseInt( elm.nativeElement.getAttribute( 'datapostid' ) );
+		this.postService.type = elm.nativeElement.getAttribute( 'dataposttype' );
+
 		this.getCommentsSubscription =
 			commentsService.getComments( this.postService.postId )
 			               .subscribe( response => {
@@ -46,10 +48,7 @@ export class CommentsComponent implements OnDestroy {
 			               } );
 
 		this.postSubscription =
-			postService.getPost( this.postService.postId )
-			           .subscribe(response => {
-				           postService.post = response;
-			           });
+			postService.getPost().subscribe(response => { postService.post = response;});
 
 	}
 

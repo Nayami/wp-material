@@ -10,14 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-require('rxjs/add/operator/map');
+require('rxjs/Rx');
 var PostService = (function () {
     function PostService(http) {
         this.http = http;
     }
-    PostService.prototype.getPost = function (postId) {
-        var id = postId || this.postId;
-        return this.http.get(AMdefaults.baseurl + "/wp-json/wp/v2/posts/" + id)['map'](function (res) { return res.json(); });
+    PostService.prototype.getPost = function () {
+        return this.http.get(AMdefaults.baseurl + "/wp-json/wp/v2/" + this.type + "s/" + this.postId)['map'](function (res) { return res.json(); });
     };
     PostService = __decorate([
         core_1.Injectable(), 
